@@ -27,7 +27,7 @@
       // intentionally want local tooling to hit the production database.
       // Before first deploy of this branch, reset remote D1 (old schema is incompatible)
       // then run `pnpm payload migrate` with remote enabled / via `deploy:database`.
-      "remote": false,
+      "remote": true,
     },
   ],
   "services": [
