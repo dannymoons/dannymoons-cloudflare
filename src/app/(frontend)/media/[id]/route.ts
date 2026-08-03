@@ -34,6 +34,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   }
 
   const { env, ctx } = await getCloudflareContext({ async: true })
+
+  if (!env.IMAGES) {
+    return new Response('Image transforms unavailable', { status: 503 })
+  }
+
   const object = await env.R2.get(media.filename)
 
   if (!object?.body) {

@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
   "name": "dannymoons",
-  "compatibility_date": "2025-08-15",
+  "compatibility_date": "2026-08-03",
   "compatibility_flags": [
     // Enable Node.js API
     // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
@@ -23,6 +23,10 @@
       "binding": "D1",
       "database_name": "dannymoons-db",
       "database_id": "bb73d787-4579-4d9e-ba20-ba0647b43d40",
+      // Use local D1 for `next dev` / `next build`. Set `"remote": true` when you
+      // intentionally want local tooling to hit the production database.
+      // Before first deploy of this branch, reset remote D1 (old schema is incompatible)
+      // then run `pnpm payload migrate` with remote enabled / via `deploy:database`.
       "remote": true,
     },
   ],

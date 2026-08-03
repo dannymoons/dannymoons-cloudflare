@@ -1,22 +1,33 @@
 import fs from 'fs'
 import path from 'path'
-import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
-import { GetPlatformProxyOptions } from 'wrangler'
+import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
 import { r2Storage } from '@payloadcms/storage-r2'
+import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
+import { buildConfig, type PayloadRequest } from 'payload'
+import type { GetPlatformProxyOptions } from 'wrangler'
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { Posts } from './collections/Posts'
+import { Categories } from './collections/categories'
+import { Media } from './collections/media'
+import { Pages } from './collections/pages'
+import { Posts } from './collections/posts'
+import { TeamMembers } from './collections/team-members'
+import { Testimonials } from './collections/testimonials'
+import { Users } from './collections/users'
+import { Wiki } from './collections/wiki'
+import { WikiCategories } from './collections/wiki-categories'
+import { Footer } from './globals/footer/config'
+import { Header } from './globals/header/config'
+import { Settings } from './globals/settings/config'
+import { plugins } from './plugins'
+import { defaultLexical } from '@/fields/defaultLexical'
+import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const realpath = (value: string) => (fs.existsSync(value) ? fs.realpathSync(value) : undefined)
 
-const isCLI = process.argv.some((value) => realpath(value).endsWith(path.join('payload', 'bin.js')))
+const isCLI = process.argv.some((value) => realpath(value)?.endsWith(path.join('payload', 'bin.js')))
 const isProduction = process.env.NODE_ENV === 'production'
 
 const createLog =
@@ -37,7 +48,7 @@ const cloudflareLogger = {
   error: createLog('error', console.error),
   fatal: createLog('fatal', console.error),
   silent: () => {},
-} as any // Use PayloadLogger type when it's exported
+} as any
 
 const cloudflare =
   isCLI || !isProduction
@@ -46,27 +57,71 @@ const cloudflare =
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
+    components: {
+      beforeLogin: ['@/components/payload/before-login'],
+      beforeDashboard: ['@/components/payload/before-dashboard'],
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    user: Users.slug,
+    livePreview: {
+      breakpoints: [
+        { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
+        { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
+        { label: 'Desktop', name: 'desktop', width: 1440, height: 900 },
+      ],
+    },
   },
-  collections: [Users, Media, Posts],
-  editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
+  editor: defaultLexical,
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
+    // Migrations are applied via `pnpm payload migrate` / `deploy:database`
+    // (not on connect) so `next build` does not mutate remote D1.
   }),
-  logger: isProduction ? cloudflareLogger : undefined,
+  collections: [
+    Categories,
+    Media,
+    Pages,
+    Posts,
+    TeamMembers,
+    Testimonials,
+    Users,
+    Wiki,
+    WikiCategories,
+  ],
+  cors: [getServerSideURL()].filter(Boolean),
+  globals: [Header, Footer, Settings],
   plugins: [
+    ...plugins,
     r2Storage({
       bucket: cloudflare.env.R2,
       collections: { media: true },
     }),
   ],
+  secret: process.env.PAYLOAD_SECRET || '',
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
+  },
+  logger: isProduction ? cloudflareLogger : undefined,
+  jobs: {
+    access: {
+      run: ({ req }: { req: PayloadRequest }): boolean => {
+        if (req.user) return true
+
+        const secret = process.env.CRON_SECRET
+        if (!secret) return false
+
+        const authHeader = req.headers.get('authorization')
+        return authHeader === `Bearer ${secret}`
+      },
+    },
+    tasks: [],
+  },
+  localization: {
+    locales: ['en', 'nl'],
+    defaultLocale: 'nl',
+  },
 })
 
 // Adapted from https://github.com/opennextjs/opennextjs-cloudflare/blob/d00b3a13e42e65aad76fba41774815726422cc39/packages/cloudflare/src/api/cloudflare-context.ts#L328C36-L328C46

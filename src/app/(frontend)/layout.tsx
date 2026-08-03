@@ -1,19 +1,60 @@
-import React from 'react'
-import './styles.css'
+import type { Metadata } from 'next'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+import { cn } from '@/utilities/ui'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
+import type React from 'react'
+
+import { AdminBar } from '@/components/payload/admin-bar'
+import { Providers } from '@/providers'
+import { InitTheme } from '@/providers/theme/init-theme'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { draftMode } from 'next/headers'
+import { headers } from 'next/headers'
+
+import './globals.css'
+import { getServerSideURL } from '@/utilities/getURL'
+
+export default async function RootLayout({
+	children
+}: {
+	children: React.ReactNode
+}) {
+	const { isEnabled } = await draftMode()
+	const headersList = await headers()
+	const locale = headersList.get('x-locale') || 'nl'
+
+	return (
+		<html
+			className={cn(GeistSans.variable, GeistMono.variable)}
+			lang={locale}
+			suppressHydrationWarning
+		>
+			<head>
+				<InitTheme />
+				<link href='/favicon.ico' rel='icon' sizes='32x32' />
+				<link href='/favicon.svg' rel='icon' type='image/svg+xml' />
+			</head>
+			<body>
+				<Providers>
+					<AdminBar
+						adminBarProps={{
+							preview: isEnabled
+						}}
+					/>
+
+					{children}
+				</Providers>
+			</body>
+		</html>
+	)
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
-
-  return (
-    <html lang="en">
-      <body>
-        <main>{children}</main>
-      </body>
-    </html>
-  )
+export const metadata: Metadata = {
+	metadataBase: new URL(getServerSideURL()),
+	openGraph: mergeOpenGraph(),
+	twitter: {
+		card: 'summary_large_image',
+		creator: '@payloadcms'
+	}
 }
