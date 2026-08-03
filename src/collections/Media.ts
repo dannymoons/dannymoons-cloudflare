@@ -5,6 +5,7 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
+
   fields: [
     {
       name: 'alt',
@@ -13,7 +14,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // These are not supported on Workers yet due to lack of sharp
+    // Cloudflare Images generates responsive variants from the R2 original at request time.
     crop: false,
     focalPoint: false,
   },

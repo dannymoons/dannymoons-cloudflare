@@ -3,9 +3,14 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    deviceSizes: [480, 768, 1200, 1920],
+    imageSizes: [150],
     localPatterns: [
       {
         pathname: '/api/media/file/**',
+      },
+      {
+        pathname: '/media/**',
       },
     ],
   },
