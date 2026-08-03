@@ -24,8 +24,8 @@ type Preview = {
 const previews: { group: string; description: string; items: Preview[] }[] = [
 	{
 		group: 'Concept-richtingen',
-		description:
-			"Drie zelfstandige concept-pagina's voor fictieve merken — van minimalistisch tot bold tot futuristisch, elk met een eigen structuur, typografie en animatie.",
+			description:
+				"Twee zelfstandige concept-pagina's voor fictieve merken — van minimalistisch tot futuristisch, elk met een eigen structuur, typografie en animatie.",
 		items: [
 			{
 				slug: 'landing-preview-studio',
@@ -38,18 +38,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 					'oklch(0.97 0.006 85)'
 				],
 				tags: ['minimal', 'editorial', 'serif']
-			},
-			{
-				slug: 'landing-preview-pulse',
-				name: 'Voltcore — bold',
-				tagline:
-					'Maximalistisch energydrink-merk. Anton display, acid-kleuren, marquees, brutalist grid en pop-animaties.',
-				palette: [
-					'oklch(0.88 0.24 130)',
-					'oklch(0.66 0.28 350)',
-					'oklch(0.16 0.02 280)'
-				],
-				tags: ['bold', 'maximalist', 'marquee']
 			},
 			{
 				slug: 'landing-preview-nova',
@@ -67,8 +55,8 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 	},
 	{
 		group: 'Stijl-richtingen',
-		description:
-			'Drie extra concept-merken in uiteenlopende stijlen — clean shadcn/ui, Apple-achtig product en een zeer creatieve studio. Elk per sectie opgebouwd in een eigen _sections-map.',
+			description:
+				'Twee extra concept-merken in uiteenlopende stijlen — clean shadcn/ui en Apple-achtig product. Elk per sectie opgebouwd in een eigen _sections-map.',
 		items: [
 			{
 				slug: 'landing-preview-shadcn',
@@ -94,18 +82,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				],
 				tags: ['apple', 'product', 'minimal']
 			},
-			{
-				slug: 'landing-preview-flux',
-				name: 'Flux — creatief',
-				tagline:
-					'Expressieve creative studio. Mix van grotesk + serif, animerende blobs, marquees, geroteerde stickers en bold kleurvlakken.',
-				palette: [
-					'oklch(0.62 0.25 350)',
-					'oklch(0.55 0.2 265)',
-					'oklch(0.96 0.02 95)'
-				],
-				tags: ['creative', 'expressive', 'bold']
-			}
 		]
 	},
 	{
@@ -158,18 +134,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				tags: ['typography', 'swiss', 'specimens']
 			},
 			{
-				slug: 'landing-preview-apex',
-				name: 'Apex — litigation',
-				tagline:
-					'Boutique litigation firm. Cormorant Garamond, copper/stone, practice areas, won cases en pro bono.',
-				palette: [
-					'oklch(0.22 0.02 55)',
-					'oklch(0.58 0.1 55)',
-					'oklch(0.96 0.008 90)'
-				],
-				tags: ['law', 'litigation', 'authoritative']
-			},
-			{
 				slug: 'landing-preview-bloom',
 				name: 'Bloom — kinderzorg',
 				tagline:
@@ -182,36 +146,12 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				tags: ['charity', 'pediatric', 'warm']
 			},
 			{
-				slug: 'landing-preview-cinder',
-				name: 'Cinder — keramiek',
-				tagline:
-					'Artisan pottery studio. EB Garamond + Mulish, kiln timeline, wabi-sabi collection en workshops.',
-				palette: [
-					'oklch(0.78 0.06 65)',
-					'oklch(0.48 0.12 45)',
-					'oklch(0.97 0.01 85)'
-				],
-				tags: ['ceramics', 'craft', 'wabi-sabi']
-			},
-			{
 				slug: 'landing-preview-relay',
 				name: 'Relay — endurance',
 				tagline:
 					'Marathon & trail events. Bebas Neue + Rubik, orange/black, elevation routes en live results.',
 				palette: ['oklch(0.12 0 0)', 'oklch(0.68 0.22 45)', 'oklch(0.99 0 0)'],
 				tags: ['sports', 'marathon', 'energy']
-			},
-			{
-				slug: 'landing-preview-driftwood',
-				name: 'Driftwood — kusthotel',
-				tagline:
-					'Mediterranean boutique hotel. Cormorant + Montserrat, linen/terra/sea, spa en coastal experiences.',
-				palette: [
-					'oklch(0.52 0.1 230)',
-					'oklch(0.58 0.12 45)',
-					'oklch(0.98 0.01 90)'
-				],
-				tags: ['hotel', 'coastal', 'boutique']
 			},
 			{
 				slug: 'landing-preview-cipher',
@@ -257,18 +197,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				tags: ['editorial', 'dashboard', 'parchment']
 			},
 			{
-				slug: 'landing-preview-orbit-signal',
-				name: 'Orbit Signal — developer API',
-				tagline:
-					'API-first carbon monitoring. Sora + JetBrains Mono, CLI preview, webhooks, SDK libraries en real-time page events.',
-				palette: [
-					'oklch(0.10 0.04 290)',
-					'oklch(0.82 0.22 130)',
-					'oklch(0.62 0.22 300)'
-				],
-				tags: ['api', 'developer', 'terminal']
-			},
-			{
 				slug: 'landing-preview-orbit-aero',
 				name: 'Orbit Aero — agency workspace',
 				tagline:
@@ -304,18 +232,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				],
 				tags: ['editorial', 'brutalist', 'dark']
 			},
-			{
-				slug: 'landing-preview-orbit-horizon-glass',
-				name: 'Orbit Horizon — glass (dark)',
-				tagline:
-					'Dark glassmorphism variant van Horizon. Dunne randen, frosted panels, olive/sage gradient achtergrond en backdrop-blur over alle kaarten.',
-				palette: [
-					'oklch(0.14 0.024 145)',
-					'oklch(0.60 0.08 145)',
-					'oklch(0.70 0.07 145)'
-				],
-				tags: ['editorial', 'glass', 'dark']
-			}
 		]
 	},
 	{
@@ -396,18 +312,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				tags: ['research', 'logged-in', 'light']
 			},
 			{
-				slug: 'landing-preview-orbit-signal-console',
-				name: 'Orbit Signal — overview',
-				tagline:
-					'Logged-in API dashboard in dark terminal stijl. Webhook status, API events stream, lime emissions chart en monospace pages table.',
-				palette: [
-					'oklch(0.10 0.04 290)',
-					'oklch(0.82 0.22 130)',
-					'oklch(0.62 0.22 300)'
-				],
-				tags: ['api', 'logged-in', 'terminal']
-			},
-			{
 				slug: 'landing-preview-orbit-horizon-console',
 				name: 'Orbit Horizon — overview',
 				tagline:
@@ -439,18 +343,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 			'Sustainability-gerichte concept-merken voor marketing managers, agencies en coaches — elk met eigen stijl, typografie en 12+ secties.',
 		items: [
 			{
-				slug: 'landing-preview-rootline',
-				name: 'Rootline — marketing leaders',
-				tagline:
-					'CMO sustainability consultancy. Libre Baskerville + Public Sans, editorial navy/teal, framework pillars en impact metrics.',
-				palette: [
-					'oklch(0.28 0.06 250)',
-					'oklch(0.52 0.1 195)',
-					'oklch(0.96 0.01 90)'
-				],
-				tags: ['sustainability', 'cmo', 'editorial']
-			},
-			{
 				slug: 'landing-preview-greenbench',
 				name: 'Greenbench — agency benchmark',
 				tagline:
@@ -463,18 +355,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				tags: ['agency', 'benchmark', 'saas']
 			},
 			{
-				slug: 'landing-preview-thrive',
-				name: 'Thrive — executive coach',
-				tagline:
-					'Executive sustainability coaching. Lora + Nunito Sans, warm sage palette, coaching paths en booking.',
-				palette: [
-					'oklch(0.94 0.03 145)',
-					'oklch(0.38 0.07 155)',
-					'oklch(0.88 0.06 85)'
-				],
-				tags: ['coaching', 'executive', 'warm']
-			},
-			{
 				slug: 'landing-preview-patchwork',
 				name: 'Patchwork — creative agency',
 				tagline:
@@ -485,42 +365,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 					'oklch(0.68 0.2 350)'
 				],
 				tags: ['agency', 'bold', 'creative']
-			},
-			{
-				slug: 'landing-preview-measure',
-				name: 'Measure — ESG for CMOs',
-				tagline:
-					'Corporate ESG metrics dashboard. IBM Plex Serif + Sans, KPI cards, data sources en compliance reporting.',
-				palette: [
-					'oklch(0.22 0.03 250)',
-					'oklch(0.48 0.12 250)',
-					'oklch(0.97 0.01 250)'
-				],
-				tags: ['esg', 'b2b', 'corporate']
-			},
-			{
-				slug: 'landing-preview-habit',
-				name: 'Habit — personal coach',
-				tagline:
-					'Consumer sustainability app landing. Fraunces + Figtree, soft mint palette, habit tracker en community.',
-				palette: [
-					'oklch(0.94 0.04 165)',
-					'oklch(0.55 0.14 155)',
-					'oklch(0.98 0.01 95)'
-				],
-				tags: ['app', 'wellness', 'consumer']
-			},
-			{
-				slug: 'landing-preview-cascade',
-				name: 'Cascade — supply chain',
-				tagline:
-					'Agency supply chain transparency. DM Serif Display + Source Sans 3, traceability map en vendor portal.',
-				palette: [
-					'oklch(0.32 0.03 250)',
-					'oklch(0.42 0.08 155)',
-					'oklch(0.94 0.01 250)'
-				],
-				tags: ['supply-chain', 'agency', 'industrial']
 			},
 			{
 				slug: 'landing-preview-beacon',
@@ -538,8 +382,8 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 	},
 	{
 		group: 'Sector-concepten',
-		description:
-			"Sector-specifieke concept-pagina's — duurzaam web, regeneratieve duurzaamheid, fysiotherapie, bistro en futuristische AI. Elk met 12+ secties in een eigen _sections-map.",
+			description:
+				"Sector-specifieke concept-pagina's voor duurzaam web en regeneratieve duurzaamheid. Elk met 12+ secties in een eigen _sections-map.",
 		items: [
 			{
 				slug: 'landing-preview-offset',
@@ -565,109 +409,6 @@ const previews: { group: string; description: string; items: Preview[] }[] = [
 				],
 				tags: ['sustainability', 'circular', 'organic']
 			},
-			{
-				slug: 'landing-preview-restore',
-				name: 'Restore — fysiotherapie',
-				tagline:
-					'Movement-focused revalidatiepraktijk. Playfair + DM Sans, klinisch-warm, 6 behandelingen, therapeuten en afspraakformulier.',
-				palette: [
-					'oklch(0.48 0.12 230)',
-					'oklch(0.68 0.14 35)',
-					'oklch(0.99 0.003 250)'
-				],
-				tags: ['healthcare', 'physio', 'clinical']
-			},
-			{
-				slug: 'landing-preview-hearth',
-				name: 'Hearth — bistro',
-				tagline:
-					'Farm-to-table buurtrestaurant. Lora + Work Sans, warm ember/rust, lunch/diner menu, lokale boeren en reserveringen.',
-				palette: [
-					'oklch(0.52 0.16 45)',
-					'oklch(0.82 0.08 85)',
-					'oklch(0.96 0.02 75)'
-				],
-				tags: ['restaurant', 'bistro', 'warm']
-			},
-			{
-				slug: 'landing-preview-synapse',
-				name: 'Synapse — AI platform',
-				tagline:
-					'Cognitieve AI-infrastructuur. Sora + JetBrains Mono, neon/pulse dark mode, model benchmarks, inference en playground demo.',
-				palette: [
-					'oklch(0.10 0.025 280)',
-					'oklch(0.78 0.2 165)',
-					'oklch(0.65 0.22 300)'
-				],
-				tags: ['ai', 'futuristic', 'neural']
-			}
-		]
-	},
-	{
-		group: 'High-end concepten',
-		description:
-			"High-end concept-pagina's voor fictieve merken — elk met 12+ secties, eigen typografie en een uitgesproken stijl. Per sectie opgebouwd in een eigen _sections-map.",
-		items: [
-			{
-				slug: 'landing-preview-verdant',
-				name: 'Verdant — sustainability',
-				tagline:
-					'Duurzaamheidsbureau in organische editorial-stijl. DM Serif Display + Source Sans 3, mos/klei/perkament, impact-data en case studies.',
-				palette: [
-					'oklch(0.38 0.08 145)',
-					'oklch(0.72 0.06 75)',
-					'oklch(0.96 0.02 95)'
-				],
-				tags: ['sustainability', 'organic', 'editorial']
-			},
-			{
-				slug: 'landing-preview-maison',
-				name: 'Maison Lérens — couture',
-				tagline:
-					'Haute couture huis in Parijs. Bodoni Moda + Jost, noir/crème/goud, atelier-verhaal, Embla lookbook-carousel en private fitting.',
-				palette: [
-					'oklch(0.14 0.01 60)',
-					'oklch(0.78 0.12 85)',
-					'oklch(0.96 0.01 90)'
-				],
-				tags: ['luxury', 'fashion', 'embla']
-			},
-			{
-				slug: 'landing-preview-atrium',
-				name: 'Atrium — architectuur',
-				tagline:
-					'Exaggerated minimalism voor een architectenstudio. Archivo + DM Sans, wit/beton/goud, projectgrid en Pritzker-awards.',
-				palette: [
-					'oklch(0.18 0.01 280)',
-					'oklch(0.72 0.14 85)',
-					'oklch(0.99 0.002 100)'
-				],
-				tags: ['architecture', 'swiss', 'minimal']
-			},
-			{
-				slug: 'landing-preview-solstice',
-				name: 'Solstice — fine dining',
-				tagline:
-					'Donker restaurantgroep met burgundy/goud. Cormorant + Lato, tasting menu, wijnkelder, Michelin-quotes en reserveringsformulier.',
-				palette: [
-					'oklch(0.14 0.02 30)',
-					'oklch(0.42 0.14 25)',
-					'oklch(0.78 0.14 85)'
-				],
-				tags: ['dining', 'dark', 'luxury']
-			},
-			{
-				slug: 'landing-preview-lumen',
-				name: 'Lumen — experiential',
-				tagline:
-					'Iridescent brand studio voor immersive experiences. Syne + Outfit, violet/cyaan gradienten, marquee, Embla showcase en R&D lab.',
-				palette: [
-					'oklch(0.12 0.03 280)',
-					'oklch(0.62 0.22 300)',
-					'oklch(0.78 0.14 200)'
-				],
-				tags: ['experiential', 'iridescent', 'embla']
-			}
 		]
 	},
 	{
