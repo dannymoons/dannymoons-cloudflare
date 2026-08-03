@@ -1,0 +1,271 @@
+// Payload admin — custom styles
+// @tailwind utilities;
+$modal-width-large: 900px;
+$modal-width-small: 400px;
+$icon-item-size-large: calc($modal-width-large / 14);
+$icon-item-size-small: calc($modal-width-small / 8);
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ── Design tokens (same as globals.css :root) ─────────────────────────────── */
+:root,
+[data-theme="light"] {
+  --density: 1;
+  --spacing: calc(0.25rem * var(--density));
+
+  --primary-l: 0.55;
+  --primary-c: 0.24;
+  --primary-h: 263;
+
+  --secondary-l: 0.94;
+  --secondary-c: 0.022;
+  --secondary-h: 78;
+
+  --neutral-l: 0.55;
+  --neutral-c: 0.020;
+  --neutral-h: 70;
+
+  --success-h: 165;
+  --warning-h: 75;
+  --error-h: 25;
+  --info-h: 230;
+
+  --radius: 0.5rem;
+
+  --primary-50: oklch(0.97 calc(var(--primary-c) * 0.08) var(--primary-h));
+  --primary-100: oklch(0.94 calc(var(--primary-c) * 0.17) var(--primary-h));
+  --primary-200: oklch(0.88 calc(var(--primary-c) * 0.42) var(--primary-h));
+  --primary-300: oklch(0.80 calc(var(--primary-c) * 0.60) var(--primary-h));
+  --primary-400: oklch(0.68 calc(var(--primary-c) * 0.80) var(--primary-h));
+  --primary-500: oklch(var(--primary-l) var(--primary-c) var(--primary-h));
+  --primary-600: oklch(0.46 calc(var(--primary-c) * 0.95) var(--primary-h));
+  --primary-700: oklch(0.38 calc(var(--primary-c) * 0.85) var(--primary-h));
+  --primary-800: oklch(0.30 calc(var(--primary-c) * 0.72) var(--primary-h));
+  --primary-900: oklch(0.22 calc(var(--primary-c) * 0.55) var(--primary-h));
+  --primary-950: oklch(0.16 calc(var(--primary-c) * 0.40) var(--primary-h));
+
+  --secondary-50: oklch(0.985 calc(var(--secondary-c) * 0.40) var(--secondary-h));
+  --secondary-100: oklch(0.97 calc(var(--secondary-c) * 0.65) var(--secondary-h));
+  --secondary-200: oklch(0.94 calc(var(--secondary-c) * 1.00) var(--secondary-h));
+  --secondary-300: oklch(0.90 calc(var(--secondary-c) * 1.30) var(--secondary-h));
+  --secondary-400: oklch(0.82 calc(var(--secondary-c) * 1.55) var(--secondary-h));
+  --secondary-500: oklch(0.72 calc(var(--secondary-c) * 1.80) var(--secondary-h));
+  --secondary-600: oklch(0.58 calc(var(--secondary-c) * 2.00) var(--secondary-h));
+  --secondary-700: oklch(0.46 calc(var(--secondary-c) * 2.00) var(--secondary-h));
+  --secondary-800: oklch(0.34 calc(var(--secondary-c) * 1.80) var(--secondary-h));
+  --secondary-900: oklch(0.24 calc(var(--secondary-c) * 1.30) var(--secondary-h));
+  --secondary-950: oklch(0.16 calc(var(--secondary-c) * 0.90) var(--secondary-h));
+
+  --neutral-50: oklch(0.985 calc(var(--neutral-c) * 0.25) var(--neutral-h));
+  --neutral-100: oklch(0.96 calc(var(--neutral-c) * 0.50) var(--neutral-h));
+  --neutral-200: oklch(0.92 calc(var(--neutral-c) * 0.70) var(--neutral-h));
+  --neutral-300: oklch(0.86 calc(var(--neutral-c) * 0.90) var(--neutral-h));
+  --neutral-400: oklch(0.70 calc(var(--neutral-c) * 1.00) var(--neutral-h));
+  --neutral-500: oklch(var(--neutral-l) var(--neutral-c) var(--neutral-h));
+  --neutral-600: oklch(0.42 calc(var(--neutral-c) * 1.10) var(--neutral-h));
+  --neutral-700: oklch(0.32 calc(var(--neutral-c) * 1.10) var(--neutral-h));
+  --neutral-800: oklch(0.22 calc(var(--neutral-c) * 1.10) var(--neutral-h));
+  --neutral-900: oklch(0.14 calc(var(--neutral-c) * 1.00) var(--neutral-h));
+  --neutral-950: oklch(0.08 calc(var(--neutral-c) * 0.90) var(--neutral-h));
+
+  --primary: var(--primary-500);
+  --primary-foreground: oklch(0.99 0.005 var(--primary-h));
+  --primary-light: var(--primary-200);
+  --primary-dark: var(--primary-800);
+
+  --secondary: var(--secondary-200);
+  --secondary-foreground: oklch(0.24 0.03 var(--primary-h));
+  --secondary-light: var(--secondary-100);
+  --secondary-dark: var(--secondary-300);
+
+  --background: var(--secondary-50);
+  --foreground: oklch(0.22 0.025 var(--primary-h));
+  --surface: var(--secondary-100);
+  --elevated: oklch(1 0 0);
+  --muted: var(--secondary-200);
+  --muted-foreground: oklch(0.46 0.025 var(--secondary-h));
+
+  --card: var(--elevated);
+  --card-foreground: var(--foreground);
+  --popover: var(--elevated);
+  --popover-foreground: var(--foreground);
+  --accent: oklch(0.93 0.030 var(--secondary-h));
+  --accent-foreground: var(--secondary-foreground);
+
+  --border: oklch(0.88 0.020 var(--secondary-h));
+  --input: oklch(0.88 0.020 var(--secondary-h));
+  --ring: var(--primary-500);
+
+  --success: oklch(0.62 0.14 var(--success-h));
+  --success-foreground: oklch(0.98 0.012 var(--success-h));
+  --warning: oklch(0.78 0.16 var(--warning-h));
+  --warning-foreground: oklch(0.18 0.04 var(--warning-h));
+  --error: oklch(0.58 0.22 var(--error-h));
+  --error-foreground: oklch(0.99 0.012 var(--error-h));
+  --destructive: var(--error);
+  --destructive-foreground: var(--error-foreground);
+}
+
+.moonsio-icon-picker-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--theme-overlay);
+  backdrop-filter: blur(1px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.moonsio-icon-picker-modal {
+  background-color: var(--theme-elevation-0);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &__close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+  }
+
+  &__header-content {
+    // display: flex;
+    // align-items: center;
+    // gap: 10px;
+  }
+
+  &__header {
+    padding: 20px;
+    border-bottom: 1px solid var(--theme-border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    &__header-title {
+      margin: 0 0 20px;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &__selected-icon {}
+
+    &__reset-icon {
+      margin: 0;
+    }
+  }
+
+  &__content {
+    padding: 20px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__search-controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+
+  }
+
+  &__search-input {
+    width: 100%;
+    // @media(min-width: 768px) {
+    //   width: 400px;
+    // }
+  }
+
+  &__search-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__reset-search {
+    margin: 0;
+  }
+
+  &__grid {
+    // gap: 4px;
+    overflow-y: auto;
+    // padding-top: 10px;
+    border-top: 1px solid var(--theme-border-color);
+    height: 450px;
+  }
+
+  &__item {
+    display: inline-grid;
+    place-items: center;
+    // aspect-ratio: 1 / 1;
+    height: $icon-item-size-large;
+    width: $icon-item-size-large;
+    border-right: 1px solid var(--theme-border-color);
+    border-bottom: 1px solid var(--theme-border-color);
+    border-top: 0;
+    border-left: 0;
+    background-color: var(--theme-elevation-0);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(.selected) {
+      background-color: var(--theme-elevation-50);
+    }
+
+    &.selected {
+      border: 2px solid var(--theme-elevation-1000);
+      background-color: var(--theme-elevation-1000);
+      color: var(--theme-elevation-0);
+    }
+  }
+
+
+  &__no-results {
+    text-align: center;
+    padding: 40px;
+    color: var(--theme-elevation-600);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
