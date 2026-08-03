@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 
-import { mediaLoader } from './media-loader'
+import { mediaLoader } from '@/utilities/media-loader'
 
 type MediaImageProps = {
   alt: string

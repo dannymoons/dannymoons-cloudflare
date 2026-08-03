@@ -1,0 +1,75 @@
+import type { Metadata } from 'next'
+
+import type { Media, Page, Post, Wiki, Config } from '../payload-types'
+
+import { mergeOpenGraph } from './mergeOpenGraph'
+import { getServerSideURL } from './getURL'
+import { DEFAULT_LOCALE, type Locale } from './locale'
+import { SITE_NAME } from './site'
+
+const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
+  const serverUrl = getServerSideURL()
+
+  let url = serverUrl + '/website-template-OG.webp'
+
+  if (image && typeof image === 'object' && 'id' in image && image.id != null) {
+    // Cloudflare Images serves OG crops via the /media/[id] transform route
+    url = `${serverUrl}/media/${image.id}?w=1200`
+  } else if (image && typeof image === 'object' && 'url' in image && image.url) {
+    url = image.url.startsWith('http') ? image.url : serverUrl + image.url
+  }
+
+  return url
+}
+
+export const generateMeta = async (args: {
+  doc: Partial<Page> | Partial<Post> | Partial<Wiki> | null
+  /**
+   * Per-locale public paths for this document (e.g. `{ nl: '/over-ons', en: '/en/about-us' }`).
+   * Used to emit the canonical URL and `hreflang` alternates. Relative paths are
+   * resolved against `metadataBase` (set in the root layout).
+   */
+  alternates?: Partial<Record<Locale, string>>
+  /** Active locale of the page being rendered. */
+  locale?: Locale
+}): Promise<Metadata> => {
+  const { doc, alternates, locale = DEFAULT_LOCALE } = args
+
+  const ogImage = getImageURL(doc?.meta?.image)
+
+  const title = doc?.meta?.title ? `${doc.meta.title} | ${SITE_NAME}` : SITE_NAME
+
+  const canonical = alternates?.[locale]
+
+  // Build the hreflang map: one entry per available locale plus an `x-default`
+  // that points at the default locale's URL.
+  const languages: Record<string, string> = {}
+  if (alternates) {
+    for (const [loc, path] of Object.entries(alternates)) {
+      if (path) languages[loc] = path
+    }
+    const defaultPath = alternates[DEFAULT_LOCALE]
+    if (defaultPath) languages['x-default'] = defaultPath
+  }
+
+  return {
+    description: doc?.meta?.description,
+    alternates: {
+      canonical: canonical ?? undefined,
+      languages: Object.keys(languages).length > 0 ? languages : undefined,
+    },
+    openGraph: mergeOpenGraph({
+      description: doc?.meta?.description || '',
+      images: ogImage
+        ? [
+            {
+              url: ogImage,
+            },
+          ]
+        : undefined,
+      title,
+      url: canonical ?? '/',
+    }),
+    title,
+  }
+}
