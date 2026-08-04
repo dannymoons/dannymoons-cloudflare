@@ -1,6 +1,6 @@
 ---
 title: "Exploring Cloudflare as a Vercel alternative for Next.js"
-description: "I wanted to know if my Next.js site could run on green energy — and whether Cloudflare could prove it better than Vercel. Here is what I found so far."
+description: "I wanted to know if my Next.js site could run on verifiable green energy. Here is what I found testing Cloudflare — and what the Green Web Foundation and Carbonfooter say about it."
 date: 2026-08-04
 topic: Modern Web
 tags: [cloudflare, vercel, hosting, nextjs, payload-cms, green-hosting]
@@ -12,41 +12,49 @@ This is not a migration story. I have not moved my site yet. This is an explorat
 
 ## Why I started looking
 
-Vercel works well. Deployments are smooth. Developer experience is excellent. But I ran into a problem when I tried to verify that my site runs on green energy.
+Vercel works well. Deployments are smooth, developer experience is excellent. But I ran into a problem when I tried to verify that my site runs on green energy.
 
-I checked with Carbonfooter and The Green Web Foundation. The results were not clear enough. And when I asked Vercel for proof about their energy sourcing, I could not get what I needed.
+I checked my site with <a href="https://www.thegreenwebfoundation.org" target="_blank" rel="noopener">The Green Web Foundation</a> and <a href="https://carbonfooter.nl" target="_blank" rel="noopener">Carbonfooter</a>. The results were not clear enough. And when I asked Vercel for transparent proof about their energy sourcing, I could not get what I needed.
 
-That made me wonder: if I host on a platform that is transparent about energy, could I get a clearer answer? And what would I have to give up in return?
+That made me wonder: if I host on a platform that is transparent about its energy, could I get a clear green verification? And what would I have to give up to make that switch?
 
-## What I am testing
+## What I tested
 
-I set up a dev environment on Cloudflare using the same stack: Next.js with Payload CMS, using OpenNext to run on Cloudflare Workers. The database is Cloudflare D1. The domains already run on Cloudflare DNS.
+I set up a dev environment on Cloudflare with the same stack: Next.js with Payload CMS, running on Cloudflare Workers via OpenNext. The database is Cloudflare D1. My domains were already on Cloudflare DNS.
 
-The plan is to migrate the database, connect a domain, and then check:
+The plan was clear: migrate the database, connect a domain, and check three things:
 
-- Does Cloudflare actually run on green energy according to Carbonfooter and The Green Web Foundation?
-- How does performance compare?
-- What breaks or changes in the workflow?
+- Does Cloudflare pass the Green Web Foundation check?
+- Does Carbonfooter confirm green energy?
+- How does the workflow and performance compare to Vercel?
 
-I do not know the answers yet. That is the point of exploring.
+## The green energy results
 
-## What I have learned so far
+This was the main question, and the answer is positive.
 
-Some things are clearly different from Vercel:
+After setting up the dev environment and running the checks, both <a href="https://www.thegreenwebfoundation.org" target="_blank" rel="noopener">The Green Web Foundation</a> and <a href="https://carbonfooter.nl" target="_blank" rel="noopener">Carbonfooter</a> confirmed that the site runs on verified green energy. Cloudflare is transparent about its energy sourcing, and that shows in the verification tools.
 
-- **Deployments require more configuration.** Vercel's git integration is hard to beat. On Cloudflare, I had to set up the pipeline manually using OpenNext and wrangler.
-- **Image optimization is not automatic.** Vercel handles this out of the box. On Cloudflare, I need to configure Cloudflare Images separately.
-- **Preview URLs work differently.** Still figuring out how to get unique preview URLs per branch.
+That alone makes the exploration worthwhile. If the goal is to host a site on provably green infrastructure, Cloudflare delivers where Vercel could not.
 
-These are not dealbreakers. But they are real differences that cost time.
+## What is different from Vercel
 
-## What I still need to find out
+Not everything is better. The trade-offs are real.
 
-The main question: will the green energy claim hold up when I run the actual site through Carbonfooter and The Green Web Foundation? If yes, that is a real advantage. If not, the search continues.
+**Deployments require more setup.** Vercel's git integration is smooth. On Cloudflare, I had to configure the pipeline manually using OpenNext and wrangler.
 
-I also want to know how production performance compares, whether the workflow stays fast enough, and whether the trade-offs are worth it for future projects.
+**Image optimization is not automatic.** Vercel handles this out of the box with their image CDN. On Cloudflare, I need to configure Cloudflare Images separately.
 
-I will write a follow-up once I have real data.
+**Preview URLs work differently.** Still figuring out how to get unique preview URLs per branch.
+
+These are solvable, but they cost time. Time is a real cost when you are used to Vercel's convenience.
+
+## What I still need to figure out
+
+I want to see how production performance compares under real traffic, whether the deployment workflow stays fast enough for daily work, and whether the reduced convenience is worth the green energy verification.
+
+So far, the answer looks like yes. But I will know more once the site is live.
+
+This is a progress report, not a conclusion. I will write a follow-up once I have production data.
 
 ---
 
@@ -56,9 +64,9 @@ I will write a follow-up once I have real data.
 
 | Field | Value |
 |-------|-------|
-| **Slug** | exploring-cloudflare-as-a-vercel-alternative |
-| **Meta description** | Can Cloudflare prove green energy better than Vercel? I am testing it — and learning the differences along the way. |
+| **Slug** | exploring-cloudflare-as-vercel-alternative-for-nextjs |
+| **Meta description** | I wanted to know if my Next.js site could run on verifiable green energy. Both the Green Web Foundation and Carbonfooter confirmed Cloudflare delivers. |
 | **Social title** | Exploring Cloudflare as a Vercel alternative for Next.js |
-| **Social description** | I have not moved my site yet. I am exploring whether Cloudflare can prove green energy better than Vercel — and what the trade-offs are. |
+| **Social description** | The green energy check passed. Now I am testing whether the trade-offs are worth it. |
 | **Related articles** | A decade of building websites, Sustainable software is an engineering quality |
 | **Related projects** | Moonsio, Carbonfooter |
