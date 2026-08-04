@@ -76,6 +76,7 @@ export default buildConfig({
   editor: defaultLexical,
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
+    push: false,
     // Migrations are applied via `pnpm payload migrate` / `deploy:database`
     // (not on connect) so `next build` does not mutate remote D1.
   }),
@@ -120,7 +121,7 @@ export default buildConfig({
   },
   localization: {
     locales: ['en', 'nl'],
-    defaultLocale: 'nl',
+    defaultLocale: 'en',
   },
 })
 

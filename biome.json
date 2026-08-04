@@ -14,12 +14,14 @@
 			"!src/payload-types.ts",
 			"!src/payload-generated-schema.ts",
 			"!src/app/(payload)/admin/importMap.js",
-			"!**/.next/**",
-			"!**/node_modules/**"
+			"!**/.next",
+			"!**/node_modules"
 		]
 	},
 	"formatter": {
-		"enabled": true
+		"enabled": true,
+		"indentStyle": "space",
+		"indentWidth": 2
 	},
 	"assist": {
 		"enabled": false
