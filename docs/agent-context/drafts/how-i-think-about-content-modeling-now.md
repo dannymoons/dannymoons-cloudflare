@@ -48,9 +48,27 @@ acf_add_local_field_group([
 ]);
 ```
 
-This is clean, version-controlled, and reviewable. But behind the scenes, every value is stored as post meta — key-value pairs attached to a post ID. Relationships are stored as serialized arrays. There is no native concept of a content type with proper foreign keys.
+This is clean, version-controlled, and reviewable. But it still has the problems I mentioned: every value stored as post meta, relationships as serialized arrays, no proper foreign keys.
 
-This works fine for straightforward content. But when you start building projects where content is reused across pages, has complex relationships, or needs to be queried in different contexts, the limitations become visible.
+Earlier this year, I built an abstraction layer on top of this. Instead of writing raw ACF config arrays, I created a `FieldTypes` class with typed static methods:
+
+```php
+use Moonsio\Fields\FieldTypes;
+
+$fields = [
+  FieldTypes::text('hero', 'title', 'Title'),
+  FieldTypes::image('hero', 'image', 'Background Image'),
+  FieldTypes::link('hero', 'cta', 'Call to Action'),
+];
+```
+
+The class handles key generation, sensible defaults, and consistent structure — so every field group follows the same pattern. It reduces boilerplate, makes blocks easier to read, and gives PHP autocomplete for field definitions.
+
+> I built an abstraction over ACF so every field group follows the same pattern.
+
+This is not a radical change. It is still ACF under the hood. But it shows the direction I was heading: toward more structure, less repetition, and a cleaner interface between code and content.
+
+That direction led me to Payload.
 
 > ACF stores everything as post meta. Payload stores content as structured, relational data.
 
