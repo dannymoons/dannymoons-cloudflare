@@ -1,6 +1,6 @@
 ---
 title: "How I think about content modeling now (vs WordPress custom fields)"
-description: "ACF was my go-to for years. Now, with Payload, I think about content modeling differently — from the database up, not from the UI down."
+description: "I always defined ACF fields in PHP config files, never in the UI. But switching to Payload changed how I think about content — from config files to structured, type-safe models."
 date: 2026-08-04
 topic: Modern Web
 tags: [payload-cms, wordpress, acf, content-modeling, architecture]
@@ -8,70 +8,99 @@ tags: [payload-cms, wordpress, acf, content-modeling, architecture]
 
 # How I think about content modeling now (vs WordPress custom fields)
 
-For years, my approach to content modeling was simple: install ACF, open the field group editor, and start adding fields. A text field for the title, a WYSIWYG for the body, an image field for the hero. Done.
+I never used the ACF field group UI. From the start, I defined my fields in PHP config files — block fields in a dedicated `block-config.php`, theme settings in a separate file, post type fields in their own files. Everything in code, everything under version control.
 
-It worked. But over time, I noticed the same problems appearing in project after project: inconsistent fields, duplicate data, and content that was hard to reuse across pages.
+It worked well. But over time, I noticed the same problems appearing across projects: inconsistent field names, duplicate data structures, and content that was hard to reuse between pages. The code was clean, but the model was not.
 
-When I started working with Payload CMS, I realized the problem was not ACF. It was the approach. ACF lets you add fields to the UI. Payload forces you to model the content first.
+When I started working with Payload CMS, I realized the problem was not how I defined the fields. It was the underlying model itself. ACF stores everything as post meta. Payload stores content as structured, relational data.
 
-## The ACF way
+## The ACF way: fields in PHP config
 
-ACF is flexible. That is its strength and its weakness.
+My typical setup looked like this:
 
-You create a field group, assign it to a post type, and start filling in fields. Need a relationship between two content types? ACF has a relationship field. Need a repeater with sub-fields? It exists.
+```php
+// block-config.php
+acf_add_local_field_group([
+  'key' => 'group_hero',
+  'title' => 'Hero Block',
+  'fields' => [
+    [
+      'key' => 'field_hero_title',
+      'label' => 'Title',
+      'name' => 'title',
+      'type' => 'text',
+    ],
+    [
+      'key' => 'field_hero_image',
+      'label' => 'Image',
+      'name' => 'image',
+      'type' => 'image',
+    ],
+  ],
+  'location' => [
+    [
+      [
+        'param' => 'block',
+        'value' => 'acf/hero',
+      ],
+    ],
+  ],
+]);
+```
 
-But because the fields are defined in the admin UI, they are easy to change and easy to grow inconsistent. I have worked on sites where the same "team member" data existed in three different field groups across three different pages. Same data, different field names, different structures.
+This is clean, version-controlled, and reviewable. But behind the scenes, every value is stored as post meta — key-value pairs attached to a post ID. Relationships are stored as serialized arrays. There is no native concept of a content type with proper foreign keys.
 
-> ACF is flexible. That is its strength and its weakness.
+This works fine for straightforward content. But when you start building projects where content is reused across pages, has complex relationships, or needs to be queried in different contexts, the limitations become visible.
 
-The result is more code to maintain, more complexity in templates, and content that is harder to migrate or reuse. It works, but it does not scale well.
+> ACF stores everything as post meta. Payload stores content as structured, relational data.
 
-## The Payload way
+## The Payload way: types as the source of truth
 
-Payload takes a different approach. You define your content model in TypeScript code. The admin panel is generated from that code. The fields are the source of truth.
+In Payload, the content model is defined in TypeScript. The database schema, the admin panel, and the API are all generated from the same types.
 
 ```typescript
 const Posts: CollectionConfig = {
   slug: 'posts',
   fields: [
     { name: 'title', type: 'text', required: true },
-    { name: 'content', type: 'richText', required: true },
+    { name: 'content', type: 'richText' },
     { name: 'categories', type: 'relationship', relationTo: 'categories', hasMany: true },
   ],
 }
 ```
 
-Everything flows from the model. The database schema matches the code. The API is generated automatically. The admin panel respects the same types.
+The difference is not in the code structure — both approaches are code-first. The difference is in what happens underneath.
 
-This means:
-- **No drift.** The code, the database, and the admin are always in sync.
-- **Type safety.** TypeScript catches mismatches before they reach production.
-- **Reusability.** A `categories` relationship is the same everywhere, not a custom field group per page.
-- **Version control.** Changes to the content model are code changes, reviewed in pull requests.
+- **ACF writes to post meta.** Every field is a row in `wp_postmeta`. Queries require meta queries, which are slow at scale.
+- **Payload writes to dedicated tables.** Each collection gets its own table. Relationships use foreign keys. Queries are fast and type-safe.
 
-> Everything flows from the model. The code, the database, and the admin are always in sync.
+This changes what you can do. Cross-collection queries that would require custom SQL or multiple loops in WordPress are a simple `depth` parameter in Payload.
 
 ## What changed in how I think
 
-The biggest shift was not technical. It was conceptual.
+The biggest shift was not about code organization. I was already organizing my ACF code well.
 
-With ACF, I thought about what the editor should see. With Payload, I think about what the content actually is.
+The shift was about treating content as structured data instead of post meta.
 
-Is a "team member" a post type or a relationship? Does "price" belong on the product or in a separate table? Can this content appear on multiple pages or is it page-specific?
+With ACF, every field group is an island. You define fields for a block, and those fields only exist within that block. If the same data appears in two blocks, you define it twice — or build a custom solution to share it.
 
-These questions exist in both systems. But Payload forces me to answer them before I start building. ACF lets me postpone them until later — and "later" often means inconsistent.
+> Every field group is an island. Payload treats content as connected data.
+
+With Payload, content is relational by default. A category is a collection. A team member is a collection. An author is a collection. You define them once, and every relationship, every block, every page can reference them.
+
+The admin panel reflects this automatically. The API reflects this automatically. The type system enforces it.
 
 ## What I still use ACF for
 
-I still use WordPress with ACF for projects where it is the better choice. Not every project needs a code-first content model. For simpler sites with straightforward content, ACF is faster and clients understand it.
+I still use WordPress with ACF for projects where it fits. Not every site needs a relational content model. For simpler projects, ACF in PHP config files is fast, predictable, and clients understand WordPress.
 
-But for any project where content is reused across pages, has relationships between types, or needs to be maintained over years — I start with the model first.
+But for any project where content has relationships, needs to be maintained over years, or requires more than flat page content — I start with the model first, not the field group.
 
 ## The sustainability connection
 
-Consistent content models mean less code. Less code means fewer database queries, smaller page sizes, and easier maintenance over time. A site with a well-defined content model is lighter, faster, and cheaper to maintain.
+Structured data means less duplication. Less duplication means less code, fewer database queries, and easier maintenance. A site built on a clear content model is lighter, faster, and cheaper to operate.
 
-That is sustainable software in practice. Not because of the tools, but because of how you think about the data.
+The tools matter, but the way you think about content matters more.
 
 ---
 
@@ -82,8 +111,8 @@ That is sustainable software in practice. Not because of the tools, but because 
 | Field | Value |
 |-------|-------|
 | **Slug** | how-i-think-about-content-modeling-now |
-| **Meta description** | ACF was my go-to for years. Now I think about content modeling differently — from the database up, not from the UI down. |
+| **Meta description** | I always defined ACF fields in PHP config files. But switching to Payload changed how I think — from post meta to structured, type-safe models. |
 | **Social title** | How I think about content modeling now (vs WordPress custom fields) |
-| **Social description** | ACF lets you add fields. Payload forces you to model content first. The difference changed how I build. |
+| **Social description** | Both approaches are code-first. The real difference is what happens underneath — post meta vs relational data. |
 | **Related articles** | So I got curious about Payload CMS with Next.js, Sustainable software is an engineering quality |
 | **Related projects** | Moonsio |
