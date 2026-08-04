@@ -9,10 +9,39 @@ Owner: Danny Moons
 ## 1. Identity
 
 Name: Danny Moons
-Role: Webontwikkelaar, founder van Moonsio, duurzame website ontwikkelaar, SEO specialist
+Role: Software engineer, founder of Moonsio, sustainable web advocate
 Website: dannymoons.nl
 Repository: `/home/danny/repos/dannymoons-cloudflare/`
 Stack: Next.js + Payload CMS on Cloudflare (OpenNext)
+Language: **English** for dannymoons.nl, **Dutch** for LinkedIn and Moonsio
+
+### One-Sentence Positioning
+
+Software engineer exploring sustainable software engineering, modern web architecture, and digital products.
+
+Also works as:
+- "Building software that is faster, smarter, and more sustainable."
+- "Sustainable software, modern web, and practical engineering."
+
+### What Danny Is
+
+- Software engineer
+- Technical founder/builder
+- Sustainable software advocate
+- Modern web architecture practitioner
+- Practical writer
+- Open-source contributor
+- Custom WordPress and Payload/Next.js developer
+- SEO specialist
+
+### What Danny Is Not
+
+- A generic SEO blogger
+- A generic WordPress page-builder specialist (custom development only)
+- An AI hype commentator
+- A climate activist with no technical depth
+- A SaaS influencer
+- A tutorial factory
 
 ## 2. What Danny Does
 
@@ -25,6 +54,7 @@ Stack: Next.js + Payload CMS on Cloudflare (OpenNext)
 ## 3. Connected Brands and Projects
 
 - **Moonsio** — web development agency, Danny's company
+- **Orbit** — product by Moonsio (in development). Sustainable web monitoring/product tool.
 - **Pixel To Planet** — sustainable web brand and consultancy together with Merel Witteman
 - **Carbonfooter** — website carbon emissions measurement (carbonfooter.nl) and soon to be an API that devs can use to build their own platforms
 - **The Sustainable Theme** — lightweight WordPress theme, open-source and built on WP Core
@@ -41,16 +71,21 @@ The personal brand should be grounded in practical work, not only theory.
 
 ## 5. Target Audiences
 
-Primary:
-- Web developers and designers interested in sustainable web
-- Potential clients for Moonsio who want to know who they'd be working with
-- The Dutch web development community
-- Conference and event organisers in the sustainable web / web dev space
+### Primary Personas
 
-Secondary:
-- People curious about sustainable web development
-- Other agencies and freelancers with similar values
-- Open source contributors and tool users
+1. **Sustainable Tech Founder** — founder/operator building a product who wants smarter decisions about performance, architecture, sustainability. Cares about shipping fast without debt, reducing costs, practical sustainability.
+
+2. **Engineering Lead** — CTO, tech lead, senior dev responsible for stack decisions, performance, code quality. Cares about maintainability, reliability, performance budgets, AI coding workflows.
+
+3. **Product-Minded Developer** — developer who likes practical building, wants to improve taste, curious about sustainable software. Cares about architecture, cleaner workflows, learning from real projects.
+
+4. **Web Agency Owner** — agency owner or freelancer delivering websites. Cares about differentiation, client education, performance/sustainability as selling points.
+
+5. **Digital Sustainability Advocate** — someone focused on climate and responsible tech who wants technical substance. Cares about honest measurement, avoiding greenwashing.
+
+6. **Potential Client** — business owner looking for credible technical help. Cares about trust, clarity, results, and whether Danny understands business constraints.
+
+7. **Journalist / Podcaster / Event Organizer** — looking for voices on sustainable software, digital sustainability, modern web. Cares about clear perspective, credibility, speaking topics.
 
 ## 6. Core Personal Stance on Sustainable Web
 
@@ -128,17 +163,79 @@ Dark patterns, invasive tracking, excessive marketing technology, unnecessary he
 
 Sustainable web development means reducing the environmental impact of digital products by building less wastefully, choosing responsible infrastructure, optimising by default, questioning unnecessary complexity, and communicating impact transparently — while staying practical enough to work with real clients and business goals.
 
-## 7. Current Priorities
+## 7. Brand Architecture Rules
+
+Danny has multiple related properties. Clear rules prevent content drift.
+
+### The Rule of Thumb
+
+> DannyMoons.nl explains the thinking. The projects prove and apply it.
+
+### Property Roles
+
+| Property | Role | Content Type |
+|---|---|---|
+| DannyMoons.nl | Personal authority and writing hub | Essays, guides, notes, project context |
+| Moonsio | Company and services | Services, case studies, business proof |
+| Orbit | Moonsio product | Product pages, docs, updates |
+| Carbonfooter | Tool for website carbon measurement | Tool, reports, methodology |
+| Pixel To Planet | Initiative with Merel Witteman | Mission, resources |
+| Hermes | Internal AI workflow project | Build notes (private, not public-facing) |
+
+### What Belongs on DannyMoons.nl
+
+Publish here when the content is:
+- Personal perspective
+- Engineering lesson
+- Broad strategic essay
+- Build-in-public note
+- Cross-project reflection
+- Technical guide
+- Sustainable software framework
+- Personal biography
+- **Not** service/commercial content (that goes on Moonsio)
+- **Not** product documentation (that goes on the product's own site)
+
+### What Belongs on Moonsio
+
+Publish on Moonsio when the content is:
+- Service-oriented, client-facing, commercial
+- Case-study focused
+- About the company, not Danny personally
+- Written to help a buyer understand services
+
+### Cross-Linking Rules
+
+- DannyMoons.nl can link outward to all projects.
+- Moonsio can link to selected Danny articles as thought leadership.
+- Avoid duplicating full articles across properties.
+- Use canonical URLs if content is republished.
+
+## 8. Content Pillars
+
+DannyMoons.nl content should focus on these themes:
+
+1. **Better Software Uses Less Waste** — sustainable software as engineering quality, not marketing. Performance, bloat, optimisation.
+2. **Modern Web Architecture** — Next.js, Payload, WordPress/ACF, hosting decisions, CMS choices, stack simplicity.
+3. **Digital Sustainability** — carbon measurement, green hosting, lifecycle thinking, honest claims, avoiding greenwashing.
+4. **Product Building** — lessons from building Moonsio, Orbit, Carbonfooter, Pixel To Planet. What works, what doesn't.
+5. **The Open Web** — personal websites, AI search, owning your content, why the web still matters.
+
+AI content belongs in the background — internal workflows (Hermes, Lotte) are not public-facing topics for the site.
+
+## 9. Current Priorities
 
 Near-term:
-1. Consistent LinkedIn presence (2 posts/week)
-2. Share updates, posts, notes on the website
-3. Test out tech stacks and self hosting options - currently doing dannymoonsio via cloudflare instead of vercel
-4. Build and share case studies from Moonsio projects
-5. Grow Carbonfooter and Pixel To Planet
-6. Speak at relevant events
+1. Publish articles on dannymoons.nl (1-6x per month)
+2. Consistent LinkedIn presence (2 posts/week)
+3. Share updates, posts, notes on the website
+4. Test out tech stacks and self hosting options - currently running via Cloudflare instead of Vercel
+5. Build and share case studies from Moonsio projects
+6. Grow Carbonfooter and Pixel To Planet
+7. Build Orbit as a Moonsio product
+8. Speaking: not actively speaking yet, looking at WordCamp NL
 
-## 8. Claims Policy
+## 10. Claims Policy
 
 Allowed claims:
 - Danny builds websites with sustainable practices
@@ -156,7 +253,7 @@ Claims to avoid:
 - Medical or health claims (those belong to Duizeligheid Nederland)
 - Exaggerated sustainability impact
 
-## 9. Key Links
+## 11. Key Links
 
 - LinkedIn: Danny Moons (personal account)
 - GitHub: github.com/dannymoons
@@ -164,10 +261,8 @@ Claims to avoid:
 - Moonsio: moonsio.nl
 - Carbonfooter: carbonfooter.nl
 
-## 10. Open Questions
+## 12. Open Questions
 
-- What is the target number of LinkedIn followers or engagement rate? -> just growth
-- Should there be a newsletter, and if so, at what cadence? -> not yet
-- Which events are priority for speaking in 2026-2027? -> non yet, looking at WordCamp NL
+- Preferred hashtag set for LinkedIn posts? -> none specific, just relevant ones
 - Is there a content calendar or should posts stay ad-hoc based on project work? -> not yet
 - Should personal brand content ever include photo/video content? -> photos are allowed or illustrations

@@ -8,18 +8,23 @@ Owner: Danny Moons
 
 ## 1. Voice Summary
 
-Danny Moons is a web developer, sustainable web advocate, and founder of Moonsio. The personal brand is about sharing real experience from building better websites.
+Danny Moons is a software engineer and builder exploring sustainable software engineering, modern web architecture, and digital products. The personal brand is about sharing real experience from building better websites and digital systems.
 
 - **Authentic and personal** — writes from real project experience, not theory
 - **Practical and clear** — focused on what works, what doesn't, and why
-- **Sustainable-minded** — sustainability is a core conviction, shared naturally
+- **Builder-led** — grounded in active projects, not abstract commentary
 - **Approachable** — knowledgeable without being preachy or academic
 - **Honest** — transparent about successes, trade-offs, and lessons learned
+- **Calm around hype** — no fake certainty, no dramatic predictions
 
 Brand character:
 - A builder who also thinks about impact
 - Someone who shares what he learns so others can build better too
 - Experienced but still curious — still learning, still improving
+
+### Voice Formula
+
+> Practical engineering clarity + personal curiosity + sustainable systems thinking.
 
 ## 2. Language Defaults
 
@@ -27,12 +32,13 @@ Internal agent/context language:
 - English is fine for internal notes and agent operations.
 
 Published content:
-- **Dutch** for LinkedIn posts, dannymoons.nl content, Dutch-speaking audiences.
-- **English** only when the audience is explicitly international (e.g., English-language conferences, global dev community posts).
+- **English** is the default for dannymoons.nl — articles, project pages, about page, site copy.
+- **Dutch** for LinkedIn posts and Dutch-speaking audiences only.
+- Mixing is fine per channel: English site, Dutch LinkedIn — that's the pattern.
 
 Formality:
-- **`je/jij`** is the default — personal, direct, authentic.
-- `u/uw` only in very formal contexts (official correspondence, legal mentions).
+- **`je/jij`** for Dutch content — personal, direct, authentic.
+- English content: casual-professional — clear and approachable, not overly formal.
 - The personal brand should feel like a conversation, not a corporate announcement.
 
 ## 3. How We Should Sound
@@ -46,16 +52,69 @@ We should sound:
 - menselijk — fouten maken, leren, delen
 
 We should not sound:
-- politiek — geen politieke statements
 - commercieel — niet pushen voor werk of opdrachten
 - arrogant — niet "ik ben de beste"
 - negatief over anderen — kritisch zijn op aanpakken mag, niet op personen
 - overdreven optimistisch over tech — AI-hype, crypto, etc.
 - alsof alles perfect gaat — eerlijk over uitdagingen
 
-## 4. Tone by Channel
+## 4. Writing Principles
 
-LinkedIn:
+1. **Start from a real problem.** Avoid abstract intros that could belong on any site.
+2. **Use specific examples.** Mention concrete tools, decisions, measurements, mistakes, and trade-offs.
+3. **Write from experience.** If Danny has not personally tested something, say so.
+4. **Separate fact, opinion, and hypothesis.** The reader should know when Danny knows something, believes something, or is testing something.
+5. **Prefer clarity over cleverness.** A memorable sentence is good. A useful sentence is better.
+6. **Respect the reader's intelligence.** Do not over-explain basic concepts unless the article is explicitly introductory.
+7. **Do not posture.** No fake certainty. No dramatic hype. No "everything has changed forever" unless the article proves it.
+8. **Keep sustainability practical.** Avoid guilt as the main emotional lever. Focus on agency, quality, and better decisions.
+
+## 5. The Danny Voice
+
+Danny should sound like a builder who thinks deeply while working. The voice can be personal, but it should not become diary-like unless the article is clearly a note or retrospective.
+
+Good Danny-style sentences:
+- "I do not think sustainable software starts with a carbon calculator. It starts with asking why this code, page, or system needs to exist."
+- "The performance issue was not the framework. It was the number of small decisions we had stopped noticing."
+- "This is where sustainability becomes engineering work instead of branding."
+
+Weak sentences to avoid:
+- "In today's fast-paced digital world, sustainability is more important than ever."
+- "This ultimate guide will teach you all the best practices."
+- "Green websites are the future."
+- Any AI-hype language.
+
+## 6. Tone by Content Type
+
+| Content Type | Tone |
+|---|---|
+| Technical article | Direct, precise, example-heavy |
+| Case study | Honest, structured, evidence-led |
+| Opinion essay | Clear stance, fair counterarguments |
+| Project update | Conversational, reflective, useful |
+| About page | Human, grounded, story-led |
+| LinkedIn post | Personal, short, practical, Dutch |
+
+## 7. Editorial Point of View
+
+Danny's writing should often include:
+- The decision behind the decision.
+- What was measured.
+- What changed after testing.
+- What trade-off was accepted.
+- What surprised him.
+- What he would do differently next time.
+
+## 8. Tone by Channel
+
+### dannymoons.nl (English)
+- Professional portfolio and personal site.
+- Articles: deeper dives into sustainable software, performance, architecture, and project lessons.
+- About page: who Danny is, what he does, what he believes in.
+- Project pages: honest write-ups of Moonsio, Carbonfooter, Pixel To Planet, Orbit, and open-source work.
+- Keep AI content minimal — internal tools like Hermes and Lotte are not public-facing topics. Focus on sustainable software, performance, and modern web.
+
+### LinkedIn (Dutch)
 - 2 posts per week (target).
 - Format: problem → insight → solution → CTA (engagement question).
 - Short paragraphs, functional emojis for warmth and scannability.
@@ -64,75 +123,55 @@ LinkedIn:
 - Hashtags at the end, not in the body.
 - No politics, no overt commercial pitches.
 - Topics: sustainable web cases/projects, WP/Next.js/Payload dev, green hosting, network/conference moments.
+- Reference dannymoons.nl articles where relevant.
 
-Website (dannymoons.nl):
-- Professional portfolio and personal site.
-- About page: who Danny is, what he does, what he believes in.
-- Project showcases with honest write-ups.
-- Blog: deeper dives than LinkedIn posts, more technical where relevant.
+### Speaking / presentations
+- Not actively speaking yet. When it happens: tailored to the audience, practical takeaways.
+- Sustainable web as the connecting theme.
 
-Speaking / presentations:
-- Tailored to the audience: more technical for dev conferences, more accessible for broader events.
-- Sustainable web as a connecting theme.
-- Practical takeaways, not abstract theory.
+## 9. Words and Phrases We Like
 
-Social (other platforms):
-- Keep the same authentic, personal tone.
-- Adapt length and format to the platform.
+Preferred:
+- sustainable software
+- practical
+- performance
+- maintainable
+- measured
+- useful
+- restraint
+- judgment
+- architecture
+- digital sustainability
+- building in public
+- "build what's needed, not more"
+- "less bloat, better performance"
+- "gewoon doen" (Dutch, for LinkedIn)
+- "minder is meer" (Dutch, for LinkedIn)
+- "bewuste keuzes" (Dutch, for LinkedIn)
 
-## 5. Words and Phrases We Like
+## 10. Words to Use Carefully
 
-Preferred words/phrases:
-- "gewoon doen" (just do it / practical approach)
-- "minder is meer" (less is more)
-- "bouw wat nodig is" (build what's needed)
-- "duurzame keuzes" (sustainable choices)
-- "praktijkvoorbeeld" (real-world example)
-- "wat ik heb geleerd" (what I learned)
-- "niet meer, niet minder" (not more, not less)
-- "bewust kiezen" (choose intentionally)
-- "less bloat, better performance" (English when it fits)
+- green / eco-friendly — only with specifics
+- revolutionary / transformative / disruptive — easily become generic
+- best practice — only if well-sourced
+- future-proof — avoid, nothing is truly future-proof
+- AI-powered — only if genuinely core to the project
+- thought leader — never use
 
-Good patterns:
-- "Ik heb onlangs gewerkt aan X en viel iets op: [insight]. Dit is wat we eraan deden: [oplossing]."
-- "Mijn standpunt over duurzame webontwikkeling is simpel: bouw wat nodig is, maak het goed, en verspil geen energie aan de rest."
-- "Deze maand: [projectinzicht], [wat ik leerde], [aanrader]."
+## 11. Words to Avoid
 
-## 6. Words and Phrases to Avoid
+- guru, ninja, wizard, 10x
+- secret formula
+- guaranteed ranking
+- zero impact
+- carbon neutral by default
+- AI-proof
+- fully automated quality
 
-Avoid:
-- "disruptief", "baanbrekend" (disruptive, groundbreaking)
-- AI-hype zonder context
-- politieke statements
-- negativiteit over specifieke personen of bedrijven
-- gegarandeerde resultaten
-- "wij" in persoonlijke content (Danny spreekt als ik)
-- overdreven bescheidenheid die niet oprecht voelt
-- lege duurzaamheidstermen zonder onderbouwing
-
-## 7. Topic-Specific Communication Rules
-
-### Sustainable web content
-- Reference real project experience where possible.
-- Ground claims in specifics: "deze site woog 40% minder na optimalisatie" — not "duurzaam is beter."
-- Link to tools and approaches Danny uses (Carbonfooter, Sustainable Theme, green hosting).
-- Can be opinionated — Danny has a clear stance — but stay constructive.
-- See `/home/danny/vault/wiki/concepts/danny-personal-sustainable-web-development-stance.md` for the full position.
-
-### Technical content
-- Assume a technically interested audience on LinkedIn; deeper technical dives are good for the blog/dannymoons.nl.
-- Explain the why, not just the what.
-- Link to related work, projects, or open source tools.
-
-### Conference / event content
-- Share honest impressions — what was valuable, what was missing.
-- Mention people met and things learned.
-- Keep it generous — credit speakers, organisers, and fellow attendees.
-
-## 8. Content Style
+## 12. Content Style
 
 Content should be:
-- persoonlijk en herkenbaar
+- persoonlijk en herkenbaar (LinkedIn) / personal and grounded (site)
 - praktisch en leerzaam
 - beknopt — geen uitweidingen
 - eerlijk over uitdagingen en twijfels
@@ -144,28 +183,11 @@ Content should not be:
 - negatief of cynisch
 - generiek — maak het specifiek voor Danny's ervaring
 
-## 9. LinkedIn Post Structure
+## 13. Example Good Copy (English, for dannymoons.nl)
 
-Posts should generally follow:
+> I do not think sustainable software starts with a carbon calculator. It starts with asking why this code, page, or system needs to exist. Everything else — hosting, optimisation, measurement — follows from that question.
 
-```
-[Haakje — herkenbare situatie of probleem]
-
-[Inzicht — wat viel op?]
-
-[Oplossing — wat heb je gedaan? Wat werkte?]
-
-[Afsluiting — vraag aan de lezer]
-.
-
-#hashtag #hashtag #hashtag
-```
-
-Length: short paragraphs, no more than ~1,200 characters unless the topic needs depth.
-Emoji: 1–3 functional emojis per post, placed naturally.
-Credits: tag collaborators or team members when relevant.
-
-## 10. Example Good Copy
+## 14. Example Good Copy (Dutch, for LinkedIn)
 
 > Ik heb een hekel aan onnodige JavaScript.
 >
@@ -177,16 +199,13 @@ Credits: tag collaborators or team members when relevant.
 >
 > Wat is de nuttelooste third-party script die je ooit op een site tegenkwam?
 
-## 11. Example Bad Copy
+## 15. Example Bad Copy
 
 > Ontdek de revolutie in duurzaam webdevelopen! Mijn AI-aangedreven aanpak verandert de game. Neem contact op voor een gratis consult!
 
-Why it is wrong: Hype, self-promotional, empty sustainability claims, not authentic.
+Why it is wrong: Hype, self-promotional, empty sustainability claims, not authentic, too AI-heavy.
 
-## 12. Open Questions
+## 16. Open Questions
 
-- Preferred hashtag set for LinkedIn posts?
-- Should personal brand content ever be in English?
-- Newsletter frequency and format?
-- Which conferences/events to prioritise for speaking?
-- Should there be a content calendar or is it ad-hoc based on project work?
+- Preferred hashtag set for LinkedIn posts? -> none specific, just relevant ones
+- Photo/video content? -> photos are allowed or illustrations
