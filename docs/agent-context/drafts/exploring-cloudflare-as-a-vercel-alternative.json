@@ -1,0 +1,495 @@
+{
+  "title": "Exploring Cloudflare as a Vercel alternative for Next.js",
+  "slug": "exploring-cloudflare",
+  "description": "I wanted to know if my Next.js site could run on green energy — and whether Cloudflare could prove it better than Vercel. Here is what I found so far.",
+  "content": {
+    "root": {
+      "type": "root",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "direction": "ltr",
+      "children": [
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "This is not a migration story. I have not moved my site yet. This is an exploration — testing whether Cloudflare can do what Vercel does, and whether it can prove green energy in a way Vercel could not.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "tag": "h2",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "Why I started looking",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "Vercel works well. Deployments are smooth. Developer experience is excellent. But I ran into a problem when I tried to verify that my site runs on green energy.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "I checked with Carbonfooter and The Green Web Foundation. The results were not clear enough. And when I asked Vercel for proof about their energy sourcing, I could not get what I needed.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "That made me wonder: if I host on a platform that is transparent about energy, could I get a clearer answer? And what would I have to give up in return?",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "tag": "h2",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "What I am testing",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "I set up a dev environment on Cloudflare using the same stack: Next.js with Payload CMS, using OpenNext to run on Cloudflare Workers. The database is Cloudflare D1. The domains already run on Cloudflare DNS.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "The plan is to migrate the database, connect a domain, and then check:",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "listType": "bullet",
+          "tag": "ul",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "listitem",
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "direction": "ltr",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Does Cloudflare actually run on green energy according to Carbonfooter and The Green Web Foundation?",
+                  "mode": "normal",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "listType": "bullet",
+          "tag": "ul",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "listitem",
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "direction": "ltr",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "How does performance compare?",
+                  "mode": "normal",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "listType": "bullet",
+          "tag": "ul",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "listitem",
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "direction": "ltr",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "What breaks or changes in the workflow?",
+                  "mode": "normal",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "I do not know the answers yet. That is the point of exploring.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "tag": "h2",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "What I have learned so far",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "Some things are clearly different from Vercel:",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "listType": "bullet",
+          "tag": "ul",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "listitem",
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "direction": "ltr",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "**Deployments require more configuration.** Vercel's git integration is hard to beat. On Cloudflare, I had to set up the pipeline manually using OpenNext and wrangler.",
+                  "mode": "normal",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "listType": "bullet",
+          "tag": "ul",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "listitem",
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "direction": "ltr",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "**Image optimization is not automatic.** Vercel handles this out of the box. On Cloudflare, I need to configure Cloudflare Images separately.",
+                  "mode": "normal",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "listType": "bullet",
+          "tag": "ul",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "listitem",
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "direction": "ltr",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "**Preview URLs work differently.** Still figuring out how to get unique preview URLs per branch.",
+                  "mode": "normal",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "These are not dealbreakers. But they are real differences that cost time.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "tag": "h2",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "What I still need to find out",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "The main question: will the green energy claim hold up when I run the actual site through Carbonfooter and The Green Web Foundation? If yes, that is a real advantage. If not, the search continues.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "I also want to know how production performance compares, whether the workflow stays fast enough, and whether the trade-offs are worth it for future projects.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "direction": "ltr",
+          "children": [
+            {
+              "type": "text",
+              "text": "I will write a follow-up once I have real data.",
+              "mode": "normal",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "topic": "Modern Web",
+  "tags": [
+    "cloudflare",
+    "vercel",
+    "hosting",
+    "nextjs"
+  ]
+}
