@@ -50,7 +50,7 @@ acf_add_local_field_group([
 
 This is clean, version-controlled, and reviewable. But it still has the problems I mentioned: every value stored as post meta, relationships as serialized arrays, no proper foreign keys.
 
-Earlier this year, I built an abstraction layer on top of this. Instead of writing raw ACF config arrays, I created a `FieldTypes` class with typed static methods:
+Last year, I built an abstraction layer on top of this. Instead of writing raw ACF config arrays, I created a `FieldTypes` class with typed static methods:
 
 ```php
 use Moonsio\Fields\FieldTypes;
