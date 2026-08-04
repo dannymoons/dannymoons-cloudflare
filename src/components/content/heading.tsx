@@ -31,7 +31,8 @@ const Heading = ({
 	size = 'lg',
 	color = 'default',
 	gradient,
-	className
+	className,
+	id
 }: HeadingProps) => {
 	const colorClass = gradient
 		? 'text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text py-5'
@@ -41,6 +42,7 @@ const Heading = ({
 
 	return (
 		<Component
+			id={id}
 			className={cn(
 				'font-bold',
 				'text-balance',

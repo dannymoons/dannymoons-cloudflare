@@ -1,90 +1,94 @@
-import { Container } from '@/components/layout/container'
-import { Section } from '@/components/layout/section'
-import { Stack } from '@/components/layout/stack'
 import { Heading } from '@/components/content/heading'
 import { Image } from '@/components/content/image'
-import type { Locale } from '@/utilities/locale'
+import { Container } from '@/components/layout/container'
 import type { Post } from '@/payload-types'
 
-const DATE_LOCALES: Record<Locale, string> = {
-	nl: 'nl-NL',
-	en: 'en-US',
-}
-
-function formatDate(value: string, locale: Locale) {
-	return new Intl.DateTimeFormat(DATE_LOCALES[locale], {
+function formatDate(value: string) {
+	return new Intl.DateTimeFormat('en-US', {
 		day: 'numeric',
 		month: 'long',
-		year: 'numeric',
+		year: 'numeric'
 	}).format(new Date(value))
 }
 
-interface PostHeroProps {
-	post: Post
-	locale: Locale
-}
-
-export function PostHero({ post, locale }: PostHeroProps) {
-	const { categories, title, populatedAuthors, publishedAt, heroImage } = post
-
+export function PostHero({ post }: { post: Post }) {
+	const { categories, heroImage, meta, populatedAuthors, publishedAt, title } =
+		post
 	const categoryTitles = (categories ?? [])
-		.map((category) => (typeof category === 'object' ? category?.title : null))
+		.map(category => (typeof category === 'object' ? category?.title : null))
 		.filter((value): value is string => Boolean(value))
-
 	const authorNames = (populatedAuthors ?? [])
-		.map((author) => author?.name)
+		.map(author => author?.name)
 		.filter((value): value is string => Boolean(value))
-
 	const hasHeroImage = heroImage && typeof heroImage === 'object'
 
 	return (
-		<Section spacing='lg' background='surface'>
-			<Container>
-				<Stack gap='md' className='mx-auto max-w-3xl'>
-					{categoryTitles.length > 0 && (
-						<div className='flex flex-wrap gap-2'>
-							{categoryTitles.map((category) => (
-								<span
-									key={category}
-									className='inline-flex w-fit rounded-full border border-border bg-accent px-3 py-1 font-medium text-primary text-xs'
-								>
-									{category}
-								</span>
-							))}
-						</div>
-					)}
+		<header className='relative'>
+			<div
+				className='pointer-events-none absolute inset-0 opacity-80'
+				style={{
+					background:
+						'radial-gradient(circle at 72% 34%, oklch(0.82 0.17 125 / 0.09), transparent 28%), linear-gradient(180deg, oklch(0.12 0.012 145), var(--background))'
+				}}
+				aria-hidden='true'
+			/>
+			<Container size='wide' className='relative py-20 sm:py-28'>
+				<div className='mx-auto max-w-5xl'>
+					<div className='flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.65rem] text-primary uppercase tracking-[0.18em]'>
+						<span className='flex items-center gap-3'>
+							<span className='size-1.5 rounded-full bg-primary shadow-[0_0_14px_var(--primary)]' />
+							Field note
+						</span>
+						{categoryTitles.map(category => (
+							<span key={category} className='text-muted-foreground'>
+								/ {category}
+							</span>
+						))}
+					</div>
 
-					<Heading headingLevel='h1' size='xl' color='foreground'>
+					<Heading
+						headingLevel='h1'
+						size='xl'
+						color='foreground'
+						className='mt-8 max-w-5xl font-semibold text-4xl leading-[0.96] tracking-[-0.055em] sm:text-5xl lg:text-6xl'
+					>
 						{title}
 					</Heading>
 
+					{meta?.description && (
+						<p className='mt-7 max-w-3xl text-lg text-muted-foreground leading-8 sm:text-xl'>
+							{meta.description}
+						</p>
+					)}
+
 					{(authorNames.length > 0 || publishedAt) && (
-						<div className='flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-sm'>
+						<div className='mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-border border-t pt-5 font-mono text-[0.68rem] text-muted-foreground uppercase tracking-[0.12em]'>
 							{authorNames.length > 0 && (
-								<span>{authorNames.join(', ')}</span>
+								<span>By {authorNames.join(', ')}</span>
 							)}
 							{authorNames.length > 0 && publishedAt && (
-								<span aria-hidden>&bull;</span>
+								<span
+									className='size-1 rounded-full bg-primary'
+									aria-hidden='true'
+								/>
 							)}
 							{publishedAt && (
-								<time dateTime={publishedAt}>{formatDate(publishedAt, locale)}</time>
+								<time dateTime={publishedAt}>{formatDate(publishedAt)}</time>
 							)}
 						</div>
 					)}
-				</Stack>
-			</Container>
+				</div>
 
-			{hasHeroImage && (
-				<Container className='mt-10'>
-					<div className='mx-auto max-w-4xl'>
+				{hasHeroImage && (
+					<figure className='mt-14 overflow-hidden rounded-[var(--radius-xl)] border border-border bg-surface p-1.5 shadow-2xl'>
 						<Image
 							{...heroImage}
 							loading='eager'
-							className='aspect-video w-full object-cover'
+							className='aspect-[16/8.5] w-full rounded-[calc(var(--radius-xl)-0.25rem)] object-cover'
 						/>
-					</div>
-				</Container>
-			)}
-		</Section>
+					</figure>
+				)}
+			</Container>
+		</header>
 	)
 }
