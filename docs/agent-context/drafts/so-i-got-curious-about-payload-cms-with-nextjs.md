@@ -8,7 +8,7 @@ tags: [nextjs, payload-cms, wordpress, architecture, web-development]
 
 # So I got curious about Payload CMS with Next.js
 
-[Danny: open with a short, personal moment. What were you doing when you first heard about Payload or Next.js? Were you working on a specific project? What made you think "maybe I should look into this"?]
+I first heard about Payload CMS from a friend who also got me into Next.js. He was a way better developer than me, so I was happy to follow his lead.
 
 For a long time, WordPress was my default. It worked. Clients knew it. Content editors could use it. SEO was strong. I had built dozens of sites with it, and I knew its limits well enough to work around them.
 
@@ -24,12 +24,10 @@ What WordPress does well:
 
 - **Content editing.** The block editor is genuinely good now. Editors can build pages without calling me.
 - **SEO.** Deep, mature, controllable. No headless CMS matches WordPress SEO plugins out of the box.
-- **Hosting.** Managed WordPress hosting is cheap, reliable, and well-understood by clients.
-- **Ecosystem.** Need a forum, a shop, a membership site? WordPress has it. Building it yourself in a headless setup would take weeks.
+- **Hosting.** You can host WordPress wherever you want, which means you can choose the most sustainable server for every project. That flexibility matters more than managed hosting convenience.
+- **Ecosystem.** Need a forum, a shop, a membership site? WordPress has it, and you can build on top of it. Building it yourself in a headless setup would take weeks.
 
-For many years, that was enough for me. I could build good websites, clients were happy, and performance was acceptable.
-
-[Danny: add your own specific take — what kept you on WordPress longest? Was it the ecosystem, the client comfort, the speed of delivery?]
+For many years, that was enough for me. I could build good websites, clients were happy, and performance was acceptable. I knew WordPress better than anything else, the premium plugins were solid, and clients knew it and wanted it. There was no strong reason to leave.
 
 ## What I started wondering about
 
@@ -39,7 +37,7 @@ The curiosity was not about replacing WordPress for everything. It was about pro
 - **Performance.** A Next.js site on a CDN is fast by default. No PHP processing per request. No database queries on every page load. That does not automatically make it better, but it removes a whole category of performance problems.
 - **Developer experience.** TypeScript from database to frontend. Auto-generated API. Local development that matches production. These things save time in ways that are hard to explain until you have tried them.
 
-[Danny: what specifically pulled you toward Payload over other headless CMS options? Was there a comparison moment?]
+For me, the pull toward Payload was about data freedom, accessibility, speed — both front-end and back-end — and the feeling of limitless design. WordPress always had guardrails. Payload felt like I could build anything I could imagine.
 
 I looked at a few options. Strapi. Contentful. Sanity. They all had strengths, but they also had things I did not like: monthly subscription costs that scaled with content, lock-in to proprietary platforms, or a developer experience that still felt separate from the frontend.
 
@@ -47,18 +45,17 @@ Payload felt different. It is open source. The content model is code. The admin 
 
 ## What I built first
 
-[Danny: what was your first real Next.js + Payload project? A test site? A real client project? How did you decide what to build first?]
+My first real Next.js + Payload projects were moonsio.nl and fysiodouma.nl. I chose them because they were real projects for real clients — that forces you to learn properly. You cannot hide behind "it is just a prototype" when someone is waiting for their website.
 
-For my first real project, I chose something that would force me to learn the stack properly. [Danny: describe the project briefly — was it Duizeligheid.nl? Something else? What made it a good first project?]
-
-The project needed:
+The projects needed:
 
 - Structured content with clear relationships between data types
-- Multiple languages with proper URL structure
 - A frontend that could be fast and accessible
 - Content editors who needed a clean, predictable admin experience
 
-[Danny: how did Payload handle these requirements compared to how you would have done it in WordPress?]
+Payload handled these well. The content model in code meant I could define exactly what each page needed, without the overhead of WordPress custom post types and field groups. The REST API was generated automatically. The frontend could request exactly the data it needed, nothing more.
+
+That last point — requesting only what you need — was a shift from WordPress, where every page load runs PHP, queries the database, and renders the full page. With Next.js and Payload, I could pre-render pages at build time and serve them as static HTML. That was faster and lighter from the start.
 
 ## What was harder than expected
 
@@ -66,11 +63,9 @@ I want to be honest about the hard parts, because too many "I switched to Next.j
 
 **The content editor experience is different.** In WordPress, editors can build pages with blocks directly. In Payload, you design the content model first, and editors fill in structured fields. This is better for consistency, but it requires more planning and less improvisation.
 
-**Hosting is more complex.** Managed WordPress hosting is a solved problem. You upload the site, it works. For Next.js + Payload, you need to think about Node.js servers, CDN configuration, build processes, database hosting, and deployment pipelines. It is not impossibly hard, but it is more decisions.
+**Hosting is more complex — especially if you do not want to use Vercel.** Managed WordPress hosting is a solved problem. You upload the site, it works. For Next.js + Payload, you need to think about Node.js servers, CDN configuration, build processes, database hosting, and deployment pipelines. It is not impossibly hard, but it is more decisions, and some of those decisions are harder when you want to host outside the Vercel ecosystem.
 
 **The ecosystem is smaller.** Need a contact form plugin? A redirect manager? An SEO analysis tool? In WordPress, these exist. In Payload, you build them yourself or find community packages.
-
-[Danny: what was the hardest part for you personally? Was there a moment you almost gave up?]
 
 ## Where I still use WordPress
 
@@ -82,8 +77,6 @@ I still use WordPress. Every week. For some projects, it is the better choice:
 
 The decision is not "WordPress vs. Next.js." It is "what does this project need?"
 
-[Danny: give a specific example — a recent project where you chose WordPress and why. And one where you chose Next.js + Payload and why.]
-
 ## What I learned
 
 The biggest lesson from this exploration was not technical. It was about curiosity.
@@ -92,7 +85,7 @@ For years, I assumed WordPress was the best tool because it was the tool I knew 
 
 I did not switch away from WordPress. I added new tools. I changed how I think about content, architecture, and performance. I became better at choosing — not just better at building.
 
-[Danny: would you give the same advice to other WordPress developers? What would you tell them?]
+If I could give advice to other WordPress developers: stay curious. Investigate what the best stacks are for you and your projects. But do not get lost like I did. I kept rebuilding my systems from scratch, and that created a less sustainable situation and cost way too much time. The goal is not to switch everything. The goal is to know enough to choose well.
 
 ---
 
