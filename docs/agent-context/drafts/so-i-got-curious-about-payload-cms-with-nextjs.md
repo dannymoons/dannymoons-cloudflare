@@ -12,7 +12,7 @@ I first heard about Payload CMS from a friend who also got me into Next.js. He w
 
 For a long time, WordPress was my default. It worked. Clients knew it. Content editors could use it. SEO was strong. I had built dozens of sites with it, and I knew its limits well enough to work around them.
 
-But somewhere in early 2024, I got curious. I kept hearing about Next.js and headless CMS options. Not as "WordPress is dead" noise — I had heard that for years and ignored it. But as practical conversations from developers whose judgment I trusted. They were not abandoning WordPress. They were adding something new to their toolkit.
+After a few coding sessions with my friend, and reading about data freedom, flexibility, and security, I got curious enough to really look into it.
 
 So I started looking.
 
@@ -24,7 +24,7 @@ What WordPress does well:
 
 - **Content editing.** The block editor is genuinely good now. Editors can build pages without calling me.
 - **SEO.** Deep, mature, controllable. No headless CMS matches WordPress SEO plugins out of the box.
-- **Hosting.** You can host WordPress wherever you want, which means you can choose the most sustainable server for every project. That flexibility matters more than managed hosting convenience.
+- **Hosting.** You can host WordPress wherever you want, which means you can choose the most sustainable server for every project.
 - **Ecosystem.** Need a forum, a shop, a membership site? WordPress has it, and you can build on top of it. Building it yourself in a headless setup would take weeks.
 
 For many years, that was enough for me. I could build good websites, clients were happy, and performance was acceptable. I knew WordPress better than anything else, the premium plugins were solid, and clients knew it and wanted it. There was no strong reason to leave.
@@ -45,17 +45,19 @@ Payload felt different. It is open source. The content model is code. The admin 
 
 ## What I built first
 
-My first real Next.js + Payload projects were moonsio.nl and fysiodouma.nl. I chose them because they were real projects for real clients — that forces you to learn properly. You cannot hide behind "it is just a prototype" when someone is waiting for their website.
+My first real Next.js + Payload project was my own site, moonsio.nl. Building for yourself gives you room to experiment, but it is still a real project — your own website is a client that will never stop asking for changes. After that came fysiodouma.nl, a real client project.
 
-The projects needed:
+I chose to start with my own site because it forced me to learn the stack properly. You cannot hide behind "it is just a prototype" when your own site depends on it.
+
+What I needed from the stack:
 
 - Structured content with clear relationships between data types
 - A frontend that could be fast and accessible
 - Content editors who needed a clean, predictable admin experience
 
-Payload handled these well. The content model in code meant I could define exactly what each page needed, without the overhead of WordPress custom post types and field groups. The REST API was generated automatically. The frontend could request exactly the data it needed, nothing more.
+Payload handled these well. The content model in code meant I could define exactly what each page needed, without the overhead of WordPress custom post types and field groups. The Payload Local API meant I could query content directly in Next.js without HTTP calls — everything stayed in-process. That was faster and cleaner than setting up REST endpoints for every content type.
 
-That last point — requesting only what you need — was a shift from WordPress, where every page load runs PHP, queries the database, and renders the full page. With Next.js and Payload, I could pre-render pages at build time and serve them as static HTML. That was faster and lighter from the start.
+That last point — the Local API — was a shift from WordPress, where every page load runs PHP, queries the database, and renders the full page. With Next.js and Payload, I could pre-render pages at build time and serve them as static HTML. Faster and lighter from the start.
 
 ## What was harder than expected
 
