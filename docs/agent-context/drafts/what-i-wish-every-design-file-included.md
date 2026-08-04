@@ -10,7 +10,9 @@ tags: [design, design-systems, figma, penpot, collaboration]
 
 A good design file does more than show how a page should look. It communicates intent, constraints, and decisions. A bad design file leaves me guessing — and guessing leads to rework, bloated CSS, and a site that does not quite match what the designer envisioned.
 
-I have worked with many designers over the years, and the best collaborations started with a file that included a few things beyond the mockups.
+> The best collaborations started with a file that included a few things beyond the mockups.
+
+I have worked with many designers over the years, and that is the common thread. The file itself sets the tone for the entire build.
 
 ## Design tokens, not just colors
 
@@ -42,7 +44,7 @@ When responsive behavior is documented in the file — even as simple notes — 
 
 ## Accessibility notes
 
-Design is not finished when it looks good. It is finished when it works for everyone.
+> Design is not finished when it looks good. It is finished when it works for everyone.
 
 The best design files include:
 - Minimum contrast ratios for text on backgrounds
@@ -67,7 +69,7 @@ The principles in this article apply to both tools. But if you are choosing betw
 
 Good design files lead to cleaner code. Cleaner code means less CSS, fewer revisions, fewer rebuilds. Every revision cycle costs energy — not just developer time, but compute resources for testing, deploying, and serving the site.
 
-Sustainable software starts before the first line of code is written. It starts in the design file.
+> Sustainable software starts before the first line of code is written. It starts in the design file.
 
 ---
 
