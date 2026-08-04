@@ -22,7 +22,7 @@ export default async function RootLayout({
 }) {
 	const { isEnabled } = await draftMode()
 	const headersList = await headers()
-	const locale = headersList.get('x-locale') || 'nl'
+	const locale = headersList.get('x-locale') || 'en'
 
 	return (
 		<html
@@ -32,7 +32,6 @@ export default async function RootLayout({
 		>
 			<head>
 				<InitTheme />
-				<link href='/favicon.ico' rel='icon' sizes='32x32' />
 				<link href='/favicon.svg' rel='icon' type='image/svg+xml' />
 			</head>
 			<body>
@@ -54,7 +53,6 @@ export const metadata: Metadata = {
 	metadataBase: new URL(getServerSideURL()),
 	openGraph: mergeOpenGraph(),
 	twitter: {
-		card: 'summary_large_image',
-		creator: '@payloadcms'
+		card: 'summary_large_image'
 	}
 }

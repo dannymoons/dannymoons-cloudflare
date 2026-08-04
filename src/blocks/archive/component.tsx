@@ -22,12 +22,7 @@ function toPostCard(post: PostCardSource, locale: Locale) {
 
 	return {
 		id: String(post.id),
-		category:
-			typeof category === 'object' && category?.title
-				? category.title
-				: locale === 'nl'
-					? 'Artikel'
-					: 'Article',
+		category: typeof category === 'object' && category?.title ? category.title : 'Article',
 		title: post.title,
 		excerpt: post.meta?.description ?? '',
 		href: localizePath(`/posts/${post.slug}`, locale)

@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 
 import type { Page } from '../../../payload-types'
 
-const locales = ['nl', 'en'] as const
+const locales = ['en'] as const
 
 export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   doc,

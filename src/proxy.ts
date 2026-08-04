@@ -1,10 +1,7 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-const LOCALES = ['nl', 'en'] as const
-const DEFAULT_LOCALE = 'nl'
-
-/** Design preview routes in `src/app/(examples)/` — no locale prefix. */
+/** Design preview routes in `src/app/(examples)/` have no locale segment. */
 function isExampleRoute(pathname: string) {
   return (
     pathname === '/sections-preview' ||
@@ -17,7 +14,6 @@ function isExampleRoute(pathname: string) {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip non-frontend routes (including Cloudflare Images media transforms)
   if (
     pathname.startsWith('/admin') ||
     pathname.startsWith('/api') ||
@@ -29,37 +25,20 @@ export function proxy(request: NextRequest) {
     return
   }
 
-  // Static design previews live outside the `[lang]` tree
-  if (isExampleRoute(pathname)) {
-    return
-  }
+  if (isExampleRoute(pathname) || pathname.includes('.')) return
 
-  // Skip static files
-  if (pathname.includes('.')) {
-    return
+  // Remove legacy locale prefixes while English is the only public language.
+  if (/^\/(en|nl)(\/|$)/.test(pathname)) {
+    const url = request.nextUrl.clone()
+    url.pathname = pathname.replace(/^\/(en|nl)/, '') || '/'
+    return NextResponse.redirect(url)
   }
 
   const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-locale', 'en')
 
-  // Already has a locale prefix — set header, keep URL as-is
-  if (pathname.startsWith('/en/') || pathname === '/en') {
-    requestHeaders.set('x-locale', 'en')
-    return NextResponse.rewrite(request.nextUrl, {
-      request: { headers: requestHeaders },
-    })
-  }
-
-  if (pathname.startsWith('/nl/') || pathname === '/nl') {
-    requestHeaders.set('x-locale', 'nl')
-    return NextResponse.rewrite(request.nextUrl, {
-      request: { headers: requestHeaders },
-    })
-  }
-
-  // No locale prefix — prepend /nl internally (user sees clean URLs)
-  requestHeaders.set('x-locale', 'nl')
   const url = request.nextUrl.clone()
-  url.pathname = pathname === '/' ? '/nl' : `/nl${pathname}`
+  url.pathname = pathname === '/' ? '/en' : `/en${pathname}`
   return NextResponse.rewrite(url, {
     request: { headers: requestHeaders },
   })

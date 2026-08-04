@@ -44,12 +44,11 @@ const getPostsSitemap = unstable_cache(
               return [{ href: `${SITE_URL}${localizePath(`/posts/${slug}`, locale)}`, hreflang: locale }]
             })
 
-            // Use NL slug as canonical
-            const nlSlug = slugByLocale['nl']
-            if (!nlSlug) return null
+            const enSlug = slugByLocale.en
+            if (!enSlug) return null
 
             return {
-              loc: `${SITE_URL}${localizePath(`/posts/${nlSlug}`, 'nl')}`,
+              loc: `${SITE_URL}${localizePath(`/posts/${enSlug}`, 'en')}`,
               lastmod,
               alternateRefs,
             }

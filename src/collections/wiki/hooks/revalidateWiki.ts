@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 
 import type { Wiki } from '../../../payload-types'
 
-const locales = ['nl', 'en'] as const
+const locales = ['en'] as const
 
 export const revalidateWiki: CollectionAfterChangeHook<Wiki> = ({
 	doc,

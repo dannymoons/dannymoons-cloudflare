@@ -1,4 +1,4 @@
-import { isLocale, type Locale } from '@/utilities/locale'
+import { isLocale } from '@/utilities/locale'
 import { SiteHeader } from '@/components/header'
 import { Footer } from '@/components/footer/footer'
 import { notFound } from 'next/navigation'
@@ -16,13 +16,11 @@ export default async function LocaleLayout({ children, params }: Args) {
 
 	if (!isLocale(lang)) notFound()
 
-	const locale = lang as Locale
-
 	return (
 		<>
-			<SiteHeader locale={locale} />
+			<SiteHeader />
 			{children}
-			<Footer locale={locale} />
+			<Footer />
 		</>
 	)
 }

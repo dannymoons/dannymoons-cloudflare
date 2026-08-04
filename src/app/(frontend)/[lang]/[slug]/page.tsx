@@ -23,7 +23,7 @@ type Args = {
 
 export async function generateStaticParams() {
 	const payload = await getPayload({ config: configPromise })
-	const locales = ['nl', 'en'] as const
+	const locales = ['en'] as const
 	const results: { slug: string; lang: string }[] = []
 
 	for (const lang of locales) {
@@ -51,9 +51,9 @@ export async function generateStaticParams() {
 
 export default async function Page({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
-	const { slug = 'home', lang = 'nl' } = await paramsPromise
+	const { slug = 'home', lang = 'en' } = await paramsPromise
 	const decodedSlug = decodeURIComponent(slug)
-	const url = `/${lang}/${decodedSlug}`
+	const url = `/${decodedSlug}`
 	let page: RequiredDataFromCollectionSlug<'pages'> | null
 
 	page = await queryPageBySlug({
@@ -91,7 +91,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({
 	params: paramsPromise
 }: Args): Promise<Metadata> {
-	const { slug = 'home', lang = 'nl' } = await paramsPromise
+	const { slug = 'home', lang = 'en' } = await paramsPromise
 	const decodedSlug = decodeURIComponent(slug)
 	const page = await queryPageBySlug({
 		slug: decodedSlug,

@@ -43,11 +43,11 @@ const getDocsSitemap = unstable_cache(
               return [{ href: `${SITE_URL}${localizePath(`/docs/${slug}`, locale)}`, hreflang: locale }]
             })
 
-            const nlSlug = slugByLocale['nl']
-            if (!nlSlug) return null
+            const enSlug = slugByLocale.en
+            if (!enSlug) return null
 
             return {
-              loc: `${SITE_URL}${localizePath(`/docs/${nlSlug}`, 'nl')}`,
+              loc: `${SITE_URL}${localizePath(`/docs/${enSlug}`, 'en')}`,
               lastmod,
               alternateRefs,
             }

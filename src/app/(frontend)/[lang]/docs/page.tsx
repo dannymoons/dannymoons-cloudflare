@@ -4,45 +4,26 @@ import { ArrowRight } from 'lucide-react'
 
 import { Heading } from '@/components/content/heading'
 import { Paragraph } from '@/components/content/paragraph'
-import { localizePath, type Locale } from '@/utilities/locale'
 import { getDocsNav } from './_lib/getDocsNav'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-const COPY: Record<Locale, { title: string; description: string }> = {
-	nl: {
-		title: 'Documentatie',
-		description: 'Blader door de documentatie, handleidingen en naslagwerken.'
-	},
-	en: {
-		title: 'Documentation',
-		description: 'Browse the documentation, guides and reference material.'
-	}
-}
-
-type Args = {
-	params: Promise<{ lang?: string }>
-}
-
 export function generateStaticParams() {
-	return [{ lang: 'nl' }, { lang: 'en' }]
+	return [{ lang: 'en' }]
 }
 
-export default async function DocsIndex({ params: paramsPromise }: Args) {
-	const { lang = 'nl' } = await paramsPromise
-	const locale = lang as Locale
-	const groups = await getDocsNav(locale)
-	const copy = COPY[locale]
+export default async function DocsIndex() {
+	const groups = await getDocsNav('en')
 
 	return (
 		<div className='flex flex-col gap-10'>
 			<header className='flex flex-col gap-3 border-border border-b pb-8'>
 				<Heading headingLevel='h1' size='lg'>
-					{copy.title}
+					Documentation
 				</Heading>
 				<Paragraph color='muted' marginTop='none'>
-					{copy.description}
+					Browse the documentation, guides and reference material.
 				</Paragraph>
 			</header>
 
@@ -56,7 +37,7 @@ export default async function DocsIndex({ params: paramsPromise }: Args) {
 							{group.docs.map((doc) => (
 								<Link
 									key={doc.slug}
-									href={localizePath(`/docs/${doc.slug}`, locale)}
+									href={`/docs/${doc.slug}`}
 									className='group flex items-center justify-between gap-3 rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40'
 								>
 									<span className='font-medium text-foreground text-sm'>
@@ -73,11 +54,9 @@ export default async function DocsIndex({ params: paramsPromise }: Args) {
 	)
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-	const { lang = 'nl' } = await paramsPromise
-	const locale = lang as Locale
+export function generateMetadata(): Metadata {
 	return {
-		title: COPY[locale].title,
-		description: COPY[locale].description
+		title: 'Documentation',
+		description: 'Browse the documentation, guides and reference material.'
 	}
 }
