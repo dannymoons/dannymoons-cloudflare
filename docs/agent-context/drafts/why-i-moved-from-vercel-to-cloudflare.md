@@ -8,79 +8,48 @@ tags: [cloudflare, vercel, hosting, nextjs, payload-cms, self-hosting]
 
 # Why I moved my Next.js site from Vercel to Cloudflare
 
-For a while, Vercel was the obvious choice for my Next.js sites. It works well, deployments are smooth, and the developer experience is excellent. I was happy there.
+For a while, Vercel was the obvious choice. Deployments are smooth. Developer experience is excellent.
 
-Then I started asking questions about sustainability. Where does the energy come from? Can I prove it? And how much control do I actually have over the infrastructure my site runs on?
-
-Vercel could not answer those questions in a way that worked for me. So I started exploring alternatives.
+But I started asking questions about sustainability. Where does the energy come from? Can I prove it? Vercel could not answer those in a way that worked for me. So I started exploring.
 
 ## The trigger
 
-The direct reason was a requirement to demonstrate that my website runs on green energy, with proof that the hosting provider actively thinks about sustainability. Vercel could not provide that in a way I was comfortable with.
+Vercel required proof that my site runs on green energy, with evidence that the host actively thinks about sustainability. They could not provide what I needed.
 
-That got me thinking about self-hosting. Not building my own server room — but running my Next.js site on infrastructure I chose, configured, and controlled more directly.
-
-I knew it would be harder than clicking "deploy" on Vercel. But I wanted to learn what that effort would teach me.
+That pushed me toward self-hosting. Not building my own server room — but running my site on infrastructure I chose and controlled more directly.
 
 ## Why Cloudflare
 
-I chose Cloudflare for a few reasons:
+My domains already run on Cloudflare — DNS, CDN, security in one place. They are transparent about energy sourcing. They have a clear commitment to renewable energy. And OpenNext makes it possible to run Next.js on Cloudflare Workers without a full rewrite.
 
-- My domains already run there. DNS, CDN, security — all in one place.
-- They are transparent about their energy use and have a clear commitment to renewable energy.
-- The anti-bot protection integrates naturally when your site runs on the same network as your DNS.
-- OpenNext made it possible to run Next.js on Cloudflare Workers without a full rewrite.
+The stack is Next.js with Payload CMS, using Cloudflare D1 as the database. The build and deploy pipeline uses OpenNext Cloudflare with wrangler for deployments.
 
-It was not the easiest path. But it felt like the right one.
+## Where I am now
 
-## What I have done so far
+The dev environment is running on Cloudflare. I am about to migrate the database from local to the remote D1 instance, connect a domain, and start testing observability, performance, and stability.
 
-[Danny: describe briefly where you are in the migration. The dev site is running on Cloudflare, what stack/configuration did you use?]
+What still needs work:
+- **Image optimization.** Vercel handled this automatically. On Cloudflare I need to configure Cloudflare Images separately.
+- **Preview URLs.** Unique preview URLs per branch do not work the same way yet.
+- **Deploy pipeline.** Vercel's git integration is hard to beat. I had to configure more of the deployment myself.
 
-The database had to be migrated from my local environment to an online dev database on Cloudflare. That was not as smooth as I hoped — the setup is different from Vercel, and there is no automatic image optimization out of the box. Preview URLs also do not work the same way yet.
+These are solvable. But they take time.
 
-I am still working through these issues. The dev site is running, but production is not live yet.
+## What is better already
 
-## What is better
-
-Even in this early stage, I can see advantages:
-
-- The site runs on the same network as the domain — DNS → CDN → compute, all inside Cloudflare.
-- Green energy is not a claim I have to trust. Cloudflare documents its energy sourcing transparently.
-- Anti-bot protection is simpler when your DNS and your hosting are the same provider.
-
-[Danny: add anything else that surprised you positively]
-
-## What is harder
-
-I want to be honest about the trade-offs, because too many migration stories leave them out.
-
-- **Deployments are more complex.** Vercel's git-integrated deployments are hard to beat. On Cloudflare, I had to configure the deployment pipeline myself.
-- **Image optimization is not automatic.** Vercel handles this with their own image CDN. On Cloudflare, I need to set it up separately.
-- **Preview URLs work differently.** I am still figuring out how to get unique preview URLs for every branch and commit.
-- **The ecosystem is smaller.** Fewer tutorials, fewer community examples, more figuring things out yourself.
-
-[Danny: add anything else that was harder than expected]
-
-These are solvable problems. But they take time, and time is a real cost.
+Even in this early stage, I can see advantages: the site runs on the same network as the domain, green energy is documented rather than claimed, and anti-bot integration is simpler when DNS and hosting share a provider.
 
 ## What I still need to figure out
 
-This article is not a conclusion. It is a progress report. There is still a lot I do not know:
+This is a progress report, not a conclusion. I still need to see how production deployments hold up, how performance compares under real traffic, and whether the workflow stays fast enough for daily work.
 
-- Will production deployments be reliable enough?
-- How will performance compare under real traffic?
-- Will the development workflow stay fast enough for daily work?
-
-I will write a follow-up article once I have answers.
+I will write a follow-up once I have answers.
 
 ## What I learned so far
 
-The biggest lesson so far is that hosting is not a checkbox. It is a decision that affects performance, sustainability, control, and development workflow. Moving from Vercel to Cloudflare is not "better" or "worse." It is a trade-off. For me, the trade-off is worth exploring.
+Hosting is not a checkbox. It is a trade-off between convenience, control, sustainability, and workflow. Moving from Vercel to Cloudflare is not objectively better. But exploring the trade-off taught me more about my own infrastructure than years of clicking "deploy" ever did.
 
-I do not know yet whether I will stay on Cloudflare permanently. But I already know more about my own infrastructure than I did before. And that knowledge is valuable, regardless of where I end up running my sites.
-
-[Danny: what would you tell someone else considering the same move?]
+If you are considering the same move: be ready for a slower setup, more manual configuration, and a smaller ecosystem to fall back on. But if control and green energy transparency matter to you, it is worth the effort.
 
 ---
 
@@ -91,8 +60,8 @@ I do not know yet whether I will stay on Cloudflare permanently. But I already k
 | Field | Value |
 |-------|-------|
 | **Slug** | why-i-moved-my-nextjs-site-from-vercel-to-cloudflare |
-| **Meta description** | Vercel wanted proof of green energy. I wanted more control. Here is what I learned from exploring self-hosting on Cloudflare. |
+| **Meta description** | Vercel wanted proof of green energy. I wanted more control. Here is what I learned from self-hosting a Next.js site on Cloudflare. |
 | **Social title** | Why I moved my Next.js site from Vercel to Cloudflare |
-| **Social description** | The migration is not done yet. But I have already learned more about my infrastructure than I did in years on Vercel. |
+| **Social description** | The migration is not done yet — but I already learned more about my infrastructure than years on Vercel taught me. |
 | **Related articles** | A decade of building websites, Sustainable software is an engineering quality |
 | **Related projects** | Moonsio |
