@@ -1,0 +1,817 @@
+{
+  "root": {
+    "type": "root",
+    "format": "",
+    "indent": 0,
+    "version": 1,
+    "direction": "ltr",
+    "children": [
+      {
+        "type": "heading",
+        "tag": "h1",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Sustainable Software Is an Engineering Quality",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Sometimes people tell me they have made their website sustainable. They moved to a green hosting provider. They bought carbon offsets. Done.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "I understand the impulse. Green hosting is better than gray hosting. Offsets can help. But if the rest of the website is still slow, bloated, full of unused scripts, and hard to maintain, then switching hosts did not make it sustainable. It just moved the problem to a slightly better server.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Sustainable software is not a hosting decision. It is not a carbon badge in the footer. It is an engineering quality — the same way performance, accessibility, and maintainability are qualities of good software.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "The Short Version",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Sustainable software means building systems that use fewer resources, stay useful longer, and cost less to operate and maintain. Green hosting is one small part of that. The real work happens in architecture choices, dependency management, content decisions, and how you think about waste.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "If your site is fast, lean, accessible, and well-maintained, it is probably more sustainable than a bloated site on a green server.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "What Sustainable Software Actually Includes",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "When I look at a project, I think about sustainability across several layers:",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Performance. A fast page uses less energy, less data, and fewer server cycles. Performance and sustainability are not separate goals. They are the same goal seen from different angles.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Maintainability. Software that is hard to maintain gets rewritten or abandoned sooner. That churn creates waste. Well-structured, well-documented systems last longer and need fewer resources over their lifetime.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Architecture. Every dependency, every framework layer, every API call adds weight. Good architecture questions whether something is needed at all. The most sustainable line of code is the one you did not write.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Dependencies. Every third-party script, every npm package, every plugin adds a cost that you might not see on the invoice. Unused or heavy dependencies make sites slower, harder to update, and more likely to break.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Content and media. A 5 MB hero image sent to every visitor is a sustainability problem, regardless of the hosting provider. So is a page full of tracking scripts nobody reads.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Lifespan. Software that lasts five years instead of two has half the rebuild cost. Decisions that make a system easier to update, migrate, and extend are sustainability decisions.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Where Green Hosting Fits",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Green hosting matters. A server powered by renewable energy is better than one powered by fossil fuels. A hosting provider that measures and reduces its footprint is making a real choice.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "But here is the honest version: if your page weighs 8 MB and loads 40 third-party scripts, even the greenest server in the world does not make your website sustainable. The waste happens before the request reaches the server — in the code, the content, the design decisions.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Green hosting is one piece of a much larger puzzle. Treating it as the whole solution is like saying a car is environmentally friendly because you put premium fuel in it.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "What This Looks Like in Practice",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Here are a few examples of engineering decisions that improve sustainability:",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "listType": "bullet",
+        "start": 1,
+        "tag": "ul",
+        "children": [
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Choosing a static or cached page instead of a dynamically rendered one, for pages that do not change often.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Removing unused JavaScript instead of adding more.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "[Danny: add a concrete example]",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Writing clear documentation so the next person does not have to reverse-engineer the system.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Picking a simpler stack when a complex one is not justified by the requirements.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "These decisions are not \"sustainability work\" in addition to normal development. They are just good engineering. The sustainability improvement is a side effect of building better software.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "[Danny: add a brief personal example]",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Trade-Offs",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Not every sustainable choice is free. Sometimes a simpler architecture takes more thinking up front. Sometimes removing a dependency means rebuilding a feature. Sometimes green hosting is more expensive.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "But most sustainable choices also improve other qualities: speed, cost, reliability, developer experience. When you optimize for sustainability, you rarely optimize for only one thing.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "What I Would Do",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "If you want to make your website or product more sustainable, start here:",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "listType": "bullet",
+        "start": 1,
+        "tag": "ul",
+        "children": [
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Measure page weight and Core Web Vitals.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Inventory your third-party scripts and remove what you do not need.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Review your dependency tree for unused or heavy packages.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Check how easy it is to update your system in two years.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          },
+          {
+            "type": "listitem",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "direction": "ltr",
+            "children": [
+              {
+                "type": "text",
+                "text": "Research green hosting only after you have addressed the above.",
+                "mode": "normal",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Start with what you can control in your own code and content. Hosting comes after.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "tag": "h2",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Final Thought",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Sustainability in software is not a label you add after the build. It is a quality of the decisions you make while building. It belongs in the definition of done, not in a marketing checkbox.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "The question is not \"Is my hosting green?\" The better question is \"Does this code, page, or system need to be this heavy? Does it need to exist at all? How long should it last?\"",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "direction": "ltr",
+        "children": [
+          {
+            "type": "text",
+            "text": "Green hosting is a fine start. But it is not the finish.",
+            "mode": "normal",
+            "style": "",
+            "detail": 0,
+            "format": 0,
+            "version": 1
+          }
+        ]
+      }
+    ]
+  }
+}
