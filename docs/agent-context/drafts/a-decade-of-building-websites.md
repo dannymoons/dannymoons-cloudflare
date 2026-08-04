@@ -66,11 +66,9 @@ After ten years, some things have not changed.
 
 I still want the best result for every client. I still want to optimise everything. I still push for quality, even when it is easier to settle.
 
-But what changed is how I define "best." It used to mean the most features, the most control, the most technology. Now it means the right architecture, the right content model, the right hosting — and knowing when less is more.
+But what changed is how I define "best." It used to mean the most features, the most control, the most technology. Now it means something more specific: a technically solid website with good design and UX, that emits less than 0.05 g of CO₂ per visit, is easy to maintain, converts well, keeps the client happy, and does not hurt the planet. That is a much harder target than "make it look good and work." But it is a better one.
 
 I have also learned that rebuilding everything from scratch is not scalable. It is not sustainable. The drive to optimise is good, but applying it by rebuilding every time you learn something new is not. I am still learning to balance the desire for perfect with the need for practical.
-
-[Danny: what does "the best result" mean to you now, compared to five years ago?]
 
 ## What I know now
 
