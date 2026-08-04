@@ -1,0 +1,214 @@
+.hero {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 77% 40%, oklch(0.82 0.17 125 / 0.08), transparent 30%),
+    linear-gradient(180deg, oklch(0.12 0.012 145), var(--background));
+}
+
+.gridBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 0.035) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+
+.systemMap {
+  position: relative;
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, oklch(0.82 0.17 125 / 0.09), transparent 28%),
+    oklch(0.135 0.014 145 / 0.72);
+  box-shadow:
+    inset 0 0 60px oklch(0 0 0 / 0.26),
+    0 0 80px oklch(0.82 0.17 125 / 0.04);
+}
+
+.systemMap::before,
+.systemMap::after {
+  position: absolute;
+  content: '';
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.systemMap::before {
+  inset: 10%;
+  border: 1px dashed oklch(1 0 0 / 0.1);
+}
+
+.systemMap::after {
+  inset: 25%;
+  border: 1px solid oklch(1 0 0 / 0.08);
+}
+
+.orbitOne,
+.orbitTwo {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  animation: orbit-spin 36s linear infinite;
+}
+
+.orbitOne::before,
+.orbitTwo::before {
+  position: absolute;
+  top: 50%;
+  left: -0.28rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  content: '';
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 18px var(--primary);
+}
+
+.orbitTwo {
+  inset: 25%;
+  animation-direction: reverse;
+  animation-duration: 24s;
+}
+
+.orbitTwo::before {
+  top: 8%;
+  left: auto;
+  right: 7%;
+  width: 0.35rem;
+  height: 0.35rem;
+  background: var(--secondary-400);
+  box-shadow: 0 0 14px var(--secondary-400);
+}
+
+.mapCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  width: 29%;
+  aspect-ratio: 1;
+  place-content: center;
+  border: 1px solid oklch(0.82 0.17 125 / 0.4);
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  line-height: 1.2;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 44px oklch(0.82 0.17 125 / 0.18);
+}
+
+.mapCore strong {
+  font-weight: 750;
+}
+
+.node1,
+.node2,
+.node3 {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  min-width: 6.7rem;
+  min-height: 3.4rem;
+  place-content: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: oklch(0.16 0.014 145 / 0.92);
+  box-shadow: 0 10px 30px oklch(0 0 0 / 0.2);
+  color: var(--foreground);
+  font-family: var(--font-geist-mono);
+  font-size: clamp(0.54rem, 1.5vw, 0.67rem);
+  line-height: 1.35;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.node1 {
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.node2 {
+  top: 61%;
+  right: -2%;
+}
+
+.node3 {
+  bottom: 5%;
+  left: 2%;
+}
+
+.projectCard::before {
+  position: absolute;
+  top: -5rem;
+  right: -5rem;
+  width: 13rem;
+  height: 13rem;
+  content: '';
+  border: 1px solid oklch(1 0 0 / 0.07);
+  border-radius: 50%;
+  transition:
+    transform 560ms var(--ease-out-expo),
+    border-color 220ms ease;
+}
+
+.projectCard::after {
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  width: 7rem;
+  height: 7rem;
+  content: '';
+  border-radius: 50%;
+  background: oklch(0.82 0.17 125 / 0.04);
+  transition:
+    transform 560ms var(--ease-out-expo),
+    background 220ms ease;
+}
+
+.projectCard:hover::before,
+.projectCard:hover::after {
+  transform: translate(-1rem, 1rem) scale(1.08);
+}
+
+.projectCard:hover::before {
+  border-color: oklch(0.82 0.17 125 / 0.18);
+}
+
+.projectCard:hover::after {
+  background: oklch(0.82 0.17 125 / 0.08);
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (max-width: 40rem) {
+  .gridBackdrop {
+    background-size: 2.5rem 2.5rem;
+  }
+
+  .node1,
+  .node2,
+  .node3 {
+    min-width: 5.4rem;
+    min-height: 2.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitOne,
+  .orbitTwo {
+    animation: none;
+  }
+}
