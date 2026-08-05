@@ -37,10 +37,10 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               <li>
                 <Link
-                  href="/#thesis"
+                  href="/#notes"
                   className="text-muted-foreground text-sm transition-colors hover:text-foreground"
                 >
-                  Thesis
+                  Notes
                 </Link>
               </li>
               <li>
@@ -53,10 +53,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/posts"
+                  href="/#faq"
                   className="text-muted-foreground text-sm transition-colors hover:text-foreground"
                 >
-                  Notes
+                  Questions
                 </Link>
               </li>
               <li>
