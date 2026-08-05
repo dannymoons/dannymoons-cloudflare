@@ -189,6 +189,9 @@ importers:
       autoprefixer:
         specifier: ^10.5.4
         version: 10.5.4(postcss@8.5.25)
+      drizzle-kit:
+        specifier: 0.31.7
+        version: 0.31.7
       eslint:
         specifier: ^10.8.0
         version: 10.8.0(jiti@2.7.0)

@@ -42,7 +42,12 @@ const nextConfig: NextConfig = {
   },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
-  serverExternalPackages: ['jose', 'pg-cloudflare', 'sharp'],
+  // `@payloadcms/drizzle/sqlite` hosts Payload's `requireDrizzleKit`, which CJS-requires
+  // `drizzle-kit/api` (schema-push tooling that is dead at runtime). Turbopack externalizes it
+  // as a hashed chunk (e.g. `drizzle-kit-<hash>/api`) that OpenNext's esbuild cannot resolve.
+  // Externalizing the importing module instead leaves a plain specifier that esbuild resolves.
+  // `drizzle-kit` is a direct devDependency so that specifier resolves during the OpenNext build.
+  serverExternalPackages: ['@payloadcms/drizzle/sqlite', 'drizzle-kit', 'jose', 'pg-cloudflare', 'sharp'],
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
