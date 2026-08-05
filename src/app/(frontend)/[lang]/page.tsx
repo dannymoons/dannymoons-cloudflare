@@ -20,7 +20,7 @@ import { SITE_DESCRIPTION, SITE_NAME } from '@/utilities/site'
 
 import styles from './home.module.css'
 
-export const revalidate = 600
+export const revalidate = 60 * 60 * 24 * 365
 
 const faqItems = [
   {
@@ -121,7 +121,7 @@ export default async function HomePage() {
                   href='#work'
                   className='group inline-flex h-12 items-center gap-3 rounded-full border border-border bg-surface/60 px-6 font-semibold text-foreground text-sm transition-colors hover:border-foreground/30 hover:bg-elevated'
                 >
-                  Let's connect
+                  What I work on
                 </Link>
               </div>
             </div>
@@ -360,13 +360,6 @@ export default async function HomePage() {
               show how ideas hold up in practice, and help others make software
               that earns its place in the world.
             </p>
-            <Link
-              href='/about'
-              className='group mt-10 inline-flex items-center gap-3 border-primary/50 border-b pb-2 font-semibold text-foreground text-sm transition-colors hover:border-primary'
-            >
-              More about Danny
-              <ArrowUpRight className='size-4 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
-            </Link>
           </div>
         </Container>
       </section>

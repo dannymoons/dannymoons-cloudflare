@@ -20,6 +20,8 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
         revalidatePath(path)
       }
+      revalidatePath('/')
+      revalidatePath('/en')
       revalidateTag('posts-sitemap', 'max')
     }
 
