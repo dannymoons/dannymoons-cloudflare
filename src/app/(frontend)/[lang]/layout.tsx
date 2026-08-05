@@ -5,22 +5,22 @@ import { notFound } from 'next/navigation'
 import type React from 'react'
 
 type Args = {
-	children: React.ReactNode
-	params: Promise<{
-		lang: string
-	}>
+  children: React.ReactNode
+  params: Promise<{
+    lang: string
+  }>
 }
 
 export default async function LocaleLayout({ children, params }: Args) {
-	const { lang } = await params
+  const { lang } = await params
 
-	if (!isLocale(lang)) notFound()
+  if (!isLocale(lang)) notFound()
 
-	return (
-		<>
-			<SiteHeader />
-			{children}
-			<Footer />
-		</>
-	)
+  return (
+    <>
+      <SiteHeader />
+      {children}
+      <Footer />
+    </>
+  )
 }
