@@ -10,9 +10,13 @@ import { Eyebrow } from '@/components/content/eyebrow'
 import { PostCard } from '@/components/cards/post-card'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
+import { postTypeLabel } from '@/utilities/post-type'
 import type { Post } from '@/payload-types'
 
-type ArchivePost = Pick<Post, 'id' | 'title' | 'slug' | 'meta' | 'categories'>
+type ArchivePost = Pick<
+	Post,
+	'id' | 'title' | 'slug' | 'meta' | 'categories' | 'tags' | 'postType'
+>
 
 function postsPageHref(page: number) {
 	return page <= 1 ? '/posts' : `/posts/page/${page}`
@@ -56,6 +60,11 @@ export function PostsArchive({
 							const category = (post.categories ?? []).find(
 								(value) => typeof value === 'object' && value?.title,
 							)
+							const tagTitles = (post.tags ?? [])
+								.map((tag) =>
+									typeof tag === 'object' ? tag?.title : null,
+								)
+								.filter((value): value is string => Boolean(value))
 
 							return (
 								<PostCard
@@ -65,6 +74,8 @@ export function PostsArchive({
 											? category.title
 											: 'Article'
 									}
+									postType={postTypeLabel(post.postType)}
+									tags={tagTitles}
 									title={post.title}
 									excerpt={post.meta?.description ?? ''}
 									readMinutes={5}

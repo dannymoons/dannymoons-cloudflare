@@ -10,19 +10,28 @@ import { Grid } from '@/components/layout/grid'
 import { Stack } from '@/components/layout/stack'
 import type { ArchiveBlock as ArchiveBlockType, Post } from '@/payload-types'
 import { DEFAULT_LOCALE, localizePath, type Locale } from '@/utilities/locale'
+import { postTypeLabel } from '@/utilities/post-type'
 
 type Props = ArchiveBlockType & { locale?: string }
 
-type PostCardSource = Pick<Post, 'id' | 'title' | 'slug' | 'categories' | 'meta' | 'publishedAt'>
+type PostCardSource = Pick<
+	Post,
+	'id' | 'title' | 'slug' | 'categories' | 'tags' | 'postType' | 'meta' | 'publishedAt'
+>
 
 function toPostCard(post: PostCardSource, locale: Locale) {
 	const category = (post.categories ?? []).find(
 		(value) => typeof value === 'object' && value !== null && 'title' in value
 	)
+	const tagTitles = (post.tags ?? [])
+		.map((tag) => (typeof tag === 'object' ? tag?.title : null))
+		.filter((value): value is string => Boolean(value))
 
 	return {
 		id: String(post.id),
 		category: typeof category === 'object' && category?.title ? category.title : 'Article',
+		postType: postTypeLabel(post.postType),
+		tags: tagTitles,
 		title: post.title,
 		excerpt: post.meta?.description ?? '',
 		href: localizePath(`/posts/${post.slug}`, locale)
@@ -56,10 +65,12 @@ export async function ArchiveBlock({
 			where: {
 				_status: { equals: 'published' }
 			},
-			select: {
+						select: {
 				title: true,
 				slug: true,
 				categories: true,
+				tags: true,
+				postType: true,
 				meta: true,
 				publishedAt: true
 			}
@@ -89,6 +100,8 @@ export async function ArchiveBlock({
 							<PostCard
 								key={card.id}
 								category={card.category}
+								postType={card.postType}
+								tags={card.tags}
 								title={card.title}
 								excerpt={card.excerpt}
 								readMinutes={5}

@@ -21,6 +21,7 @@ import { getLocaleAlternates } from '@/utilities/getLocaleAlternates'
 import { staticAlternates } from '@/utilities/locale'
 
 import { TableOfContents } from './table-of-contents'
+import { postTypeLabel } from '@/utilities/post-type'
 
 type Args = {
 	params: Promise<{
@@ -69,18 +70,28 @@ export default async function Page({ params: paramsPromise }: Args) {
 			const category = (related.categories ?? []).find(
 				value => typeof value === 'object' && value?.title
 			)
+			const tagTitles = (related.tags ?? [])
+				.map(tag => (typeof tag === 'object' ? tag?.title : null))
+				.filter((value): value is string => Boolean(value))
 
 			return {
 				category:
 					typeof category === 'object' && category?.title
 						? category.title
 						: 'Field note',
+				postType: postTypeLabel(related.postType),
+				tags: tagTitles,
 				title: related.title,
 				excerpt: related.meta?.description ?? '',
 				readMinutes: 5,
 				href: `/posts/${related.slug}`
 			}
 		})
+
+	const tagTitles = (target: Post) =>
+		(target.tags ?? [])
+			.map(tag => (typeof tag === 'object' ? tag?.title : null))
+			.filter((value): value is string => Boolean(value))
 
 	return (
 		<article>
@@ -103,7 +114,12 @@ export default async function Page({ params: paramsPromise }: Args) {
 				</Container>
 			</section>
 
-			{relatedPosts.length > 0 && <ArticleFooter relatedPosts={relatedPosts} />}
+			{relatedPosts.length > 0 && (
+				<ArticleFooter
+					tags={tagTitles(post)}
+					relatedPosts={relatedPosts}
+				/>
+			)}
 		</article>
 	)
 }

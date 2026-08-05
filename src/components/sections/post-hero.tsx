@@ -2,6 +2,7 @@ import { Heading } from '@/components/content/heading'
 import { Image } from '@/components/content/image'
 import { Container } from '@/components/layout/container'
 import type { Post } from '@/payload-types'
+import { postTypeLabel } from '@/utilities/post-type'
 
 function formatDate(value: string) {
 	return new Intl.DateTimeFormat('en-US', {
@@ -12,10 +13,21 @@ function formatDate(value: string) {
 }
 
 export function PostHero({ post }: { post: Post }) {
-	const { categories, heroImage, meta, populatedAuthors, publishedAt, title } =
-		post
+	const {
+		categories,
+		heroImage,
+		meta,
+		populatedAuthors,
+		publishedAt,
+		tags,
+		title,
+		postType
+	} = post
 	const categoryTitles = (categories ?? [])
 		.map(category => (typeof category === 'object' ? category?.title : null))
+		.filter((value): value is string => Boolean(value))
+	const tagTitles = (tags ?? [])
+		.map(tag => (typeof tag === 'object' ? tag?.title : null))
 		.filter((value): value is string => Boolean(value))
 	const authorNames = (populatedAuthors ?? [])
 		.map(author => author?.name)
@@ -37,7 +49,7 @@ export function PostHero({ post }: { post: Post }) {
 					<div className='flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.65rem] text-primary uppercase tracking-[0.18em]'>
 						<span className='flex items-center gap-3'>
 							<span className='size-1.5 rounded-full bg-primary shadow-[0_0_14px_var(--primary)]' />
-							Field note
+							{postTypeLabel(postType)}
 						</span>
 						{categoryTitles.map(category => (
 							<span key={category} className='text-muted-foreground'>
@@ -45,6 +57,19 @@ export function PostHero({ post }: { post: Post }) {
 							</span>
 						))}
 					</div>
+
+					{tagTitles.length > 0 && (
+						<div className='mt-4 flex flex-wrap gap-2'>
+							{tagTitles.map(tag => (
+								<span
+									key={tag}
+									className='rounded-full border border-border bg-surface px-3 py-1 font-mono text-[0.65rem] text-muted-foreground uppercase tracking-[0.12em]'
+								>
+									{tag}
+								</span>
+							))}
+						</div>
+					)}
 
 					<Heading
 						headingLevel='h1'

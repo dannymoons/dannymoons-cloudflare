@@ -11,6 +11,8 @@ export interface PostCardProps {
   readMinutes: number
   href: string
   featured?: boolean
+  postType?: string
+  tags?: string[]
   className?: string
 }
 
@@ -20,7 +22,9 @@ export function PostCard({
   excerpt,
   featured,
   href,
+  postType,
   readMinutes,
+  tags,
   title,
 }: PostCardProps) {
   return (
@@ -34,7 +38,7 @@ export function PostCard({
     >
       <div className="flex items-center justify-between gap-4">
         <span className="font-mono text-[0.62rem] text-primary uppercase tracking-[0.16em]">
-          {featured ? 'Featured note' : category}
+          {featured ? 'Featured note' : postType ?? category}
         </span>
         <span className="flex shrink-0 items-center gap-1.5 font-mono text-[0.62rem] text-muted-foreground uppercase tracking-[0.1em]">
           <Clock className="size-3" />
@@ -52,6 +56,20 @@ export function PostCard({
           {title}
         </Heading>
         <p className="mt-3 line-clamp-3 text-muted-foreground text-sm leading-6">{excerpt}</p>
+
+        {tags && tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-border px-2 py-0.5 font-mono text-[0.6rem] text-muted-foreground uppercase tracking-[0.1em]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
         <span className="mt-6 inline-flex items-center gap-2 font-semibold text-foreground text-xs transition-colors group-hover:text-primary">
           Read note
           <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
