@@ -4,6 +4,7 @@ description: "Green hosting is not enough. Sustainable software means making bet
 date: 2026-08-03
 topic: Sustainable Software
 tags: [sustainable-software, performance, maintainability, architecture]
+status: published
 ---
 
 # Sustainable Software Is an Engineering Quality

@@ -4,6 +4,7 @@ description: "I wanted to know if my Next.js site could run on verifiable green 
 date: 2026-08-04
 topic: Modern Web
 tags: [cloudflare, vercel, hosting, nextjs, payload-cms, green-hosting]
+status: published
 ---
 
 # Exploring Cloudflare as a Vercel alternative for Next.js

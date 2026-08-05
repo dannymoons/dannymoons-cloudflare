@@ -4,6 +4,7 @@ description: "After a decade of WordPress sites, I started wondering what Next.j
 date: 2026-08-04
 topic: Modern Web
 tags: [nextjs, payload-cms, wordpress, architecture, web-development]
+status: published
 ---
 
 # So I got curious about Payload CMS with Next.js
