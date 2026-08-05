@@ -4,6 +4,7 @@ description: "Green hosting is not enough. Sustainable software means making bet
 date: 2026-08-03
 topic: Sustainable Software
 tags: [sustainable-software, performance, maintainability, architecture]
+status: published
 ---
 
 # Sustainable Software Is an Engineering Quality
@@ -14,13 +15,13 @@ I understand the impulse. Green hosting is better than gray hosting. But if that
 
 Sustainable software is not a hosting decision. It is not a badge or an offset purchase. It is an engineering quality — the same way performance, accessibility, and maintainability are qualities of good software. Green hosting is one piece of the puzzle, but it is not the whole picture.
 
-## The Short Version
+## In short...
 
 Sustainable software means building systems that use fewer resources, stay useful longer, and cost less to operate and maintain. Green hosting is one small part of that. The real work happens in architecture choices, dependency management, content decisions, and how you think about waste.
 
 If your site is fast, lean, accessible, and well-maintained, it is probably more sustainable than a bloated site on a green server.
 
-## What Sustainable Software Actually Includes
+## What sustainable software actually includes
 
 When I look at a project, I think about sustainability across several layers:
 
@@ -36,7 +37,7 @@ When I look at a project, I think about sustainability across several layers:
 
 **Lifespan.** Software that lasts five years instead of two has half the rebuild cost. Decisions that make a system easier to update, migrate, and extend are sustainability decisions. So are decisions that make it easier to say no to unnecessary features.
 
-## Where Green Hosting Fits
+## Where green hosting fits
 
 Green hosting matters. A server powered by renewable energy is better than one powered by fossil fuels. A hosting provider that measures and reduces its footprint is making a real choice.
 
@@ -44,28 +45,30 @@ But if your page weighs 8 MB and loads forty third-party scripts, even the green
 
 Green hosting is one piece of a much larger puzzle. Treating it as the whole solution is like saying a car is environmentally friendly because you put premium fuel in it.
 
-## What This Looks Like in Practice
+## What this looks like in practice
 
 Here are a few examples of engineering decisions that improve sustainability:
 
 - Choosing a static or cached page instead of a dynamically rendered one, for pages that do not change often.
 - Removing unused JavaScript instead of adding more.
-- [Danny: add a concrete example from your own work — a dependency you removed, a page weight you cut, a client project where you made sustainability part of engineering]
 - Writing clear documentation so the next person does not have to reverse-engineer the system.
 - Picking a simpler stack when a complex one is not justified by the requirements.
 - Running a dependency audit before adding a new package — not after.
 
 These are not "sustainability initiatives." They are just careful engineering. The sustainability improvement is a side effect. But that side effect matters, and it adds up across every project.
 
-[Danny: add a brief personal example of a moment when you realized sustainability was really about engineering decisions, not marketing]
+It was during my early works in 2018 when I developed my first custom WordPress theme that I found out that making the right programming decisions let to better performance. Later I found out that this goes hand in hand with sustainability.
 
-## Trade-Offs
+
+## Trade-offs
 
 Not every sustainable choice is free. Sometimes a simpler architecture takes more thinking up front. Sometimes removing a dependency means rebuilding a feature. Sometimes green hosting is more expensive.
 
 But most sustainable choices also improve other qualities: speed, cost, reliability, developer experience. When you optimize for sustainability, you rarely optimize for only one thing.
 
-## What I Would Do
+> So actually there are no real trad-offs here but only wins.
+
+## What I would do from a developers perspective
 
 If you want to make your website or product more sustainable, start here:
 
@@ -77,7 +80,7 @@ If you want to make your website or product more sustainable, start here:
 
 Start with what you can control in your own code and content. That is where most of the waste lives. Hosting comes after.
 
-## Final Thought
+## Final thought
 
 Sustainability in software is not a label you add after the build. It is a quality of the decisions you make while building. It belongs in the definition of done, not in a marketing checkbox.
 
