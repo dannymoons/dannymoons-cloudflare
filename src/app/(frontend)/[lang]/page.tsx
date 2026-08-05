@@ -20,7 +20,7 @@ import { SITE_DESCRIPTION, SITE_NAME } from '@/utilities/site'
 
 import styles from './home.module.css'
 
-export const revalidate = 60 * 60 * 24 * 365
+export const revalidate = 31536000
 
 const faqItems = [
   {
