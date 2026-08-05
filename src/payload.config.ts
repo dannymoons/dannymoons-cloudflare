@@ -11,6 +11,7 @@ import { Categories } from './collections/categories'
 import { Media } from './collections/media'
 import { Pages } from './collections/pages'
 import { Posts } from './collections/posts'
+import { Tags } from './collections/tags'
 import { TeamMembers } from './collections/team-members'
 import { Testimonials } from './collections/testimonials'
 import { Users } from './collections/users'
@@ -85,6 +86,7 @@ export default buildConfig({
     Media,
     Pages,
     Posts,
+    Tags,
     TeamMembers,
     Testimonials,
     Users,

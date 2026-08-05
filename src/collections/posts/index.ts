@@ -1,8 +1,10 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, RichTextField } from 'payload'
 
 import {
   BlocksFeature,
   BlockquoteFeature,
+  convertMarkdownToLexical,
+  editorConfigFactory,
   FixedToolbarFeature,
   HeadingFeature,
   HorizontalRuleFeature,
@@ -86,6 +88,49 @@ export const Posts: CollectionConfig<'posts'> = {
               relationTo: 'media'
             },
             {
+              name: 'markdown',
+              type: 'code',
+              localized: true,
+              admin: {
+                language: 'markdown',
+                description:
+                  'The source of truth. Pasting Markdown and saving regenerates the rich text content below from this.'
+              },
+              hooks: {
+                beforeValidate: [
+                  async ({ siblingData, siblingFields, value, previousValue, operation }) => {
+                    const generate = (siblingData as Record<string, unknown> | undefined)
+                      ?.generateRichText as boolean | undefined
+                    if (generate === false) return
+                    const changed = operation === 'create' || value !== previousValue
+                    if (!changed) return
+                    const raw = value
+                    if (typeof raw !== 'string' || !raw.trim()) return
+                    const contentField = siblingFields.find(
+                      field => 'name' in field && field.name === 'content'
+                    ) as RichTextField | undefined
+                    if (!contentField) return
+                    const editorConfig = editorConfigFactory.fromField({
+                      field: contentField as RichTextField
+                    })
+                    ;(siblingData as Record<string, unknown>).content = convertMarkdownToLexical({
+                      markdown: raw,
+                      editorConfig
+                    })
+                  }
+                ]
+              }
+            },
+            {
+              name: 'generateRichText',
+              type: 'checkbox',
+              defaultValue: true,
+              admin: {
+                description:
+                  'When on, saving regenerates the rich text content below from the Markdown. Toggle off to author the rich text by hand.'
+              }
+            },
+            {
               name: 'content',
               type: 'richText',
               localized: true,
@@ -106,8 +151,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   ]
                 }
               }),
-              label: false,
-              required: true
+              label: false
             }
           ],
           label: 'Content'
@@ -131,6 +175,18 @@ export const Posts: CollectionConfig<'posts'> = {
               relationTo: 'posts'
             },
             {
+              name: 'postType',
+              type: 'select',
+              admin: {
+                position: 'sidebar'
+              },
+              options: [
+                { label: 'Blog', value: 'blog' },
+                { label: 'Field note', value: 'field-note' },
+                { label: 'Announcement', value: 'announcement' }
+              ]
+            },
+            {
               name: 'categories',
               type: 'relationship',
               admin: {
@@ -138,6 +194,15 @@ export const Posts: CollectionConfig<'posts'> = {
               },
               hasMany: true,
               relationTo: 'categories'
+            },
+            {
+              name: 'tags',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar'
+              },
+              hasMany: true,
+              relationTo: 'tags'
             }
           ],
           label: 'Meta'
