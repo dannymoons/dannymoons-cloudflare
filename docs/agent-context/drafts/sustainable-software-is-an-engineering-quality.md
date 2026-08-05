@@ -1,7 +1,7 @@
 ---
 title: "Sustainable Software Is an Engineering Quality"
 description: "Green hosting is not enough. Sustainable software means making better decisions about architecture, dependencies, content, and maintainability — long before you pick a server."
-date: 2026-08-03
+date: 2026-02-11
 topic: Sustainable Software
 tags: [sustainable-software, performance, maintainability, architecture]
 status: published
@@ -9,7 +9,7 @@ status: published
 
 # Sustainable Software Is an Engineering Quality
 
-I often see websites that claim to be sustainable because they switched to a green hosting provider. Sometimes they even display a carbon badge in the footer. Done. Sustainable website achieved.
+I often see websites that claim to be sustainable because they switched to a green hosting provider. Sometimes they even display a [carbon badge in the footer](https://www.thegreenwebfoundation.org). Done. Sustainable website achieved.
 
 I understand the impulse. Green hosting is better than gray hosting. But if that same site still loads 8 MB of JavaScript, serves uncompressed hero images, runs five analytics tools, and has dependencies nobody remembers adding — then the hosting provider is not the problem. The waste was designed and built in long before the request reached the server.
 
@@ -72,7 +72,7 @@ But most sustainable choices also improve other qualities: speed, cost, reliabil
 
 If you want to make your website or product more sustainable, start here:
 
-1. Measure page weight and Core Web Vitals.
+1. Measure page weight and [Core Web Vitals](https://web.dev/vitals/).
 2. Inventory your third-party scripts and remove what you do not need.
 3. Review your dependency tree for unused or heavy packages.
 4. Check how easy it is to update your system in two years.

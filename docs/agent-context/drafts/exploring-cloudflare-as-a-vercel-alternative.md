@@ -11,11 +11,11 @@ status: published
 
 This is not a migration story. I have not moved my site yet. This is an exploration — testing whether Cloudflare can do what Vercel does, and whether it can prove green energy in a way Vercel could not.
 
-## Why I started looking
+## Why I started looking at different hosting for my Next.js websites
 
 Vercel works well. Deployments are smooth, developer experience is excellent. But I ran into a problem when I tried to verify that my site runs on green energy.
 
-I checked my site with <a href="https://www.thegreenwebfoundation.org" target="_blank" rel="noopener">The Green Web Foundation</a> and <a href="https://carbonfooter.nl" target="_blank" rel="noopener">Carbonfooter</a>. The results were not clear enough. And when I asked Vercel for transparent proof about their energy sourcing, I could not get what I needed.
+I checked my site with [The Green Web Foundation](https://www.thegreenwebfoundation.org) and [Carbonfooter](https://carbonfooter.nl). The results were not clear enough. And when I asked Vercel for transparent proof about their energy sourcing, I could not get what I needed.
 
 That made me wonder: if I host on a platform that is transparent about its energy, could I get a clear green verification? And what would I have to give up to make that switch?
 
@@ -33,7 +33,7 @@ The plan was clear: migrate the database, connect a domain, and check three thin
 
 This was the main question, and the answer is positive.
 
-After setting up the dev environment and running the checks, both <a href="https://www.thegreenwebfoundation.org" target="_blank" rel="noopener">The Green Web Foundation</a> and <a href="https://carbonfooter.nl" target="_blank" rel="noopener">Carbonfooter</a> confirmed that the site runs on verified green energy. Cloudflare is transparent about its energy sourcing, and that shows in the verification tools.
+After setting up the dev environment and running the checks, both [The Green Web Foundation](https://www.thegreenwebfoundation.org) and [Carbonfooter](https://carbonfooter.nl) confirmed that the site runs on verified green energy. Cloudflare is transparent about its energy sourcing, and that shows in the verification tools.
 
 That alone makes the exploration worthwhile. If the goal is to host a site on provably green infrastructure, Cloudflare delivers where Vercel could not.
 
