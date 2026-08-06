@@ -11,6 +11,7 @@ import { Categories } from './collections/categories'
 import { Media } from './collections/media'
 import { Pages } from './collections/pages'
 import { Posts } from './collections/posts'
+import { Tags } from './collections/tags'
 import { TeamMembers } from './collections/team-members'
 import { Testimonials } from './collections/testimonials'
 import { Users } from './collections/users'
@@ -65,6 +66,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
+    meta: {
+      // Disable Payload's auto-generated OG images (`/api/og`). The site never
+      // uses them, and without this Payload's static `next/og.js` import pulls
+      // ~2.6 MiB of @vercel/og wasm into the Workers bundle. See next.config.ts.
+      defaultOGImageType: 'off',
+    },
     livePreview: {
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
@@ -76,6 +83,7 @@ export default buildConfig({
   editor: defaultLexical,
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
+    push: false,
     // Migrations are applied via `pnpm payload migrate` / `deploy:database`
     // (not on connect) so `next build` does not mutate remote D1.
   }),
@@ -84,6 +92,7 @@ export default buildConfig({
     Media,
     Pages,
     Posts,
+    Tags,
     TeamMembers,
     Testimonials,
     Users,
@@ -120,7 +129,7 @@ export default buildConfig({
   },
   localization: {
     locales: ['en', 'nl'],
-    defaultLocale: 'nl',
+    defaultLocale: 'en',
   },
 })
 

@@ -23,7 +23,7 @@ type Args = {
 
 export async function generateStaticParams() {
 	const payload = await getPayload({ config: configPromise })
-	const locales = ['nl', 'en'] as const
+	const locales = ['en'] as const
 	const results: { slug: string; lang: string }[] = []
 
 	for (const lang of locales) {
@@ -47,10 +47,10 @@ export async function generateStaticParams() {
 
 export default async function WikiDocPage({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
-	const { slug = '', lang = 'nl' } = await paramsPromise
+	const { slug = '', lang = 'en' } = await paramsPromise
 	const locale = lang as Locale
 	const decodedSlug = decodeURIComponent(slug)
-	const url = `/${lang}/docs/${decodedSlug}`
+	const url = `/docs/${decodedSlug}`
 	const doc = await queryWikiBySlug({ slug: decodedSlug, lang })
 
 	if (!doc) return <PayloadRedirects url={url} />
@@ -81,7 +81,7 @@ export default async function WikiDocPage({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-	const { slug = '', lang = 'nl' } = await paramsPromise
+	const { slug = '', lang = 'en' } = await paramsPromise
 	const decodedSlug = decodeURIComponent(slug)
 	const doc = await queryWikiBySlug({ slug: decodedSlug, lang })
 

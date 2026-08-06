@@ -1,82 +1,98 @@
+import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 
-import type { Footer as FooterType, Setting } from '@/payload-types'
-
-import { FooterColumn } from '@/components/footer/footer-columns'
-import { FooterLinks } from '@/components/footer/footer-links'
-import {
-	FooterCopyright,
-	FooterCredits,
-	FooterSocialLinks
-} from '@/components/footer/footer-credits'
-import { Wordmark } from '@/components/brand/wordmark'
-import { CMSLink } from '@/components/content/cms-link'
+import { Heading } from '@/components/content/heading'
 import { Container } from '@/components/layout/container'
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { localizePath, type Locale } from '@/utilities/locale'
 
-export async function Footer({ locale }: { locale: Locale }) {
-	const [footer, settings] = await Promise.all([
-		getCachedGlobal('footer', locale, 1)() as Promise<FooterType>,
-		getCachedGlobal('settings', locale, 1)() as Promise<Setting>
-	])
+export function Footer() {
+  return (
+    <footer className="border-border border-t bg-surface/55 pt-16 pb-7 sm:pt-20">
+      <Container size="wide">
+        <div className="grid gap-12 pb-16 md:grid-cols-2 lg:grid-cols-[1.4fr_0.55fr_0.55fr]">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-3" aria-label="Danny Moons">
+              <span className="grid size-8 place-items-center rounded-full border border-primary/40">
+                <span className="size-2 rounded-full bg-primary" />
+              </span>
+              <span className="font-semibold tracking-[-0.02em]">Danny Moons</span>
+            </Link>
+            <Heading
+              headingLevel="p"
+              size="md"
+              color="foreground"
+              className="mt-7 max-w-lg font-normal text-2xl leading-tight tracking-[-0.025em] sm:text-3xl"
+            >
+              Better digital work starts with clear thinking.
+            </Heading>
+            <p className="mt-5 max-w-md text-muted-foreground text-sm leading-6">
+              Notes on sustainable software engineering, AI agents, and the future of digital
+              products.
+            </p>
+          </div>
 
-	const siteName = settings?.siteName || 'Payload Starter'
-	const columns = footer?.columns ?? []
-	const socialLinks = footer?.socialLinks ?? []
+          <div>
+            <p className="font-mono text-[0.63rem] text-primary uppercase tracking-[0.18em]">
+              Navigate
+            </p>
+            <ul className="mt-5 space-y-3">
+              <li>
+                <Link
+                  href="/#notes"
+                  className="text-muted-foreground text-sm transition-colors hover:text-foreground"
+                >
+                  Notes
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#work"
+                  className="text-muted-foreground text-sm transition-colors hover:text-foreground"
+                >
+                  Work
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#faq"
+                  className="text-muted-foreground text-sm transition-colors hover:text-foreground"
+                >
+                  Questions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#about"
+                  className="text-muted-foreground text-sm transition-colors hover:text-foreground"
+                >
+                  About
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-	return (
-		<footer className='border-border border-t bg-surface pt-16 pb-8'>
-			<Container size='wide'>
-				<div className='mb-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4'>
-					<div className='flex flex-col gap-4'>
-						<Link href={localizePath('/', locale)} aria-label={siteName}>
-							<Wordmark name={siteName} size='lg' />
-						</Link>
-						{footer?.description ? (
-							<p className='max-w-xs text-muted-foreground text-sm leading-relaxed'>
-								{footer.description}
-							</p>
-						) : null}
-					</div>
+          <div>
+            <p className="font-mono text-[0.63rem] text-primary uppercase tracking-[0.18em]">
+              Connect
+            </p>
+            <div className="mt-5 space-y-3">
+              <a
+                href="https://github.com/dannymoons"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+              >
+                GitHub
+                <ArrowUpRight className="size-3.5 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </div>
+        </div>
 
-					{columns.map((column, i) => (
-						<FooterColumn key={column.id ?? i} title={column.label}>
-							<FooterLinks>
-								{(column.navItems ?? []).map((item, j) => (
-									<li key={item.id ?? j} data-slot='footer-link'>
-										<CMSLink
-											{...item.link}
-											locale={locale}
-											appearance='inline'
-											className='text-muted-foreground text-sm transition-colors hover:text-foreground'
-										/>
-									</li>
-								))}
-							</FooterLinks>
-						</FooterColumn>
-					))}
-				</div>
-
-				<FooterCredits className='border-border border-t'>
-					<FooterCopyright companyName={siteName} className='text-muted-foreground' />
-					{socialLinks.length > 0 ? (
-						<FooterSocialLinks>
-							{socialLinks.map((social, i) => (
-								<a
-									key={social.id ?? i}
-									href={social.url}
-									target='_blank'
-									rel='noopener noreferrer'
-									className='rounded-md border border-border px-3 py-1.5 text-muted-foreground text-xs transition-colors hover:text-foreground'
-								>
-									{social.label}
-								</a>
-							))}
-						</FooterSocialLinks>
-					) : null}
-				</FooterCredits>
-			</Container>
-		</footer>
-	)
+        <div className="flex flex-col gap-3 border-border border-t pt-6 text-[0.68rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Danny Moons</p>
+          <p>Built with care for speed, clarity, and impact.</p>
+        </div>
+      </Container>
+    </footer>
+  )
 }

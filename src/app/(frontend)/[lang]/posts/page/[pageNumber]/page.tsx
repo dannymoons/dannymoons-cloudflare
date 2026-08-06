@@ -5,34 +5,20 @@ import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 
 import { PostsArchive } from '@/components/sections/posts-archive'
-import { type Locale } from '@/utilities/locale'
 import PageClient from './page.client'
 
 export const revalidate = 600
 
 const POSTS_PER_PAGE = 12
 
-const COPY: Record<Locale, { title: string; description: string }> = {
-	nl: {
-		title: 'Artikelen',
-		description: 'Lees de laatste artikelen, inzichten en updates van ons team.',
-	},
-	en: {
-		title: 'Articles',
-		description: 'Read the latest articles, insights and updates from our team.',
-	},
-}
-
 type Args = {
 	params: Promise<{
 		pageNumber: string
-		lang?: string
 	}>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
-	const { pageNumber, lang = 'nl' } = await paramsPromise
-	const locale = lang as Locale
+	const { pageNumber } = await paramsPromise
 	const payload = await getPayload({ config: configPromise })
 
 	const sanitizedPageNumber = Number(pageNumber)
@@ -45,25 +31,24 @@ export default async function Page({ params: paramsPromise }: Args) {
 		limit: POSTS_PER_PAGE,
 		page: sanitizedPageNumber,
 		overrideAccess: false,
-		locale,
+		locale: 'en',
 		select: {
 			title: true,
 			slug: true,
 			categories: true,
+			tags: true,
+			postType: true,
 			meta: true,
 		},
 	})
-
-	const copy = COPY[locale]
 
 	return (
 		<div className="pt-24">
 			<PageClient />
 			<PostsArchive
 				posts={posts.docs}
-				locale={locale}
-				heading={copy.title}
-				description={copy.description}
+				heading="Articles"
+				description="Read the latest articles, insights, and updates from Danny."
 				page={posts.page ?? sanitizedPageNumber}
 				totalPages={posts.totalPages}
 			/>
@@ -72,17 +57,16 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-	const { pageNumber, lang = 'nl' } = await paramsPromise
-	const locale = lang as Locale
+	const { pageNumber } = await paramsPromise
 
 	return {
-		title: `${COPY[locale].title} — ${pageNumber}`,
+		title: `Articles — ${pageNumber}`,
 	}
 }
 
 export async function generateStaticParams() {
 	const payload = await getPayload({ config: configPromise })
-	const locales = ['nl', 'en'] as const
+	const locales = ['en'] as const
 	const results: { pageNumber: string; lang: string }[] = []
 
 	for (const lang of locales) {

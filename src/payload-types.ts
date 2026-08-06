@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     posts: Post;
+    tags: Tag;
     'team-members': TeamMember;
     testimonials: Testimonial;
     users: User;
@@ -97,6 +98,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -407,7 +409,15 @@ export interface Post {
   id: number;
   title: string;
   heroImage?: (number | null) | Media;
-  content: {
+  /**
+   * The source of truth. Pasting Markdown and saving regenerates the rich text content below from this.
+   */
+  markdown?: string | null;
+  /**
+   * When on, saving regenerates the rich text content below from the Markdown. Toggle off to author the rich text by hand.
+   */
+  generateRichText?: boolean | null;
+  content?: {
     root: {
       type: string;
       children: {
@@ -421,9 +431,11 @@ export interface Post {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   relatedPosts?: (number | Post)[] | null;
+  postType?: ('blog' | 'field-note' | 'announcement') | null;
   categories?: (number | Category)[] | null;
+  tags?: (number | Tag)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -448,6 +460,21 @@ export interface Post {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2380,6 +2407,10 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
+        relationTo: 'tags';
+        value: number | Tag;
+      } | null)
+    | ({
         relationTo: 'team-members';
         value: number | TeamMember;
       } | null)
@@ -3437,9 +3468,13 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
+  markdown?: T;
+  generateRichText?: T;
   content?: T;
   relatedPosts?: T;
+  postType?: T;
   categories?: T;
+  tags?: T;
   meta?:
     | T
     | {
@@ -3460,6 +3495,17 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

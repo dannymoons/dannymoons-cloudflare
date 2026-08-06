@@ -1,110 +1,108 @@
+import { ArrowUpRight, AudioLines, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
-import type { Header as HeaderType, Media as MediaType, Setting } from '@/payload-types'
-
-import { Header as HeaderShell } from '@/components/header/header'
-import { Navbar, NavbarActions, NavbarBrand, NavbarContent } from '@/components/header/navbar'
-import { Nav } from '@/components/header/nav'
-import { MobileMenu } from '@/components/header/mobile-menu'
-import { Logo } from '@/components/brand/logo'
-import { Wordmark } from '@/components/brand/wordmark'
-import { CMSLink } from '@/components/content/cms-link'
-import { LocaleSwitcher } from '@/components/content/locale-switcher'
 import { Container } from '@/components/layout/container'
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { localizePath, type Locale } from '@/utilities/locale'
+import { Header as HeaderShell } from '@/components/header/header'
+import { MobileMenu } from '@/components/header/mobile-menu'
+import { Nav } from '@/components/header/nav'
+import {
+  Navbar,
+  NavbarActions,
+  NavbarBrand,
+  NavbarContent
+} from '@/components/header/navbar'
 
-function Brand({
-	logo,
-	siteName,
-	href
-}: {
-	logo?: HeaderType['logo']
-	siteName: string
-	href: string
-}) {
-	const media = typeof logo === 'object' && logo !== null ? (logo as MediaType) : null
+export function SiteHeader() {
+  return (
+    <HeaderShell border='glass' className='bg-background/76'>
+      <Container size='wide' padding='none'>
+        <Navbar className='h-[4.5rem]'>
+          <NavbarBrand>
+            <Link
+              href='/'
+              className='group flex items-center gap-3'
+              aria-label='Danny Moons'
+            >
+              <span className='relative grid size-8 place-items-center rounded-full border border-primary/45 bg-primary/8'>
+                <span className='size-2 rounded-full bg-primary transition-transform duration-300 group-hover:scale-125' />
+                <span className='absolute inset-1 rounded-full border border-primary/35 border-dashed' />
+              </span>
+              <span className='font-semibold text-foreground text-sm tracking-[-0.02em] sm:text-base'>
+                Danny Moons
+              </span>
+            </Link>
+          </NavbarBrand>
 
-	return (
-		<Link href={href} className='flex items-center gap-2.5' aria-label={siteName}>
-			{media?.url ? (
-				<Logo src={media.url} alt={media.alt || siteName} size='sm' priority='high' />
-			) : (
-				<Wordmark name={siteName} size='lg' />
-			)}
-		</Link>
-	)
-}
+          <NavbarContent className='justify-center'>
+            <Nav aria-label='Primary'>
+              <Link
+                href='/#notes'
+                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
+              >
+                Notes
+              </Link>
+              <Link
+                href='/#work'
+                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
+              >
+                Work
+              </Link>
+              <Link
+                href='/#faq'
+                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
+              >
+                Questions
+              </Link>
+              <Link
+                href='/#about'
+                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
+              >
+                About
+              </Link>
+            </Nav>
+          </NavbarContent>
 
-export async function SiteHeader({ locale }: { locale: Locale }) {
-	const [header, settings] = await Promise.all([
-		getCachedGlobal('header', locale, 1)() as Promise<HeaderType>,
-		getCachedGlobal('settings', locale, 1)() as Promise<Setting>
-	])
-
-	const siteName = settings?.siteName || 'Payload Starter'
-	const navItems = header?.navItems ?? []
-	const homeHref = localizePath('/', locale)
-	const cta = header?.cta
-
-	return (
-		<HeaderShell border='glass'>
-			<Container size='wide' padding='none'>
-				<Navbar>
-					<NavbarBrand>
-						<Brand logo={header?.logo} siteName={siteName} href={homeHref} />
-					</NavbarBrand>
-
-					<NavbarContent className='justify-center'>
-						<Nav aria-label='Primary'>
-							{navItems.map((item, i) => (
-								<CMSLink
-									key={item.id ?? i}
-									{...item.link}
-									locale={locale}
-									appearance='inline'
-									className='px-3 py-1.5 font-medium text-foreground/70 text-sm transition-colors hover:text-foreground'
-								/>
-							))}
-						</Nav>
-					</NavbarContent>
-
-					<NavbarActions>
-						<LocaleSwitcher locale={locale} />
-						{cta?.enabled && cta.link ? (
-							<CMSLink
-								{...cta.link}
-								locale={locale}
-								appearance={cta.link.appearance === 'outline' ? 'ghost' : 'primary'}
-								size='sm'
-								className='hidden sm:inline-flex'
-							/>
-						) : null}
-						<MobileMenu>
-							<Nav orientation='vertical'>
-								{navItems.map((item, i) => (
-									<CMSLink
-										key={item.id ?? i}
-										{...item.link}
-										locale={locale}
-										appearance='inline'
-										className='px-3 py-2 font-medium text-foreground/80 text-sm transition-colors hover:text-foreground'
-									/>
-								))}
-								{cta?.enabled && cta.link ? (
-									<CMSLink
-										{...cta.link}
-										locale={locale}
-										appearance='primary'
-										size='sm'
-										className='mt-2'
-									/>
-								) : null}
-							</Nav>
-						</MobileMenu>
-					</NavbarActions>
-				</Navbar>
-			</Container>
-		</HeaderShell>
-	)
+          <NavbarActions>
+            <a
+              href='https://www.linkedin.com/in/danny-moons/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='group hidden h-9 items-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-foreground text-xs transition-colors hover:border-primary/40 hover:bg-elevated sm:inline-flex'
+            >
+              Let's connect
+              <AudioLines className='size-3.5 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+            </a>
+            <MobileMenu side='right' contentClassName='bg-background'>
+              <Nav orientation='vertical'>
+                <Link
+                  href='/#notes'
+                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
+                >
+                  Notes
+                </Link>
+                <Link
+                  href='/#work'
+                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
+                >
+                  Work
+                </Link>
+                <Link
+                  href='/#faq'
+                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
+                >
+                  Questions
+                </Link>
+                <Link
+                  href='/#about'
+                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
+                >
+                  About
+                </Link>
+              </Nav>
+            </MobileMenu>
+          </NavbarActions>
+        </Navbar>
+      </Container>
+    </HeaderShell>
+  )
 }

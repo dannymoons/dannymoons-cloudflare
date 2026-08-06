@@ -2643,7 +2643,7 @@ export async function seed({ payload }: { payload: Payload }): Promise<void> {
 
 	// 10. Globals.
 	await seedGlobal('settings', {
-		siteName: 'Payload Starter',
+		siteName: 'Danny Moons',
 		tagline: L(
 			'Een meertalige Payload + Next.js starter.',
 			'A multilingual Payload + Next.js starter.'

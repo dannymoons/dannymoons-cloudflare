@@ -42,7 +42,12 @@ const nextConfig: NextConfig = {
   },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
-  serverExternalPackages: ['jose', 'pg-cloudflare', 'sharp'],
+  // `@payloadcms/drizzle/sqlite` hosts Payload's `requireDrizzleKit`, which CJS-requires
+  // `drizzle-kit/api` (schema-push tooling that is dead at runtime). Turbopack externalizes it
+  // as a hashed chunk (e.g. `drizzle-kit-<hash>/api`) that OpenNext's esbuild cannot resolve.
+  // Externalizing the importing module instead leaves a plain specifier that esbuild resolves.
+  // `drizzle-kit` is a direct devDependency so that specifier resolves during the OpenNext build.
+  serverExternalPackages: ['@payloadcms/drizzle/sqlite', 'drizzle-kit', 'jose', 'pg-cloudflare', 'sharp'],
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
@@ -56,6 +61,14 @@ const nextConfig: NextConfig = {
   redirects,
   turbopack: {
     root: path.resolve(dirname),
+    resolveAlias: {
+      // Payload statically imports `next/og.js` for its auto-registered `/api/og`
+      // endpoint, dragging ~2.6 MiB of `@vercel/og` (resvg.wasm, index.node/edge,
+      // yoga.wasm, fonts) into every payload route. The site never generates OG
+      // images (`admin.meta.defaultOGImageType: 'off'`), so alias the only
+      // importer to a stub to keep the Workers bundle under the gzip size limit.
+      'next/og.js': './src/lib/og-shim.ts',
+    },
   },
   experimental: {
     useTypeScriptCli: true,

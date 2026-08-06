@@ -3,7 +3,7 @@
  * the SEO plugin defaults, etc.). Change these in one spot rather than hunting
  * through individual files.
  */
-export const SITE_NAME = 'Payload Starter'
+export const SITE_NAME = 'Danny Moons'
 
 export const SITE_DESCRIPTION =
-	'A multilingual Payload CMS + Next.js starter with a block-based page builder.'
+	'Software engineer and builder exploring sustainable software, AI agents, and the future of the web.'

@@ -34,7 +34,7 @@ const getPagesSitemap = unstable_cache(
     // Static utility pages (same slug across locales)
     const staticPages = ['/search', '/posts']
     const staticEntries = staticPages.map((path) => ({
-      loc: `${SITE_URL}${localizePath(path, 'nl')}`,
+      loc: `${SITE_URL}${localizePath(path, 'en')}`,
       lastmod: dateFallback,
       alternateRefs: LOCALES.map((locale) => ({
         href: `${SITE_URL}${localizePath(path, locale)}`,
@@ -56,13 +56,12 @@ const getPagesSitemap = unstable_cache(
               return [{ href: `${SITE_URL}${localizePath(path, locale)}`, hreflang: locale }]
             })
 
-            // Use the default (NL) slug as the canonical loc
-            const nlSlug = slugByLocale['nl']
-            if (!nlSlug) return null
-            const canonicalPath = nlSlug === 'home' ? '/' : `/${nlSlug}`
+            const enSlug = slugByLocale.en
+            if (!enSlug) return null
+            const canonicalPath = enSlug === 'home' ? '/' : `/${enSlug}`
 
             return {
-              loc: `${SITE_URL}${localizePath(canonicalPath, 'nl')}`,
+              loc: `${SITE_URL}${localizePath(canonicalPath, 'en')}`,
               lastmod,
               alternateRefs,
             }

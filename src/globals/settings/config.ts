@@ -17,7 +17,7 @@ export const Settings: GlobalConfig = {
 			name: 'siteName',
 			type: 'text',
 			required: true,
-			defaultValue: 'Payload Starter'
+			defaultValue: 'Danny Moons'
 		},
 		{
 			name: 'tagline',

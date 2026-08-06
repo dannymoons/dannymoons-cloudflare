@@ -1,83 +1,88 @@
 import { Heading } from '@/components/content/heading'
-import { PostCard } from '@/components/cards/post-card'
-import type { PostCardProps } from '@/components/cards/post-card'
+import { PostCard, type PostCardProps } from '@/components/cards/post-card'
 import { Container } from '@/components/layout/container'
-import { Section } from '@/components/layout/section'
-import { Grid } from '@/components/layout/grid'
-import { Stack } from '@/components/layout/stack'
-import { Divider } from '@/components/layout/divider'
 
 export interface ArticleFooterAuthor {
-	name: string
-	role?: string
-	bio?: string
-	avatar?: string
+  name: string
+  role?: string
+  bio?: string
+  avatar?: string
 }
 
 export interface ArticleFooterProps {
-	author?: ArticleFooterAuthor
-	tags?: string[]
-	relatedPosts?: Omit<PostCardProps, 'className'>[]
+  author?: ArticleFooterAuthor
+  tags?: string[]
+  relatedPosts?: Omit<PostCardProps, 'className'>[]
 }
 
 export function ArticleFooter({ author, tags, relatedPosts }: ArticleFooterProps) {
-	return (
-		<Section spacing='md' background='transparent'>
-			<Container size='default'>
-				<Stack gap='xl'>
-					{tags && tags.length > 0 && (
-						<div>
-							<Divider className='mb-6' />
-							<div className='flex flex-wrap gap-2'>
-								{tags.map(tag => (
-									<span
-										key={tag}
-										className='rounded-full border border-border bg-accent px-3 py-1 text-muted-foreground text-xs'
-									>
-										{tag}
-									</span>
-								))}
-							</div>
-						</div>
-					)}
-					{author && (
-						<div className='rounded-xl border border-border bg-card p-6'>
-							<div className='flex items-start gap-4'>
-								{author.avatar && (
-									<img
-										src={author.avatar}
-										alt={author.name}
-										className='h-14 w-14 shrink-0 rounded-full object-cover'
-									/>
-								)}
-								<div>
-									<p className='font-semibold text-foreground text-sm'>{author.name}</p>
-									{author.role && (
-										<p className='mb-2 text-primary text-xs'>{author.role}</p>
-									)}
-									{author.bio && (
-										<p className='text-muted-foreground text-sm leading-relaxed'>
-											{author.bio}
-										</p>
-									)}
-								</div>
-							</div>
-						</div>
-					)}
-					{relatedPosts && relatedPosts.length > 0 && (
-						<div>
-							<Heading headingLevel='h3' size='md' className='mb-6'>
-								Gerelateerde artikelen
-							</Heading>
-							<Grid cols={relatedPosts.length as 2 | 3} gap='md'>
-								{relatedPosts.map(post => (
-									<PostCard key={post.href} {...post} />
-								))}
-							</Grid>
-						</div>
-					)}
-				</Stack>
-			</Container>
-		</Section>
-	)
+  return (
+    <section className="border-border border-b bg-surface/35 py-section-lg">
+      <Container size="wide">
+        {tags && tags.length > 0 && (
+          <div className="mb-12 flex flex-wrap gap-2 border-border border-b pb-8">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-[0.65rem] text-muted-foreground uppercase tracking-[0.12em]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {author && (
+          <div className="mb-14 max-w-2xl rounded-[var(--radius-xl)] border border-border bg-surface p-7">
+            <div className="flex items-start gap-4">
+              {author.avatar && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={author.avatar}
+                  alt={author.name}
+                  className="size-14 shrink-0 rounded-full object-cover"
+                />
+              )}
+              <div>
+                <p className="font-semibold text-foreground text-sm">{author.name}</p>
+                {author.role && (
+                  <p className="mt-1 font-mono text-[0.65rem] text-primary uppercase tracking-[0.12em]">
+                    {author.role}
+                  </p>
+                )}
+                {author.bio && (
+                  <p className="mt-3 text-muted-foreground text-sm leading-6">{author.bio}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {relatedPosts && relatedPosts.length > 0 && (
+          <div>
+            <div className="mb-10 grid gap-5 lg:grid-cols-[0.4fr_1fr] lg:items-end">
+              <div className="flex items-center gap-4 font-mono text-[0.65rem] uppercase tracking-[0.18em]">
+                <span className="text-primary">Next</span>
+                <span className="h-px w-8 bg-border" />
+                <span className="text-muted-foreground">From the notebook</span>
+              </div>
+              <Heading
+                headingLevel="h2"
+                size="lg"
+                color="foreground"
+                className="font-medium tracking-[-0.04em]"
+              >
+                Continue reading.
+              </Heading>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {relatedPosts.map((post) => (
+                <PostCard key={post.href} {...post} />
+              ))}
+            </div>
+          </div>
+        )}
+      </Container>
+    </section>
+  )
 }

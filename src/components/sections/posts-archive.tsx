@@ -10,33 +10,20 @@ import { Eyebrow } from '@/components/content/eyebrow'
 import { PostCard } from '@/components/cards/post-card'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
-import { localizePath, type Locale } from '@/utilities/locale'
+import { postTypeLabel } from '@/utilities/post-type'
 import type { Post } from '@/payload-types'
 
-type ArchivePost = Pick<Post, 'id' | 'title' | 'slug' | 'meta' | 'categories'>
+type ArchivePost = Pick<
+	Post,
+	'id' | 'title' | 'slug' | 'meta' | 'categories' | 'tags' | 'postType'
+>
 
-const COPY: Record<Locale, { fallbackCategory: string; empty: string; previous: string; next: string }> = {
-	nl: {
-		fallbackCategory: 'Artikel',
-		empty: 'Er zijn nog geen artikelen.',
-		previous: 'Vorige',
-		next: 'Volgende',
-	},
-	en: {
-		fallbackCategory: 'Article',
-		empty: 'There are no articles yet.',
-		previous: 'Previous',
-		next: 'Next',
-	},
-}
-
-function postsPageHref(page: number, locale: Locale) {
-	return localizePath(page <= 1 ? '/posts' : `/posts/page/${page}`, locale)
+function postsPageHref(page: number) {
+	return page <= 1 ? '/posts' : `/posts/page/${page}`
 }
 
 interface PostsArchiveProps {
 	posts: ArchivePost[]
-	locale: Locale
 	eyebrow?: string
 	heading: string
 	description?: string
@@ -46,15 +33,12 @@ interface PostsArchiveProps {
 
 export function PostsArchive({
 	posts,
-	locale,
 	eyebrow,
 	heading,
 	description,
 	page = 1,
 	totalPages = 1,
 }: PostsArchiveProps) {
-	const copy = COPY[locale]
-
 	return (
 		<Section spacing='lg'>
 			<Container>
@@ -69,13 +53,18 @@ export function PostsArchive({
 				</Stack>
 
 				{posts.length === 0 ? (
-					<p className='text-muted-foreground'>{copy.empty}</p>
+					<p className='text-muted-foreground'>There are no articles yet.</p>
 				) : (
 					<Grid cols={3} gap='md'>
 						{posts.map((post) => {
 							const category = (post.categories ?? []).find(
 								(value) => typeof value === 'object' && value?.title,
 							)
+							const tagTitles = (post.tags ?? [])
+								.map((tag) =>
+									typeof tag === 'object' ? tag?.title : null,
+								)
+								.filter((value): value is string => Boolean(value))
 
 							return (
 								<PostCard
@@ -83,12 +72,14 @@ export function PostsArchive({
 									category={
 										typeof category === 'object' && category?.title
 											? category.title
-											: copy.fallbackCategory
+											: 'Article'
 									}
+									postType={postTypeLabel(post.postType)}
+									tags={tagTitles}
 									title={post.title}
 									excerpt={post.meta?.description ?? ''}
 									readMinutes={5}
-									href={localizePath(`/posts/${post.slug}`, locale)}
+									href={`/posts/${post.slug}`}
 								/>
 							)
 						})}
@@ -101,7 +92,7 @@ export function PostsArchive({
 						className='mt-12 flex items-center justify-center gap-2'
 					>
 						<Link
-							href={postsPageHref(page - 1, locale)}
+							href={postsPageHref(page - 1)}
 							aria-disabled={page <= 1}
 							tabIndex={page <= 1 ? -1 : undefined}
 							className={cn(
@@ -111,13 +102,13 @@ export function PostsArchive({
 							)}
 						>
 							<ChevronLeft className='h-4 w-4' />
-							{copy.previous}
+							Previous
 						</Link>
 
 						{Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
 							<Link
 								key={pageNumber}
-								href={postsPageHref(pageNumber, locale)}
+								href={postsPageHref(pageNumber)}
 								aria-current={pageNumber === page ? 'page' : undefined}
 								className={cn(
 									buttonVariants({
@@ -131,7 +122,7 @@ export function PostsArchive({
 						))}
 
 						<Link
-							href={postsPageHref(page + 1, locale)}
+							href={postsPageHref(page + 1)}
 							aria-disabled={page >= totalPages}
 							tabIndex={page >= totalPages ? -1 : undefined}
 							className={cn(
@@ -140,7 +131,7 @@ export function PostsArchive({
 								page >= totalPages && 'pointer-events-none opacity-50',
 							)}
 						>
-							{copy.next}
+							Next
 							<ChevronRight className='h-4 w-4' />
 						</Link>
 					</nav>

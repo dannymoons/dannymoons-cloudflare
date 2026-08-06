@@ -1,14 +1,10 @@
 import { Paragraph } from '@/components/content/paragraph'
-import { List, ListItem } from '@/components/content/list'
 // import { textStyles } from 'components/content/Text'
 import { cn } from '@/utilities/ui'
 import type {
 	DefaultNodeTypes,
-	SerializedLinkNode,
-	SerializedHeadingNode,
-	SerializedTextNode,
-	SerializedListNode,
-	SerializedListItemNode
+	SerializedBlockNode,
+	SerializedHeadingNode
 } from '@payloadcms/richtext-lexical'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
@@ -17,9 +13,6 @@ import {
 	LinkJSXConverter,
 	RichText as RichTextWithoutBlocks
 } from '@payloadcms/richtext-lexical/react'
-
-import { Fragment } from 'react'
-import Link from 'next/link'
 
 import Heading from '@/components/content/heading'
 import { Image } from '@/components/content/image'
@@ -36,158 +29,103 @@ const headingSizes: Record<string, 'sm' | 'md' | 'lg'> = {
 
 type NodeTypes =
 	| DefaultNodeTypes
+	| SerializedBlockNode<{
+		blockType: 'Code'
+		code: string
+		language?: string
+	}>
 	| SerializedHeadingNode
-	| SerializedTextNode
-	| SerializedLinkNode
-	| SerializedListNode
-	| SerializedListItemNode
 
 type TextSize = 'sm' | 'md' | 'lg'
 
-const jsxConverters =
-	(textSize?: TextSize): JSXConvertersFunction<NodeTypes> =>
-	({ defaultConverters }) => ({
+type RichTextNode = {
+	children?: RichTextNode[]
+	tag?: string
+	text?: string
+	type?: string
+}
+
+export type TableOfContentsItem = {
+	id: string
+	level: 2 | 3
+	text: string
+}
+
+function getNodeText(node: RichTextNode): string {
+	if (node.type === 'text') return node.text ?? ''
+	return (node.children ?? []).map(getNodeText).join('')
+}
+
+function getUniqueHeadingID(text: string, counts: Map<string, number>): string {
+	const base =
+		text
+			.toLowerCase()
+			.normalize('NFKD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/^-|-$/g, '') || 'section'
+	const count = counts.get(base) ?? 0
+	counts.set(base, count + 1)
+	return count === 0 ? base : `${base}-${count + 1}`
+}
+
+export function getTableOfContents(data: SerializedEditorState): TableOfContentsItem[] {
+	const counts = new Map<string, number>()
+	const nodes = data.root.children as RichTextNode[]
+
+	return nodes.flatMap((node) => {
+		if (node.type !== 'heading' || (node.tag !== 'h2' && node.tag !== 'h3')) return []
+		const text = getNodeText(node).trim()
+		if (!text) return []
+
+		return [{ id: getUniqueHeadingID(text, counts), level: node.tag === 'h2' ? 2 : 3, text }]
+	})
+}
+
+const jsxConverters = (textSize?: TextSize): JSXConvertersFunction<NodeTypes> => {
+	const headingCounts = new Map<string, number>()
+
+	return ({ defaultConverters }) => ({
 		...defaultConverters,
 		...{ ...LinkJSXConverter },
-		paragraph: ({ node }) => (
+		blocks: {
+			...defaultConverters.blocks,
+			Code: ({ node }) => {
+				const { code, language } = node.fields
+				return (
+					<pre className='my-8 max-w-full overflow-x-auto rounded-xl bg-muted p-4 text-sm leading-6'>
+						<code data-language={language || undefined}>{code}</code>
+					</pre>
+				)
+			}
+		},
+		paragraph: ({ node, nodesToJSX }) => (
 			<Paragraph
-				color='default'
+				color='foreground'
 				marginBottom={'none'}
 				marginTop={'none'}
 				size={textSize || 'lg'}
 			>
-				{node.children?.map((child, index) => {
-					switch (child.type) {
-						case 'text':
-							return (
-								<Fragment
-									key={`text-${index}-${(child as SerializedTextNode).text}`}
-								>
-									{(child as SerializedTextNode).text}
-								</Fragment>
-							)
-						case 'link':
-							return (
-								<Link
-									className='underline'
-									key={`link-${index}-${(child as SerializedLinkNode).fields.url}`}
-									href={(child as SerializedLinkNode).fields.url || ''}
-								>
-									{(child as SerializedLinkNode).children.map(
-										(linkChild, linkIndex) => (
-											<Fragment
-												key={`link-child-${linkIndex}-${(linkChild as SerializedTextNode).text}`}
-											>
-												{linkChild.type === 'text'
-													? (linkChild as SerializedTextNode).text
-													: null}
-											</Fragment>
-										)
-									)}
-								</Link>
-							)
-						default:
-							return null
-					}
-				})}
+				{nodesToJSX({ nodes: node.children })}
 			</Paragraph>
 		),
-		heading: ({ node }) => {
+		heading: ({ node, nodesToJSX }) => {
 			const tag = (node as SerializedHeadingNode).tag
+			const text = getNodeText(node as RichTextNode).trim()
+			const id =
+				tag === 'h2' || tag === 'h3' ? getUniqueHeadingID(text, headingCounts) : undefined
 			return (
-			<Heading headingLevel={tag} size={headingSizes[tag] ?? 'md'} className='mt-2'>
-				{node.children.map((child, index) => {
-					switch (child.type) {
-						case 'text':
-							return (
-								<Fragment
-									key={`heading-text-${index}-${(child as SerializedTextNode).text}`}
-								>
-									{(child as SerializedTextNode).text}
-								</Fragment>
-							)
-						case 'link':
-							return (
-								<Link
-									className='underline'
-									key={`heading-link-${index}-${(child as SerializedLinkNode).fields.url}`}
-									href={(child as SerializedLinkNode).fields.url || ''}
-								>
-									{(child as SerializedLinkNode).children.map(
-										(linkChild, linkIndex) => (
-											<Fragment
-												key={`heading-link-child-${linkIndex}-${(linkChild as SerializedTextNode).text}`}
-											>
-												{linkChild.type === 'text'
-													? (linkChild as SerializedTextNode).text
-													: null}
-											</Fragment>
-										)
-									)}
-								</Link>
-							)
-						default:
-							return null
-					}
-				})}
-			</Heading>
+				<Heading
+					headingLevel={tag}
+					size={headingSizes[tag] ?? 'md'}
+					color='foreground'
+					className='mt-2 scroll-mt-28'
+					id={id}
+				>
+					{nodesToJSX({ nodes: node.children })}
+				</Heading>
 			)
 		},
-		list: ({ node }) => (
-			<Fragment>
-				{(node as SerializedListNode).children.length > 0 && (
-					<List listType={node.tag}>
-						{(node as SerializedListNode).children.map((child, index) => {
-							return (
-								<ListItem
-									key={`list-item-${crypto.randomUUID()}`}
-									className='my-2 list-disc @xl:text-xl text-lg'
-								>
-									{(child as SerializedListItemNode).children.map(
-										(child, childIndex) => {
-											switch (child.type) {
-												case 'text':
-													return (
-														<Fragment
-															key={`list-text-${childIndex}-${(child as SerializedTextNode).text}`}
-														>
-															{(child as SerializedTextNode).text}
-														</Fragment>
-													)
-												case 'link':
-													return (
-														<Link
-															className='underline'
-															key={`list-link-${childIndex}-${(child as SerializedLinkNode).fields.url}`}
-															href={
-																(child as SerializedLinkNode).fields.url || ''
-															}
-														>
-															{(child as SerializedLinkNode).children.map(
-																(linkChild, linkIndex) => (
-																	<Fragment
-																		key={`list-link-child-${linkIndex}-${(linkChild as SerializedTextNode).text}`}
-																	>
-																		{linkChild.type === 'text'
-																			? (linkChild as SerializedTextNode).text
-																			: null}
-																	</Fragment>
-																)
-															)}
-														</Link>
-													)
-												default:
-													return null
-											}
-										}
-									)}
-								</ListItem>
-							)
-						})}
-					</List>
-				)}
-			</Fragment>
-		),
 		upload: ({ node }) => {
 			const value = (node as { value?: unknown }).value
 			if (!value || typeof value !== 'object') return null
@@ -201,6 +139,7 @@ const jsxConverters =
 			)
 		}
 	})
+}
 
 interface RichTextBasicProps {
 	data: SerializedEditorState

@@ -10,34 +10,15 @@ import { Section } from '@/components/layout/section'
 import { Grid } from '@/components/layout/grid'
 import { Stack } from '@/components/layout/stack'
 import { Heading } from '@/components/content/heading'
-import { localizePath, type Locale } from '@/utilities/locale'
 import PageClient from './page.client'
 
-const COPY: Record<Locale, { title: string; fallbackCategory: string; empty: string }> = {
-	nl: {
-		title: 'Zoeken',
-		fallbackCategory: 'Artikel',
-		empty: 'Geen resultaten gevonden.',
-	},
-	en: {
-		title: 'Search',
-		fallbackCategory: 'Article',
-		empty: 'No results found.',
-	},
-}
-
 type Args = {
-	params: Promise<{
-		lang?: string
-	}>
 	searchParams: Promise<{
 		q: string
 	}>
 }
 
-export default async function Page({ params: paramsPromise, searchParams: searchParamsPromise }: Args) {
-	const { lang = 'nl' } = await paramsPromise
-	const locale = lang as Locale
+export default async function Page({ searchParams: searchParamsPromise }: Args) {
 	const { q: query } = await searchParamsPromise
 	const payload = await getPayload({ config: configPromise })
 
@@ -45,7 +26,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
 		collection: 'search',
 		depth: 1,
 		limit: 12,
-		locale,
+		locale: 'en',
 		select: {
 			title: true,
 			slug: true,
@@ -67,8 +48,6 @@ export default async function Page({ params: paramsPromise, searchParams: search
 			: {}),
 	})
 
-	const copy = COPY[locale]
-
 	return (
 		<div className="pt-24">
 			<PageClient />
@@ -76,7 +55,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
 				<Container>
 					<Stack gap="md" align="center" className="mb-12 text-center">
 						<Heading headingLevel="h1" size="lg" color="foreground">
-							{copy.title}
+							Search
 						</Heading>
 						<div className="mx-auto w-full max-w-xl text-left">
 							<Search />
@@ -91,17 +70,17 @@ export default async function Page({ params: paramsPromise, searchParams: search
 								return (
 									<PostCard
 										key={doc.id}
-										category={category?.title ?? copy.fallbackCategory}
+										category={category?.title ?? 'Article'}
 										title={doc.meta?.title ?? doc.title ?? ''}
 										excerpt={doc.meta?.description ?? ''}
 										readMinutes={5}
-										href={localizePath(`/posts/${doc.slug}`, locale)}
+										href={`/posts/${doc.slug}`}
 									/>
 								)
 							})}
 						</Grid>
 					) : (
-						<p className="text-center text-muted-foreground">{copy.empty}</p>
+						<p className="text-center text-muted-foreground">No results found.</p>
 					)}
 				</Container>
 			</Section>
@@ -109,11 +88,8 @@ export default async function Page({ params: paramsPromise, searchParams: search
 	)
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-	const { lang = 'nl' } = await paramsPromise
-	const locale = lang as Locale
-
+export function generateMetadata(): Metadata {
 	return {
-		title: COPY[locale].title,
+		title: 'Search',
 	}
 }
