@@ -36,7 +36,7 @@ export function SiteHeader() {
           <NavbarContent className='justify-center'>
             <Nav aria-label='Primary'>
               <Link
-                href='/#notes'
+                href='/posts'
                 className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
               >
                 Notes
