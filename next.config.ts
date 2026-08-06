@@ -61,6 +61,14 @@ const nextConfig: NextConfig = {
   redirects,
   turbopack: {
     root: path.resolve(dirname),
+    resolveAlias: {
+      // Payload statically imports `next/og.js` for its auto-registered `/api/og`
+      // endpoint, dragging ~2.6 MiB of `@vercel/og` (resvg.wasm, index.node/edge,
+      // yoga.wasm, fonts) into every payload route. The site never generates OG
+      // images (`admin.meta.defaultOGImageType: 'off'`), so alias the only
+      // importer to a stub to keep the Workers bundle under the gzip size limit.
+      'next/og.js': './src/lib/og-shim.ts',
+    },
   },
   experimental: {
     useTypeScriptCli: true,

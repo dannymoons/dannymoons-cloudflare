@@ -66,6 +66,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
+    meta: {
+      // Disable Payload's auto-generated OG images (`/api/og`). The site never
+      // uses them, and without this Payload's static `next/og.js` import pulls
+      // ~2.6 MiB of @vercel/og wasm into the Workers bundle. See next.config.ts.
+      defaultOGImageType: 'off',
+    },
     livePreview: {
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
