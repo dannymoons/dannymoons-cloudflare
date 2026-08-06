@@ -3,6 +3,7 @@ import type { CollectionConfig, RichTextField } from 'payload'
 import {
   BlocksFeature,
   BlockquoteFeature,
+  CodeBlock,
   convertMarkdownToLexical,
   editorConfigFactory,
   FixedToolbarFeature,
@@ -31,6 +32,42 @@ import {
   PreviewField
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from 'payload'
+
+const codeLanguageAliases: Record<string, string> = {
+  js: 'javascript',
+  md: 'markdown',
+  plain: 'plaintext',
+  py: 'python',
+  rb: 'ruby',
+  sh: 'shell',
+  text: 'plaintext',
+  ts: 'typescript',
+  txt: 'plaintext',
+  yml: 'yaml'
+}
+
+const normalizeCodeBlocks = (content: Record<string, unknown>) => {
+  const root = content.root
+  if (!root || typeof root !== 'object') return content
+
+  const children = (root as { children?: unknown }).children
+  if (!Array.isArray(children)) return content
+
+  for (const node of children) {
+    if (!node || typeof node !== 'object') continue
+    const block = node as {
+      fields?: { blockType?: string; code?: unknown; language?: unknown }
+      type?: string
+    }
+    if (block.type !== 'block' || block.fields?.blockType !== 'Code') continue
+
+    const language = typeof block.fields.language === 'string' ? block.fields.language : ''
+    block.fields.language = (codeLanguageAliases[language] ?? language) || 'plaintext'
+    block.fields.code = typeof block.fields.code === 'string' ? block.fields.code : ''
+  }
+
+  return content
+}
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -113,10 +150,12 @@ export const Posts: CollectionConfig<'posts'> = {
                     const editorConfig = editorConfigFactory.fromField({
                       field: contentField as RichTextField
                     })
-                    ;(siblingData as Record<string, unknown>).content = convertMarkdownToLexical({
-                      markdown: raw,
-                      editorConfig
-                    })
+                    ;(siblingData as Record<string, unknown>).content = normalizeCodeBlocks(
+                      convertMarkdownToLexical({
+                        markdown: raw,
+                        editorConfig
+                      }) as unknown as Record<string, unknown>
+                    )
                   }
                 ]
               }
@@ -144,7 +183,7 @@ export const Posts: CollectionConfig<'posts'> = {
                     UnorderedListFeature(),
                     OrderedListFeature(),
                     BlockquoteFeature(),
-                    BlocksFeature({ blocks: [] }),
+                    BlocksFeature({ blocks: [CodeBlock()] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature()

@@ -3,6 +3,7 @@ import { Paragraph } from '@/components/content/paragraph'
 import { cn } from '@/utilities/ui'
 import type {
 	DefaultNodeTypes,
+	SerializedBlockNode,
 	SerializedHeadingNode
 } from '@payloadcms/richtext-lexical'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
@@ -28,6 +29,11 @@ const headingSizes: Record<string, 'sm' | 'md' | 'lg'> = {
 
 type NodeTypes =
 	| DefaultNodeTypes
+	| SerializedBlockNode<{
+		blockType: 'Code'
+		code: string
+		language?: string
+	}>
 	| SerializedHeadingNode
 
 type TextSize = 'sm' | 'md' | 'lg'
@@ -82,6 +88,17 @@ const jsxConverters = (textSize?: TextSize): JSXConvertersFunction<NodeTypes> =>
 	return ({ defaultConverters }) => ({
 		...defaultConverters,
 		...{ ...LinkJSXConverter },
+		blocks: {
+			...defaultConverters.blocks,
+			Code: ({ node }) => {
+				const { code, language } = node.fields
+				return (
+					<pre className='my-8 max-w-full overflow-x-auto rounded-xl bg-muted p-4 text-sm leading-6'>
+						<code data-language={language || undefined}>{code}</code>
+					</pre>
+				)
+			}
+		},
 		paragraph: ({ node, nodesToJSX }) => (
 			<Paragraph
 				color='foreground'
