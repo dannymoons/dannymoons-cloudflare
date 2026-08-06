@@ -66,7 +66,7 @@ Not every sustainable choice is free. Sometimes a simpler architecture takes mor
 
 But most sustainable choices also improve other qualities: speed, cost, reliability, developer experience. When you optimize for sustainability, you rarely optimize for only one thing.
 
-> So actually there are no real trad-offs here but only wins.
+> So actually there are no real trade-offs here but only wins.
 
 ## What I would do from a developers perspective
 
