@@ -4,12 +4,13 @@ import { cache } from 'react'
 
 import { LOCALES, localizePath, type Locale } from '@/utilities/locale'
 
-type AlternateCollection = 'pages' | 'posts' | 'wiki'
+type AlternateCollection = 'pages' | 'posts' | 'wiki' | 'glossary'
 
 const collectionPrefix: Record<AlternateCollection, string> = {
 	pages: '',
 	posts: '/posts',
 	wiki: '/docs',
+	glossary: '/what-is',
 }
 
 /**

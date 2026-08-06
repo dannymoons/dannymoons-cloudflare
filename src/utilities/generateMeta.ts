@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import type { Media, Page, Post, Wiki, Config } from '../payload-types'
+import type { Media, Page, Post, Wiki, Glossary, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
@@ -23,7 +23,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 }
 
 export const generateMeta = async (args: {
-  doc: Partial<Page> | Partial<Post> | Partial<Wiki> | null
+  doc: Partial<Page> | Partial<Post> | Partial<Wiki> | Partial<Glossary> | null
   /**
    * Per-locale public paths for this document (e.g. `{ nl: '/over-ons', en: '/en/about-us' }`).
    * Used to emit the canonical URL and `hreflang` alternates. Relative paths are

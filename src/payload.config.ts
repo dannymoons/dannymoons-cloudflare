@@ -8,6 +8,7 @@ import { buildConfig, type PayloadRequest } from 'payload'
 import type { GetPlatformProxyOptions } from 'wrangler'
 
 import { Categories } from './collections/categories'
+import { Glossary } from './collections/glossary'
 import { Media } from './collections/media'
 import { Pages } from './collections/pages'
 import { Posts } from './collections/posts'
@@ -89,6 +90,7 @@ export default buildConfig({
   }),
   collections: [
     Categories,
+    Glossary,
     Media,
     Pages,
     Posts,
