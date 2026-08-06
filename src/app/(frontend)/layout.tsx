@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
+// import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import type React from 'react'
 
@@ -16,43 +16,43 @@ import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
 export default async function RootLayout({
-	children
+  children
 }: {
-	children: React.ReactNode
+  children: React.ReactNode
 }) {
-	const { isEnabled } = await draftMode()
-	const headersList = await headers()
-	const locale = headersList.get('x-locale') || 'en'
+  const { isEnabled } = await draftMode()
+  const headersList = await headers()
+  const locale = headersList.get('x-locale') || 'en'
 
-	return (
-		<html
-			className={cn(GeistSans.variable, GeistMono.variable)}
-			lang={locale}
-			suppressHydrationWarning
-		>
-			<head>
-				<InitTheme />
-				<link href='/favicon.svg' rel='icon' type='image/svg+xml' />
-			</head>
-			<body>
-				<Providers>
-					<AdminBar
-						adminBarProps={{
-							preview: isEnabled
-						}}
-					/>
+  return (
+    <html
+      className={cn(GeistSans.variable)}
+      lang={locale}
+      suppressHydrationWarning
+    >
+      <head>
+        <InitTheme />
+        <link href='/favicon.svg' rel='icon' type='image/svg+xml' />
+      </head>
+      <body>
+        <Providers>
+          <AdminBar
+            adminBarProps={{
+              preview: isEnabled
+            }}
+          />
 
-					{children}
-				</Providers>
-			</body>
-		</html>
-	)
+          {children}
+        </Providers>
+      </body>
+    </html>
+  )
 }
 
 export const metadata: Metadata = {
-	metadataBase: new URL(getServerSideURL()),
-	openGraph: mergeOpenGraph(),
-	twitter: {
-		card: 'summary_large_image'
-	}
+  metadataBase: new URL(getServerSideURL()),
+  openGraph: mergeOpenGraph(),
+  twitter: {
+    card: 'summary_large_image'
+  }
 }

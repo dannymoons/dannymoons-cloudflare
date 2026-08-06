@@ -1,19 +1,18 @@
 
-const baseUrl = ''
+const baseUrl = 'https://dannymoons.nl'
 export const defaultSchemaValues = {
   address: {
-    streetAddress: 'Straatnaam 123',
-    addressLocality: 'Plaatsnaam',
-    postalCode: '1234AB',
+    streetAddress: 'Giek 10',
+    addressLocality: 'Huizen',
+    postalCode: '1276 JD',
     addressRegion: 'NH',
     addressCountry: 'Nederland',
-    googleMapsUrl: 'https://www.google.com/maps/place/?cid="123"'
   },
   companyDetails: {
-    companyName: 'Bedrijfsnaam',
+    companyName: 'Moonsio',
     url: baseUrl,
-    email: 'info@example.com',
-    phoneNumber: '06-12345678',
+    email: 'danny@moonsio.nl',
+    phoneNumber: '0628509910',
     openingHours: [
       `Mo: 09:00-17:00`,
       `Tu: 09:00-17:00`,
