@@ -200,9 +200,6 @@ export interface Glossary {
    * The source of truth. Pasting Markdown and saving regenerates the rich text content below from this.
    */
   markdown?: string | null;
-  /**
-   * When on, saving regenerates the rich text content below from the Markdown. Toggle off to author the rich text by hand.
-   */
   generateRichText?: boolean | null;
   content?: {
     root: {
