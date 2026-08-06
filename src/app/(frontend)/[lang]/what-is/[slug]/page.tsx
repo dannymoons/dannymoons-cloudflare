@@ -53,7 +53,7 @@ export default async function GlossaryEntryPage({
 
   const content = entry.content as unknown as Parameters<
     typeof RichTextBasic
-  >[0]['data']
+  >[0]['data'] | null
 
   return (
     <article>
@@ -67,10 +67,12 @@ export default async function GlossaryEntryPage({
             {entry.title}
           </Heading>
 
-          <RichTextBasic
-            data={content}
-            className='gap-6 [&_a]:text-primary [&_a]:decoration-primary/40 [&_blockquote]:my-10 [&_blockquote]:border-primary [&_blockquote]:border-l-2 [&_blockquote]:pl-6 [&_blockquote]:font-medium [&_blockquote]:text-2xl [&_blockquote]:text-foreground [&_blockquote]:leading-9 [&_h1:first-child]:hidden [&_h2]:mt-12 [&_h3]:mt-8 [&_li::marker]:text-primary [&_li]:text-lg [&_li]:text-muted-foreground [&_li]:leading-8 [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-7 [&_p]:text-muted-foreground [&_p]:leading-8 [&_strong]:text-foreground [&_ul]:my-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-7'
-          />
+          {content ? (
+            <RichTextBasic
+              data={content}
+              className='gap-6 [&_a]:text-primary [&_a]:decoration-primary/40 [&_blockquote]:my-10 [&_blockquote]:border-primary [&_blockquote]:border-l-2 [&_blockquote]:pl-6 [&_blockquote]:font-medium [&_blockquote]:text-2xl [&_blockquote]:text-foreground [&_blockquote]:leading-9 [&_h1:first-child]:hidden [&_h2]:mt-12 [&_h3]:mt-8 [&_li::marker]:text-primary [&_li]:text-lg [&_li]:text-muted-foreground [&_li]:leading-8 [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-7 [&_p]:text-muted-foreground [&_p]:leading-8 [&_strong]:text-foreground [&_ul]:my-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-7'
+            />
+          ) : null}
         </Container>
       </section>
     </article>
