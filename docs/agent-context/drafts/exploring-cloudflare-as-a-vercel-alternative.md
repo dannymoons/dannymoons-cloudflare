@@ -49,6 +49,44 @@ Not everything is better. The trade-offs are real.
 
 These are solvable, but they cost time. Time is a real cost when you are used to Vercel's convenience.
 
+## What broke during the first deployment attempt
+
+The development environment worked before the first production deployment. The difficult part was not getting Next.js to render a page. It was getting the whole Payload server, admin panel, database adapter, and Cloudflare runtime to agree on what should be bundled.
+
+### A dead `drizzle-kit` dependency stopped the build
+
+The first build failed because OpenNext could not resolve a hashed `drizzle-kit` chunk. Payload's SQLite adapter contains a synchronous `require('drizzle-kit/api')` for schema tooling. That tooling is not needed while the Worker serves requests, but Next.js and Turbopack still saw it during the build. OpenNext then tried to bundle the hashed Turbopack reference and could not resolve it.
+
+The fix was to externalise the importing Payload module, add `drizzle-kit` as a direct development dependency, and let the build resolve the plain package name instead. Externalising a neighbouring database package produced a different module-export error, which was a useful reminder that the package named in an error is not always the package that should be externalised.
+
+### The Worker was only slightly too large
+
+After the module-resolution issue was fixed, Cloudflare rejected the Worker because its compressed upload was just over the paid-plan limit:
+
+```text
+Total Upload: 48392.87 KiB / gzip: 10481.94 KiB
+```
+
+The raw bundle was around 46 MB, which was below the 64 MiB uncompressed limit. The relevant number was the gzip value: 10.24 MiB against a 10 MiB limit.
+
+My first instinct was to minify the Worker. That barely helped. Minifying the 34 MB handler reduced its gzip size by only about 0.06 MiB. The reason is simple: gzip already removes much of the whitespace that minification targets.
+
+The larger problem was an unused Open Graph image route. Payload's Next.js integration statically imports `next/og.js` for its built-in `/api/og` endpoint. That pulled `@vercel/og` into both Payload API routes, including `resvg.wasm`, `yoga.wasm`, and several fonts. These binary files do not compress well, so an apparently small feature added a disproportionate amount to the Worker upload.
+
+I was not using dynamic Open Graph images. Rather than change Payload's generated route files, I added a Turbopack alias that maps `next/og.js` to a small local stub and set Payload's `defaultOGImageType` to `off`. The generated routes remain untouched, and the unused image generator no longer enters the Worker module graph.
+
+The clean build then reported:
+
+```text
+Total Upload: 46002.87 KiB / gzip: 9680.85 KiB
+```
+
+That is 9.45 MiB gzip, below the 10 MiB limit. The `@vercel/og` wasm and font files were no longer present in the generated Worker bundle.
+
+This was not primarily a Next.js 16 problem. Next 16 and Turbopack changed the shape of the generated server chunks, but the Open Graph dependency came from Payload's static import and would also be relevant on older Payload 3.x versions. Downgrading Payload would also mean downgrading the surrounding Payload packages and risking compatibility with the current generated routes and migrations.
+
+The practical lesson was that Worker size is a dependency-graph problem before it is a minification problem. When a deployment is close to the limit, look for unused binary assets and server-side features that entered the bundle indirectly.
+
 ## What I still need to figure out
 
 I want to see how production performance compares under real traffic, whether the deployment workflow stays fast enough for daily work, and whether the reduced convenience is worth the green energy verification.
