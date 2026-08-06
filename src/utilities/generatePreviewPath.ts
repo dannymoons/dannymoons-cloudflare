@@ -18,13 +18,15 @@ export const generatePreviewPath = ({ collection, slug, req }: Props) => {
     return null
   }
 
-  const locale = req.locale || 'nl'
+  void req // locale prefix not needed — middleware rewrites clean URLs internally
+
   const encodedSlug = encodeURIComponent(slug)
+  const prefix = collectionPrefixMap[collection] ?? ''
 
   const encodedParams = new URLSearchParams({
     slug: encodedSlug,
     collection,
-    path: `/${locale}${collectionPrefixMap[collection]}/${encodedSlug}`,
+    path: `${prefix}/${encodedSlug}`,
     previewSecret: process.env.PREVIEW_SECRET || '',
   })
 
