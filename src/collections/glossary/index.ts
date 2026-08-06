@@ -152,13 +152,15 @@ export const Glossary: CollectionConfig<'glossary'> = {
               type: 'checkbox',
               defaultValue: true,
               admin: {
-                description:
-                  'When on, saving regenerates the rich text content below from the Markdown. Toggle off to author the rich text by hand.'
+                hidden: true
               }
             },
             {
               name: 'content',
               type: 'richText',
+              admin: {
+                hidden: true
+              },
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
                   return [
