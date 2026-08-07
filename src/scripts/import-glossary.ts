@@ -179,7 +179,10 @@ const run = async () => {
   const payload = await getPayload({ config })
 
   if (targetArg) {
-    const filePath = path.resolve(targetArg)
+    // Resolve: if just a filename, look in glossary dir
+    const filePath = targetArg.includes(path.sep) || targetArg.includes('/')
+      ? path.resolve(targetArg)
+      : path.join(glossaryDir, targetArg.endsWith('.md') ? targetArg : `${targetArg}.md`)
     if (!fs.existsSync(filePath)) {
       console.error(`File not found: ${filePath}`)
       process.exit(1)
