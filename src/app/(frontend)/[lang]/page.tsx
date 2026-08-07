@@ -101,8 +101,10 @@ export default async function HomePage() {
                 className='max-w-4xl font-semibold text-4xl leading-[0.94] tracking-[-0.055em] sm:text-5xl lg:text-6xl'
               >
                 <span className='block'>Building software that is</span>
-                <span className='block text-primary'>faster, smarter,</span>
-                <span className='block'>and more sustainable.</span>
+                <span className='block'>faster, smarter,</span>
+                <span className='block text-primary'>
+                  and more sustainable.
+                </span>
               </Heading>
               <p className='mt-8 max-w-2xl text-base text-muted-foreground leading-7 sm:text-lg sm:leading-8'>
                 Hi, I&apos;m Danny. I build sustainable websites, tools and
@@ -495,8 +497,7 @@ function Note({
 }
 
 export function generateMetadata(): Metadata {
-  const title =
-    'Danny Moons · Sustainable software, AI, and the future of the web'
+  const title = 'Danny Moons - I build sustainable websites that scale'
   const alternates = staticAlternates('/')
 
   return {
