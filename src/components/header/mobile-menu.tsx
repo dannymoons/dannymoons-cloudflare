@@ -25,9 +25,6 @@ import type * as React from 'react'
 import Link from 'next/link'
 
 export interface MobileMenuProps {
-  children: React.ReactNode
-  title?: string
-  side?: 'left' | 'right'
   triggerClassName?: string
   contentClassName?: string
 }

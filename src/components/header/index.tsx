@@ -11,6 +11,7 @@ import {
   NavbarBrand,
   NavbarContent
 } from '@/components/header/navbar'
+import { NavItem } from './nav-item'
 
 export function SiteHeader() {
   return (
@@ -35,30 +36,10 @@ export function SiteHeader() {
 
           <NavbarContent className='justify-center'>
             <Nav aria-label='Primary'>
-              <Link
-                href='/posts'
-                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
-              >
-                Notes
-              </Link>
-              <Link
-                href='/#work'
-                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
-              >
-                Work
-              </Link>
-              <Link
-                href='/#faq'
-                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
-              >
-                Questions
-              </Link>
-              <Link
-                href='/#about'
-                className='px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground'
-              >
-                About
-              </Link>
+              <NavItem href='/posts'>Notes</NavItem>
+              <NavItem href='/#work'>Work</NavItem>
+              <NavItem href='/#faq'> Questions</NavItem>
+              <NavItem href='/#about'>About</NavItem>
             </Nav>
           </NavbarContent>
 
@@ -72,34 +53,7 @@ export function SiteHeader() {
               Let's connect
               <AudioLines className='size-3.5 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
             </a>
-            <MobileMenu side='right' contentClassName='bg-background'>
-              <Nav orientation='vertical'>
-                <Link
-                  href='/#notes'
-                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
-                >
-                  Notes
-                </Link>
-                <Link
-                  href='/#work'
-                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
-                >
-                  Work
-                </Link>
-                <Link
-                  href='/#faq'
-                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
-                >
-                  Questions
-                </Link>
-                <Link
-                  href='/#about'
-                  className='border-border border-b px-2 py-4 font-medium text-base text-foreground'
-                >
-                  About
-                </Link>
-              </Nav>
-            </MobileMenu>
+            <MobileMenu contentClassName='bg-background' />
           </NavbarActions>
         </Navbar>
       </Container>
