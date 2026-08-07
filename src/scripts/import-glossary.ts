@@ -179,10 +179,9 @@ const run = async () => {
   const payload = await getPayload({ config })
 
   if (targetArg) {
-    // Resolve: if just a filename, look in glossary dir
-    const filePath = targetArg.includes(path.sep) || targetArg.includes('/')
-      ? path.resolve(targetArg)
-      : path.join(glossaryDir, targetArg.endsWith('.md') ? targetArg : `${targetArg}.md`)
+    // Accept filename only (with or without .md), always resolve from glossary dir
+    const filename = targetArg.endsWith('.md') ? targetArg : `${targetArg}.md`
+    const filePath = path.join(glossaryDir, filename)
     if (!fs.existsSync(filePath)) {
       console.error(`File not found: ${filePath}`)
       process.exit(1)
