@@ -12,4 +12,4 @@ Think of it like a recipe. Instead of guessing how much sugar to add each time, 
 
 When designers and developers use the same tokens, the website looks consistent everywhere. It also makes the code cleaner and the website lighter, because the same values are reused instead of being written over and over.
 
-Danny prefers to define design tokens in tools like Penpot or Figma before building starts, so the entire site is built on a consistent foundation.
+I prefer to define design tokens in tools like Penpot or Figma before building starts, so the entire site is built on a consistent foundation.

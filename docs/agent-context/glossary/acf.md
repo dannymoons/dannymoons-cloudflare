@@ -10,6 +10,6 @@ ACF is a WordPress plugin that lets you add custom fields to pages and posts. It
 
 Without ACF, WordPress only gives you a title and a text editor. With ACF, you can add things like images, links, lists, and dropdown menus — exactly what you need for each page.
 
-Danny has been using ACF for years. He always defines his fields in code files rather than using the visual editor, which keeps everything consistent and under version control (like saving different versions of a document). He also built a custom layer on top of ACF called FieldTypes, which makes defining fields faster and more consistent across projects.
+I have been using ACF for years. I always define my fields in code files rather than using the visual editor, which keeps everything consistent and under version control (like saving different versions of a document). I also built a custom layer on top of ACF called FieldTypes, which makes defining fields faster and more consistent across projects.
 
-In 2025, he started moving many of his projects to Payload CMS, which handles custom fields in a more modern and structured way.
+In 2025, I started moving many of my projects to Payload CMS, which handles custom fields in a more modern and structured way.

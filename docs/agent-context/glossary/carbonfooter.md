@@ -10,4 +10,4 @@ Carbonfooter is a tool that checks whether a website runs on green energy. You t
 
 It works by checking the website against the Green Web Foundation database. If the host is listed as using green energy, Carbonfooter shows a green result. If not, it shows a warning.
 
-Danny co-created Carbonfooter. It is one of the tools he uses to measure and prove that the websites he builds are actually sustainable — not just claiming to be.
+I co-created Carbonfooter. It is one of the tools I use to measure and prove that the websites I build are actually sustainable — not just claiming to be.

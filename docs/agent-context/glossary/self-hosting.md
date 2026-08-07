@@ -12,4 +12,4 @@ Most websites are "hosted" by a company that manages the servers for you. You pa
 
 This gives you more control. You can choose a hosting provider that runs on green energy. You decide how the server is configured. You know exactly what is running on your infrastructure.
 
-The downside is that it takes more time and skill. You need to understand servers, security, and maintenance. That is why Danny describes his current Cloudflare setup as an exploration — he is learning whether the extra control is worth the extra effort.
+The downside is that it takes more time and skill. You need to understand servers, security, and maintenance. That is why I describe my current Cloudflare setup as an exploration — I am learning whether the extra control is worth the extra effort.
