@@ -2,48 +2,36 @@ import { cn } from '@/utilities/ui'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type * as React from 'react'
 
-const logoVariants = cva('block', {
+const logoVariants = cva('relative grid shrink-0 place-items-center', {
   variants: {
     size: {
-      xs: 'h-6',
-      sm: 'h-8',
-      md: 'h-10',
-      lg: 'h-12',
-      xl: 'h-16',
-    },
+      xs: 'size-6',
+      sm: 'size-8',
+      md: 'size-10',
+      lg: 'size-12',
+      xl: 'size-16'
+    }
   },
   defaultVariants: {
-    size: 'sm',
-  },
+    size: 'sm'
+  }
 })
 
 export interface LogoProps
-  extends React.ImgHTMLAttributes<HTMLImageElement>,
-    VariantProps<typeof logoVariants> {
-  loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
-}
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof logoVariants> {}
 
-export function Logo({
-  className,
-  size,
-  loading = 'lazy',
-  priority = 'low',
-  alt = 'Logo',
-  src,
-  ...props
-}: LogoProps) {
+export function Logo({ className, size, ...props }: LogoProps) {
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      data-slot="logo"
-      alt={alt}
-      loading={loading}
-      fetchPriority={priority}
-      decoding="async"
-      className={cn(logoVariants({ size }), 'w-auto', className)}
-      src={src ?? 'https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg'}
+    <span
+      data-slot='logo'
+      aria-hidden='true'
+      className={cn(logoVariants({ size }), 'group/logo', className)}
       {...props}
-    />
+    >
+      <span className='absolute inset-0 rounded-full border border-primary/45 bg-primary/8 transition-transform duration-500 group-hover/logo:rotate-12' />
+      <span className='size-2 rounded-full bg-primary transition-transform duration-300 group-hover/logo:scale-125' />
+      <span className='absolute inset-1 rounded-full border border-primary/35 border-dashed transition-transform duration-700 group-hover/logo:-rotate-45' />
+    </span>
   )
 }

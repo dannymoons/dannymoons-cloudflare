@@ -1,62 +1,33 @@
-import { ArrowUpRight, AudioLines, ExternalLink } from 'lucide-react'
-import Link from 'next/link'
+import { AudioLines } from 'lucide-react'
 
+import { SiteBrand } from '@/components/brand/site-brand'
 import { Container } from '@/components/layout/container'
-import { Header as HeaderShell } from '@/components/header/header'
+import { DesktopNav } from '@/components/header/desktop-nav'
 import { MobileMenu } from '@/components/header/mobile-menu'
-import { Nav } from '@/components/header/nav'
-import {
-  Navbar,
-  NavbarActions,
-  NavbarBrand,
-  NavbarContent
-} from '@/components/header/navbar'
-import { NavItem } from './nav-item'
 
 export function SiteHeader() {
   return (
-    <HeaderShell border='glass' className='bg-background/76'>
+    <header className='sticky top-0 z-[var(--z-sticky)] w-full border-border/50 border-b bg-background/76 backdrop-blur-md supports-[backdrop-filter]:bg-background/60'>
       <Container size='wide' padding='none'>
-        <Navbar className='h-[4.5rem]'>
-          <NavbarBrand>
-            <Link
-              href='/'
-              className='group flex items-center gap-3'
-              aria-label='Danny Moons'
-            >
-              <span className='relative grid size-8 place-items-center rounded-full border border-primary/45 bg-primary/8'>
-                <span className='size-2 rounded-full bg-primary transition-transform duration-300 group-hover:scale-125' />
-                <span className='absolute inset-1 rounded-full border border-primary/35 border-dashed' />
-              </span>
-              <span className='font-semibold text-foreground text-sm tracking-[-0.02em] sm:text-base'>
-                Danny Moons
-              </span>
-            </Link>
-          </NavbarBrand>
+        <div className='flex h-[4.5rem] items-center gap-4 px-4 sm:px-6 lg:px-8'>
+          <SiteBrand />
 
-          <NavbarContent className='justify-center'>
-            <Nav aria-label='Primary'>
-              <NavItem href='/posts'>Notes</NavItem>
-              <NavItem href='/#work'>Work</NavItem>
-              <NavItem href='/#faq'> Questions</NavItem>
-              <NavItem href='/#about'>About</NavItem>
-            </Nav>
-          </NavbarContent>
+          <DesktopNav />
 
-          <NavbarActions>
+          <div className='ml-auto flex items-center gap-2'>
             <a
               href='https://www.linkedin.com/in/danny-moons/'
               target='_blank'
               rel='noopener noreferrer'
               className='group hidden h-9 items-center gap-2 rounded-full border border-border bg-surface px-4 font-semibold text-foreground text-xs transition-colors hover:border-primary/40 hover:bg-elevated sm:inline-flex'
             >
-              Let's connect
+              Let&apos;s connect
               <AudioLines className='size-3.5 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
             </a>
-            <MobileMenu contentClassName='bg-background' />
-          </NavbarActions>
-        </Navbar>
+            <MobileMenu />
+          </div>
+        </div>
       </Container>
-    </HeaderShell>
+    </header>
   )
 }

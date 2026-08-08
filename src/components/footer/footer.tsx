@@ -2,6 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { Heading } from '@/components/content/heading'
+import { SiteBrand } from '@/components/brand/site-brand'
 import { Container } from '@/components/layout/container'
 
 export function Footer() {
@@ -10,12 +11,7 @@ export function Footer() {
       <Container size="wide">
         <div className="grid gap-12 pb-16 md:grid-cols-2 lg:grid-cols-[1.4fr_0.55fr_0.55fr]">
           <div>
-            <Link href="/" className="inline-flex items-center gap-3" aria-label="Danny Moons">
-              <span className="grid size-8 place-items-center rounded-full border border-primary/40">
-                <span className="size-2 rounded-full bg-primary" />
-              </span>
-              <span className="font-semibold tracking-[-0.02em]">Danny Moons</span>
-            </Link>
+            <SiteBrand />
             <Heading
               headingLevel="p"
               size="md"
