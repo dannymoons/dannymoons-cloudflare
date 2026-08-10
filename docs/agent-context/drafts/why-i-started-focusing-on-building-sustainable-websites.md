@@ -1,5 +1,6 @@
 ---
 title: "Why I started focusing on building sustainable websites"
+slug: why-i-started-focusing-on-building-sustainable-websites
 description: "I did not start building websites to think about sustainability. I started because I liked making things for the web. Here is why sustainable websites became part of my everyday work."
 date: 2023-11-26
 categories: [Sustainable Web Development]

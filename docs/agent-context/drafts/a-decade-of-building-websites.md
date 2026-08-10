@@ -1,5 +1,6 @@
 ---
 title: "A decade of building websites: what changed, what stayed the same"
+slug: a-decade-of-building-websites
 description: "Ten years of building websites. From WordPress to custom CMS to modern stacks. Here is what I learned, what I stopped doing, and what I still believe."
 date: 2026-08-04
 categories: [Sustainable Web Development]

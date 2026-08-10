@@ -1,5 +1,6 @@
 ---
 title: "Exploring Cloudflare as a Vercel alternative for Next.js"
+slug: exploring-cloudflare-as-a-vercel-alternative
 description: "I wanted to know if my Next.js site could run on verifiable green energy. Here is what I found testing Cloudflare — and what the Green Web Foundation and Carbonfooter say about it."
 date: 2026-08-03
 categories: [Sustainable Web Development]

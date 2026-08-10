@@ -1,5 +1,6 @@
 ---
 title: "How I think about content modeling now (vs WordPress custom fields)"
+slug: how-i-think-about-content-modeling-now
 description: "I always defined ACF fields in PHP config files, never in the UI. But switching to Payload changed how I think about content — from config files to structured, type-safe models."
 date: 2026-08-04
 categories: [Content Management]
