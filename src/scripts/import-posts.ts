@@ -9,6 +9,8 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+
 let updateAllMode = false
 const isCI = process.env.CI === 'true' || process.argv.includes('--yes')
 const isCheckOnly = process.argv.includes('--check')
@@ -272,6 +274,7 @@ async function importFile(
       context: { disableRevalidate: true },
     })
     console.log(`  ✅ Updated: "${title}"`)
+    await sleep(100)
     return 'updated'
   }
 
@@ -283,6 +286,7 @@ async function importFile(
     context: { disableRevalidate: true },
   })
   console.log(`  ✅ Created: "${title}"`)
+  await sleep(100)
   return 'created'
 }
 
