@@ -11,17 +11,19 @@ const rl = readline.createInterface({
 
 let updateAllMode = false
 const isCI = process.env.CI === 'true' || process.argv.includes('--yes')
+const isCheckOnly = process.argv.includes('--check')
 
 /**
  * Usage:
- *   pnpm import-glossary                           # import all files
- *   pnpm import-glossary docs/agent-context/glossary/opennext.md  # single file
+ *   pnpm import-glossary                           # import all files (interactive)
+ *   pnpm import-glossary --check                    # dry-run: show what would change
+ *   pnpm import-glossary --yes                      # auto-update all without prompts
+ *   pnpm import-glossary opennext                   # single file
  *
- * Behavior:
- *   - Parses frontmatter (title, slug, tags, aliases, date) + markdown body
- *   - Creates new entries as drafts
- *   - When an entry with the same slug already exists, asks interactively:
- *     [y] update / [n] skip / [a] update all (stops asking for the rest)
+ * In interactive mode, when an entry already exists, you are asked per entry
+ * whether to update (y), skip (n), or update all remaining (a).
+ * With --check, no entries are created or updated — only a preview is shown.
+ * With --yes (or CI=true), all existing entries are updated without prompting.
  */
 
 // --- Frontmatter parsing (simple, no YAML dependency) ---
@@ -87,6 +89,49 @@ async function resolveTags(payload: any, tagNames: string[]) {
   return ids
 }
 
+// --- Describe changes between file frontmatter and existing entry ---
+
+function describeGlossaryChanges(
+  frontmatter: Record<string, unknown>,
+  existing: any,
+  body: string,
+): string[] {
+  const changes: string[] = []
+  const title = (frontmatter.title as string) || ''
+  const slug = (frontmatter.slug as string) || ''
+  const tags = (frontmatter.tags as string[]) || []
+  const aliases = (frontmatter.aliases as string[]) || []
+  const dateStr = (frontmatter.date as string) || ''
+
+  if (title !== existing.title) changes.push('title')
+  if (slug !== existing.slug) changes.push('slug')
+  if (body !== (existing.markdown || '')) changes.push('content')
+
+  // Tags: compare as arrays of tag titles
+  const existingTagTitles = (existing.tags || [])
+    .filter((t: any) => typeof t === 'object' && t?.title)
+    .map((t: any) => t.title as string)
+  const tagDiff = tags.length !== existingTagTitles.length ||
+    tags.some((t) => !existingTagTitles.includes(t))
+  if (tagDiff) changes.push('tags')
+
+  // Aliases: compare as arrays of alias strings
+  const existingAliases = (existing.aliases || []).map((a: any) =>
+    typeof a === 'object' ? a.alias : a
+  )
+  const aliasDiff = aliases.length !== existingAliases.length ||
+    aliases.some((a) => !existingAliases.includes(a))
+  if (aliasDiff) changes.push('aliases')
+
+  // Date
+  const existingDate = existing.publishedAt
+    ? new Date(existing.publishedAt).toISOString().split('T')[0]
+    : ''
+  if (dateStr && dateStr !== existingDate) changes.push('date')
+
+  return changes
+}
+
 // --- Import a single file. Returns 'created' | 'updated' | 'skipped' ---
 
 async function importFile(payload: any, filePath: string): Promise<'created' | 'updated' | 'skipped'> {
@@ -109,14 +154,28 @@ async function importFile(payload: any, filePath: string): Promise<'created' | '
   })
 
   const exists = existing.docs.length > 0
+  const changes = exists ? describeGlossaryChanges(frontmatter, existing.docs[0], body) : null
+
+  // In --check mode: show preview and skip
+  if (isCheckOnly) {
+    if (!exists) {
+      console.log(`  🆕 "${title}" (${slug})`)
+    } else if (changes && changes.length > 0) {
+      console.log(`  ✏️  "${title}" (${slug}) — ${changes.join(', ')}`)
+    } else {
+      console.log(`  ✅ "${title}" (${slug}) — ongewijzigd`)
+    }
+    return 'skipped'
+  }
 
   if (exists && !updateAllMode) {
     if (isCI) {
       // Non-interactive CI mode: update all without prompting
       updateAllMode = true
     } else {
+      const changeHint = changes && changes.length > 0 ? ` (wijziging: ${changes.join(', ')})` : ''
       const answer = await rl.question(
-        `"${title}" (${slug}) already exists. Update? [y/n/a] `
+        `"${title}" (${slug}) already exists${changeHint}. Update? [y/n/a] `
       )
       const lower = answer.toLowerCase().trim()
 
@@ -175,7 +234,9 @@ async function importFile(payload: any, filePath: string): Promise<'created' | '
 // --- Main ---
 
 const run = async () => {
-  const targetArg = process.argv[2]
+  // Parse flags: --check and --yes are consumed; remaining arg is target file
+  const args = process.argv.slice(2).filter((a) => !a.startsWith('--'))
+  const targetArg = args[0]
   const glossaryDir = path.resolve('docs/agent-context/glossary')
 
   const payload = await getPayload({ config })
@@ -202,7 +263,12 @@ const run = async () => {
       process.exit(0)
     }
 
-    console.log(`Found ${files.length} glossary entries\n`)
+    if (isCheckOnly) {
+      console.log(`\n📋 Dry-run: ${files.length} glossary entries\n`)
+    } else {
+      console.log(`Found ${files.length} glossary entries\n`)
+    }
+
     let created = 0
     let updated = 0
     let skipped = 0

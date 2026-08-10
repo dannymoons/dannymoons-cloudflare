@@ -22,17 +22,21 @@ const rl = readline.createInterface({
 
 let updateAllMode = false
 const isCI = process.env.CI === 'true' || process.argv.includes('--yes')
+const isCheckOnly = process.argv.includes('--check')
 
 /**
  * Import blog posts / notes from Markdown files into the Posts collection.
  *
  * Usage:
- *   pnpm import-posts                           # all draft files
- *   pnpm import-posts exploring-cloudflare       # single file (with or without .md)
+ *   pnpm import-posts                           # all draft files (interactive)
+ *   pnpm import-posts --check                    # dry-run: show what would change
+ *   pnpm import-posts --yes                      # auto-update all without prompts
+ *   pnpm import-posts exploring-cloudflare       # single file
  *
- * Frontmatter expected:
- *   title, description, date, tags, topic, status (draft|published)
- * The markdown body is converted to Lexical rich text.
+ * In interactive mode, when a post already exists, you are asked per post
+ * whether to update (y), skip (n), or update all remaining (a).
+ * With --check, no posts are created or updated — only a preview is shown.
+ * With --yes (or CI=true), all existing posts are updated without prompting.
  */
 
 // --- Helpers ---
@@ -115,7 +119,6 @@ async function resolveHeroImage(payload: any, filename: string) {
   if (media.docs.length > 0) {
     return media.docs[0].id
   }
-  // Also try without extension, or with alt text match
   const basename = filename.replace(/\.[^.]+$/, '')
   const mediaAlt = await payload.find({
     collection: 'media',
@@ -155,6 +158,58 @@ function markdownToLexical(markdown: string) {
   return convertMarkdownToLexical({ markdown, editorConfig })
 }
 
+// --- Describe changes between file frontmatter and existing post ---
+
+function describePostChanges(
+  frontmatter: Record<string, unknown>,
+  existing: any,
+  lexicalContent: any,
+): string[] {
+  const changes: string[] = []
+  const title = (frontmatter.title as string) || ''
+  const description = (frontmatter.description as string) || ''
+  const slug = (frontmatter.slug as string) || ''
+  const categoryNames = (frontmatter.categories as string[]) || []
+  const tags = (frontmatter.tags as string[]) || []
+  const status = (frontmatter.status as string) || 'draft'
+  const dateStr = (frontmatter.date as string) || ''
+
+  if (title !== existing.title) changes.push('title')
+  if (slug !== existing.slug) changes.push('slug')
+  if (description !== (existing.meta?.description || '')) changes.push('description')
+  if (status !== (existing._status || 'draft')) changes.push('status')
+
+  // Compare content (lexical JSON)
+  const existingContent = existing.content
+  if (existingContent && JSON.stringify(lexicalContent) !== JSON.stringify(existingContent)) {
+    changes.push('content')
+  }
+
+  // Compare categories
+  const existingCategoryTitles = (existing.categories || [])
+    .filter((c: any) => typeof c === 'object' && c?.title)
+    .map((c: any) => c.title as string)
+  const catDiff = categoryNames.length !== existingCategoryTitles.length ||
+    categoryNames.some((c) => !existingCategoryTitles.includes(c))
+  if (catDiff) changes.push('categories')
+
+  // Compare tags
+  const existingTagTitles = (existing.tags || [])
+    .filter((t: any) => typeof t === 'object' && t?.title)
+    .map((t: any) => t.title as string)
+  const tagDiff = tags.length !== existingTagTitles.length ||
+    tags.some((t) => !existingTagTitles.includes(t))
+  if (tagDiff) changes.push('tags')
+
+  // Compare date
+  const existingDate = existing.publishedAt
+    ? new Date(existing.publishedAt).toISOString().split('T')[0]
+    : ''
+  if (dateStr && dateStr !== existingDate) changes.push('date')
+
+  return changes
+}
+
 // --- Import a single file ---
 
 async function importFile(
@@ -185,6 +240,9 @@ async function importFile(
     cleanBody = cleanBody.replace(/^#\s+.+?\n\n?/, '')
   }
 
+  // Convert markdown to Lexical rich text (needed for both diff and import)
+  const lexicalContent = markdownToLexical(cleanBody)
+
   // Check if post already exists
   const existing = await payload.find({
     collection: 'posts',
@@ -194,14 +252,28 @@ async function importFile(
   })
 
   const exists = existing.docs.length > 0
+  const changes = exists ? describePostChanges(frontmatter, existing.docs[0], lexicalContent) : null
+
+  // In --check mode: show preview and skip
+  if (isCheckOnly) {
+    if (!exists) {
+      console.log(`  🆕 "${title}" (${slug})`)
+    } else if (changes && changes.length > 0) {
+      console.log(`  ✏️  "${title}" (${slug}) — ${changes.join(', ')}`)
+    } else {
+      console.log(`  ✅ "${title}" (${slug}) — ongewijzigd`)
+    }
+    return 'skipped'
+  }
 
   if (exists && !updateAllMode) {
     if (isCI) {
       // Non-interactive CI mode: update all without prompting
       updateAllMode = true
     } else {
+      const changeHint = changes && changes.length > 0 ? ` (wijziging: ${changes.join(', ')})` : ''
       const answer = await rl.question(
-        `"${title}" (${slug}) already exists. Update? [y/n/a] `
+        `"${title}" (${slug}) already exists${changeHint}. Update? [y/n/a] `
       )
       const lower = answer.toLowerCase().trim()
       if (lower === 'a') {
@@ -212,9 +284,6 @@ async function importFile(
       }
     }
   }
-
-  // Convert markdown to Lexical rich text
-  const lexicalContent = markdownToLexical(cleanBody)
 
   // Resolve categories
   const categoryIds = await resolveCategories(payload, categoryNames)
@@ -261,7 +330,9 @@ async function importFile(
 // --- Main ---
 
 const run = async () => {
-  const targetArg = process.argv[2]
+  // Parse flags: --check and --yes are consumed; remaining arg is target file
+  const args = process.argv.slice(2).filter((a) => !a.startsWith('--'))
+  const targetArg = args[0]
   const draftsDir = path.resolve('docs/agent-context/drafts')
 
   const payload = await getPayload({ config })
@@ -288,7 +359,12 @@ const run = async () => {
       process.exit(0)
     }
 
-    console.log(`Found ${files.length} post drafts\n`)
+    if (isCheckOnly) {
+      console.log(`\n📋 Dry-run: ${files.length} post drafts\n`)
+    } else {
+      console.log(`Found ${files.length} post drafts\n`)
+    }
+
     let created = 0
     let updated = 0
     let skipped = 0
