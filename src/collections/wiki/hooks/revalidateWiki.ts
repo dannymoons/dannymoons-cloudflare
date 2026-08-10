@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 import type { Wiki } from '../../../payload-types'
 
@@ -18,7 +18,7 @@ export const revalidateWiki: CollectionAfterChangeHook<Wiki> = ({
 				payload.logger.info(`Revalidating wiki doc at path: ${path}`)
 				revalidatePath(path)
 			}
-			revalidateTag('docs-sitemap', 'max')
+			revalidatePath('/sitemap.xml')
 		}
 
 		if (previousDoc?._status === 'published' && doc._status !== 'published' && previousDoc.slug) {
@@ -26,7 +26,7 @@ export const revalidateWiki: CollectionAfterChangeHook<Wiki> = ({
 				const oldPath = `/${locale}/docs/${previousDoc.slug}`
 				revalidatePath(oldPath)
 			}
-			revalidateTag('docs-sitemap', 'max')
+			revalidatePath('/sitemap.xml')
 		}
 	}
 
@@ -42,7 +42,7 @@ export const revalidateWikiDelete: CollectionAfterDeleteHook<Wiki> = ({
 			const path = `/${locale}/docs/${doc.slug}`
 			revalidatePath(path)
 		}
-		revalidateTag('docs-sitemap', 'max')
+		revalidatePath('/sitemap.xml')
 	}
 
 	return doc

@@ -9,9 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       disallow: '/admin/',
     },
-    sitemap: [
-      `${base}/pages-sitemap.xml`,
-      `${base}/posts-sitemap.xml`,
-    ],
+    sitemap: `${base}/sitemap.xml`,
   }
 }

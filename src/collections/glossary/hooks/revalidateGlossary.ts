@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 import type { Glossary } from '../../../payload-types'
 
@@ -22,7 +22,7 @@ export const revalidateGlossary: CollectionAfterChangeHook<Glossary> = ({
       }
       revalidatePath('/')
       revalidatePath('/en')
-      revalidateTag('glossary-sitemap', 'max')
+      revalidatePath('/sitemap.xml')
     }
 
     if (previousDoc?._status === 'published' && doc._status !== 'published' && previousDoc.slug) {
@@ -33,7 +33,7 @@ export const revalidateGlossary: CollectionAfterChangeHook<Glossary> = ({
 
         revalidatePath(oldPath)
       }
-      revalidateTag('glossary-sitemap', 'max')
+      revalidatePath('/sitemap.xml')
     }
   }
 
@@ -50,7 +50,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<Glossary> = ({
 
       revalidatePath(path)
     }
-    revalidateTag('glossary-sitemap', 'max')
+    revalidatePath('/sitemap.xml')
   }
 
   return doc
