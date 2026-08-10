@@ -13,4 +13,4 @@ What makes WordPress popular is its simplicity. You install it, pick a theme, ad
 
 I built websites with WordPress for most of my career. It is reliable, well-known, and clients trust it. I still use it for projects where it fits.
 
-The downsides: because WordPress stores data in a flexible but unstructured way (see: post meta), it can become slow and messy as a site grows. That is one of the reasons I started moving to Payload CMS for more complex projects.
+The downsides: because [WordPress](/what-is/wordpress) stores data in a flexible but unstructured way (see: [post meta](/what-is/post-meta)), it can become slow and messy as a site grows. That is one of the reasons I started moving to [Payload CMS](/what-is/payload-cms) for more complex projects.

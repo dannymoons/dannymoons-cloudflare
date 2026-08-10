@@ -11,4 +11,4 @@ TypeScript is a programming language that builds on JavaScript. It adds types, w
 
 Think of it like a form with clear fields. A normal JavaScript form might say "fill in the box." A TypeScript form says "fill in this box with a number between 1 and 10." It catches mistakes before they cause problems.
 
-I use TypeScript for all my Payload CMS projects. It makes the code more reliable, because the computer checks the types while I am writing — not after something breaks on the live website.
+I use [TypeScript](/what-is/typescript) for all my [Payload CMS](/what-is/payload-cms) projects. It makes the code more reliable, because the computer checks the types while I am writing — not after something breaks on the live website.

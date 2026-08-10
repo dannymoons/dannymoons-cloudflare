@@ -36,14 +36,14 @@ For many years, that was enough for me. I could build good websites, clients wer
 The curiosity was not about replacing WordPress for everything. It was about projects where I wanted more control:
 
 - **Content modeling.** WordPress stores content as post types and fields. Payload treats content as a structured API. The difference matters when you want to reuse content across pages, languages, or frontends.
-- **Performance.** A Next.js site on a CDN is fast by default. No PHP processing per request. No database queries on every page load. That does not automatically make it better, but it removes a whole category of performance problems.
-- **Developer experience.** TypeScript from database to frontend. Auto-generated API. Local development that matches production. These things save time in ways that are hard to explain until you have tried them.
+- **Performance.** A Next.js site on a [CDN](/what-is/cdn) is fast by default. No PHP processing per request. No database queries on every page load. That does not automatically make it better, but it removes a whole category of performance problems.
+- **Developer experience.** [TypeScript](/what-is/typescript) from database to frontend. Auto-generated API. Local development that matches production. These things save time in ways that are hard to explain until you have tried them.
 
 For me, the pull toward Payload was about data freedom, accessibility, speed — both front-end and back-end — and the feeling of limitless design. WordPress always had guardrails. Payload felt like I could build anything I could imagine.
 
 I looked at a few options. [Strapi](https://strapi.io). [Contentful](https://www.contentful.com). [Sanity](https://www.sanity.io). They all had strengths, but they also had things I did not like: monthly subscription costs that scaled with content, lock-in to proprietary platforms, or a developer experience that still felt separate from the frontend.
 
-Payload felt different. It is [open source](https://github.com/payloadcms/payload). The content model is code. The admin panel is generated from your TypeScript types. It runs on your own infrastructure. That combination — open source, code-first, self-hosted — was what I was looking for.
+Payload felt different. It is [open source](https://github.com/payloadcms/payload). The content model is code. The admin panel is generated from your TypeScript types. It runs on your own [infrastructure](/what-is/self-hosting). That combination — open source, code-first, self-hosted — was what I was looking for.
 
 ## What I built first
 
@@ -69,7 +69,7 @@ I want to be honest about the hard parts, because too many "I switched to Next.j
 
 **Hosting is more complex — especially if you do not want to use [Vercel](https://vercel.com).** Managed WordPress hosting is a solved problem. You upload the site, it works. For Next.js + Payload, you need to think about Node.js servers, CDN configuration, build processes, database hosting, and deployment pipelines. It is not impossibly hard, but it is more decisions, and some of those decisions are harder when you want to host outside the Vercel ecosystem.
 
-**The ecosystem is smaller.** Need a contact form plugin? A redirect manager? An SEO analysis tool? In WordPress, these exist. In Payload, you build them yourself or find community packages.
+**The ecosystem is smaller.** Need a contact form [plugin](/what-is/plugin)? A redirect manager? An SEO analysis tool? In WordPress, these exist. In Payload, you build them yourself or find community packages.
 
 ## Where I still use WordPress
 
@@ -89,7 +89,7 @@ For years, I assumed WordPress was the best tool because it was the tool I knew 
 
 I did not switch away from WordPress. I added new tools. I changed how I think about content, architecture, and performance. I became better at choosing — not just better at building.
 
-If I could give advice to other WordPress developers: stay curious. Investigate what the best stacks are for you and your projects. But do not get lost like I did. I kept rebuilding my systems from scratch, and that created a less sustainable situation and cost way too much time. The goal is not to switch everything. The goal is to know enough to choose well.
+If I could give advice to other WordPress developers: stay curious. Investigate what the best stacks are for you and your projects. But do not get lost like I did. I kept rebuilding my systems from scratch, and that created a less sustainable situation and cost way too much time. The goal is not to switch everything. The goal is to know enough to choose well. For more on why I think this way, read [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
 
 ---

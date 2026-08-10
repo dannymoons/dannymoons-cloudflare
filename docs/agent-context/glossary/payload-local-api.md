@@ -13,4 +13,4 @@ Think of it like this: normally, a website asks a separate server for data (via 
 
 For developers, this means faster code and fewer moving parts. For visitors, it means the website loads faster, because the system does not need extra network calls to fetch content.
 
-I use the Local API in my Next.js + Payload projects to keep the sites light and quick.
+I use the Local API in my [Next.js](/what-is/nextjs) + Payload projects to keep the sites light and quick.

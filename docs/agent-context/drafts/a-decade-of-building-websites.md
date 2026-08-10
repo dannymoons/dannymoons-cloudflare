@@ -25,7 +25,7 @@ At that time, I thought I knew what I was doing. In reality, I was learning the 
 
 ## The custom CMS detour
 
-At some point, I wanted more control. WordPress was good, but I wanted something that was built exactly for the projects I was working on.
+At some point, I wanted more control. [WordPress](/what-is/wordpress) was good, but I wanted something that was built exactly for the projects I was working on.
 
 So I started building moons.io CMS — a Laravel-based custom CMS. The ideas were good: more control, better performance, a system designed for specific use cases. I worked with a colleague who handled much of the development, and I learned my first real steps in PHP and hosting along the way.
 
@@ -47,19 +47,19 @@ Around late 2021, something shifted. I was part of a network called BNI Friendsh
 
 I started researching how websites impact the environment. Not as a marketing angle — I genuinely wanted to know whether what I was building was doing more harm than necessary.
 
-Then I met Merel. We worked together on carbonfix.org, a project about measuring and reducing the carbon footprint of websites. That collaboration grew into Carbonfooter, The Sustainable Theme, and Pixel to Planet. Suddenly, sustainability was not something I thought about on the side. It was becoming the core of how I build.
+Then I met Merel. We worked together on carbonfix.org, a project about measuring and reducing the carbon footprint of websites. That collaboration grew into [Carbonfooter](/what-is/carbonfooter), The Sustainable Theme, and Pixel to Planet. Suddenly, sustainability was not something I thought about on the side. It was becoming the core of how I build.
 
 [Danny: add a specific moment from the sustainability shift — a project, a conversation, or an insight that stands out]
 
 ## The modern web pivot
 
-A couple of years ago, a friend introduced me to Next.js and Payload CMS. He was a better developer than me, and I trusted his judgment. We did a few coding sessions together, and I started reading about data freedom, flexibility, and security.
+A couple of years ago, a friend introduced me to [Next.js](/what-is/nextjs) and [Payload CMS](/what-is/payload-cms). He was a better developer than me, and I trusted his judgment. We did a few coding sessions together, and I started reading about data freedom, flexibility, and security.
 
 The more I explored, the more I saw possibilities that WordPress did not offer: content as structured data, TypeScript from database to frontend, pre-rendered pages by default, and the freedom to design without guardrails.
 
 My first real project with this stack was my own site, moonsio.nl. Building for yourself gives you room to experiment, but it is still a real project. After that came fysiodouma.nl (a rebuild), and later more complex projects like duizeligheid.nl.
 
-I did not abandon WordPress. I still use it for projects where it is the better choice. But I added new tools, and I changed how I think about content, architecture, and performance.
+I did not abandon [WordPress](/what-is/wordpress). I still use it for projects where it is the better choice. But I added new tools, and I changed how I think about content, architecture, and performance.
 
 ## What stayed the same
 

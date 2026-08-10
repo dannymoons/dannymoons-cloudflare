@@ -13,4 +13,4 @@ Normally, when you visit a website, your browser talks to one server in one loca
 
 It is like having a book in a central library versus having copies in local libraries everywhere. The local copy is always faster to reach.
 
-Cloudflare, where I host this site, operates one of the largest CDNs. It is part of why the site loads fast everywhere in the world.
+[Cloudflare](/what-is/cloudflare-workers), where I host this site, operates one of the largest CDNs. It is part of why the site loads fast everywhere in the world.

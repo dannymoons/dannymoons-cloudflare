@@ -11,4 +11,4 @@ Next.js is a framework for building websites and web applications. It is built o
 
 Compared to traditional websites (where every page loads a completely new file from the server), Next.js is smarter. It pre-builds pages so they load instantly, and it only updates the parts of a page that change. This makes websites faster and smoother for visitors.
 
-I use Next.js as the frontend for my Payload CMS projects. The combination gives me a fast, modern website with a flexible content management system behind it.
+I use [Next.js](/what-is/nextjs) as the frontend for my [Payload CMS](/what-is/payload-cms) projects. The combination gives me a fast, modern website with a flexible content management system behind it.

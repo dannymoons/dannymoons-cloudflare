@@ -128,6 +128,8 @@ That is the kind of web I want to help build.
 
 Faster, smarter, and more sustainable.
 
+For a deeper take on what this means in practice — and why green hosting is only one piece of the puzzle — read [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
+
 ---
 
 *Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*

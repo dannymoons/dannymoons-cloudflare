@@ -20,14 +20,14 @@ I have worked with different designers over the years, and that is the common th
 ## Design tokens, not just colors
 When a designer picks a color, I want to know why. Is this the primary action color? The background variant? The hover state? Without that context, I make assumptions — and assumptions are where inconsistencies creep in.
 
-The most useful design files include tokens:
+The most useful design files include [tokens](/what-is/design-tokens):
 - Color palette with names (not just hex values)
 - Spacing scale (4px, 8px, 12px, 16px, 24px...)
 - Type scale with sizes, weights, and line heights
 - Shadow and border radius tokens
 - Basically tokenize everything if you want to make me happy :-)
 
-Tools like Penpot and Figma both support token systems. When they are defined in the file before development starts, the CSS is cleaner and the site is lighter. No redundant values, no guessing.
+Tools like [Penpot](/what-is/penpot) and Figma both support token systems. When they are defined in the file before development starts, the CSS is cleaner and the site is lighter. No redundant values, no guessing.
 
 ## Component states, not just the happy path
 Every button has a default state, a hover state, a focus state, a disabled state, and a loading state. Same for inputs, links, cards, and navigation items.
@@ -58,7 +58,7 @@ The best design files include:
 Including these in the design phase prevents accessibility issues before they reach code. Fixing an accessibility issue in CSS is much more expensive than getting it right from the start.
 
 ## A note on tools: Penpot over Figma
-I used to work in Figma. It is a great design tool. But I am currently migrating over to Penpot.
+I used to work in Figma. It is a great design tool. But I am currently migrating over to [Penpot](/what-is/penpot).
 
 The reasons are practical:
 - Open-source: No subscription, no license management, no data lock-in.
@@ -70,7 +70,7 @@ The principles in this article apply to both tools. But if you are choosing betw
 ## What this has to do with sustainability
 Good design files lead to cleaner code. Cleaner code means less CSS, fewer revisions, fewer rebuilds. Every revision cycle costs energy — not just developer time, but compute resources for testing, deploying, and serving the site.
 
-> Sustainable software starts before the first line of code is written. It starts in the design file.
+> Sustainable software starts before the first line of code is written. It starts in the design file. Read more in [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
 
 ---
