@@ -1,9 +1,10 @@
 ---
 title: "So I got curious about Payload CMS with Next.js"
 description: "After a decade of WordPress sites, I started wondering what Next.js and Payload CMS could do. Here is what I found — the good, the hard, and why I still use both."
-date: 2026-08-04
-categories: [Modern Web]
-tags: [nextjs, payload-cms, wordpress, architecture, web-development]
+date: 2024-03-12
+categories: [Sustainable Web-development, Content Management]
+tags: [nextjs, payload-cms, wordpress, architecture, web-development]\
+post-type: field-note
 status: published
 ---
 
@@ -89,6 +90,7 @@ For years, I assumed WordPress was the best tool because it was the tool I knew 
 I did not switch away from WordPress. I added new tools. I changed how I think about content, architecture, and performance. I became better at choosing — not just better at building.
 
 If I could give advice to other WordPress developers: stay curious. Investigate what the best stacks are for you and your projects. But do not get lost like I did. I kept rebuilding my systems from scratch, and that created a less sustainable situation and cost way too much time. The goal is not to switch everything. The goal is to know enough to choose well.
+
 
 ---
 

@@ -5,7 +5,7 @@ date: 2023-11-26
 topic: Sustainable Software
 categories: [sustainable web-development, sustainability]
 tags: [sustainable-software, sustainability, web-development, performance]
-status: to-publish
+status: published
 ---
 
 # Why I started focusing on building sustainable websites
