@@ -3,17 +3,6 @@ import config from '@payload-config'
 import fs from 'fs'
 import path from 'path'
 import readline from 'readline/promises'
-import {
-  convertMarkdownToLexical,
-  editorConfigFactory,
-  HeadingFeature,
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  HorizontalRuleFeature,
-  lexicalEditor,
-  BlocksFeature,
-} from '@payloadcms/richtext-lexical'
-import type { RichTextField } from 'payload'
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -133,37 +122,12 @@ async function resolveHeroImage(payload: any, filename: string) {
   return null
 }
 
-// --- Markdown → Lexical conversion ---
-
-function createEditorConfig() {
-  const contentField: RichTextField = {
-    name: 'content',
-    type: 'richText',
-    editor: lexicalEditor({
-      features: ({ rootFeatures }) => [
-        ...rootFeatures,
-        HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-        BlocksFeature({ blocks: [] }),
-        FixedToolbarFeature(),
-        InlineToolbarFeature(),
-        HorizontalRuleFeature(),
-      ],
-    }),
-  }
-  return editorConfigFactory.fromField({ field: contentField })
-}
-
-function markdownToLexical(markdown: string) {
-  const editorConfig = createEditorConfig()
-  return convertMarkdownToLexical({ markdown, editorConfig })
-}
-
 // --- Describe changes between file frontmatter and existing post ---
 
 function describePostChanges(
   frontmatter: Record<string, unknown>,
   existing: any,
-  lexicalContent: any,
+  body: string,
 ): string[] {
   const changes: string[] = []
   const title = (frontmatter.title as string) || ''
@@ -179,11 +143,8 @@ function describePostChanges(
   if (description !== (existing.meta?.description || '')) changes.push('description')
   if (status !== (existing._status || 'draft')) changes.push('status')
 
-  // Compare content (lexical JSON)
-  const existingContent = existing.content
-  if (existingContent && JSON.stringify(lexicalContent) !== JSON.stringify(existingContent)) {
-    changes.push('content')
-  }
+  // Compare markdown body (source of truth; Payload converts to Lexical server-side)
+  if (body !== (existing.markdown || '')) changes.push('content')
 
   // Compare categories
   const existingCategoryTitles = (existing.categories || [])
@@ -240,9 +201,6 @@ async function importFile(
     cleanBody = cleanBody.replace(/^#\s+.+?\n\n?/, '')
   }
 
-  // Convert markdown to Lexical rich text (needed for both diff and import)
-  const lexicalContent = markdownToLexical(cleanBody)
-
   // Check if post already exists
   const existing = await payload.find({
     collection: 'posts',
@@ -252,7 +210,7 @@ async function importFile(
   })
 
   const exists = existing.docs.length > 0
-  const changes = exists ? describePostChanges(frontmatter, existing.docs[0], lexicalContent) : null
+  const changes = exists ? describePostChanges(frontmatter, existing.docs[0], cleanBody) : null
 
   // In --check mode: show preview and skip
   if (isCheckOnly) {
@@ -291,7 +249,8 @@ async function importFile(
   const data: Record<string, unknown> = {
     title,
     slug,
-    content: lexicalContent,
+    markdown: cleanBody,
+    generateRichText: true,
     authors: [authorId],
     categories: categoryIds,
     publishedAt,
