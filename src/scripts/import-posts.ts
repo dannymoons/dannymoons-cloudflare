@@ -143,7 +143,7 @@ async function importFile(
   const description = (frontmatter.description as string) || ''
   const slug = (frontmatter.slug as string) || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
   const tags = (frontmatter.tags as string[]) || []
-  const categoryNames = (frontmatter.categories as string[]) || (frontmatter.topic as string ? [frontmatter.topic as string] : [])
+  const categoryNames = (frontmatter.categories as string[]) || []
   const status = (frontmatter.status as string) || 'draft'
   const dateStr = (frontmatter.date as string) || new Date().toISOString().split('T')[0]
   const publishedAt = new Date(dateStr).toISOString()

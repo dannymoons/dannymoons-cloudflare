@@ -2,7 +2,7 @@
 title: "Exploring Cloudflare as a Vercel alternative for Next.js"
 description: "I wanted to know if my Next.js site could run on verifiable green energy. Here is what I found testing Cloudflare — and what the Green Web Foundation and Carbonfooter say about it."
 date: 2026-08-04
-topic: Modern Web
+categories: [Modern Web]
 tags: [cloudflare, vercel, hosting, nextjs, payload-cms, green-hosting]
 status: published
 ---

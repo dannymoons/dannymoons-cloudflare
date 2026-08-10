@@ -2,7 +2,7 @@
 title: "So I got curious about Payload CMS with Next.js"
 description: "After a decade of WordPress sites, I started wondering what Next.js and Payload CMS could do. Here is what I found — the good, the hard, and why I still use both."
 date: 2026-08-04
-topic: Modern Web
+categories: [Modern Web]
 tags: [nextjs, payload-cms, wordpress, architecture, web-development]
 status: published
 ---

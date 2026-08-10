@@ -2,8 +2,9 @@
 title: "A decade of building websites: what changed, what stayed the same"
 description: "Ten years of building websites. From WordPress to custom CMS to modern stacks. Here is what I learned, what I stopped doing, and what I still believe."
 date: 2026-08-04
-topic: Product Building
+categories: [Product Building]
 tags: [retrospective, web-development, wordpress, nextjs, sustainability]
+status: draft
 ---
 
 # A decade of building websites: what changed, what stayed the same
