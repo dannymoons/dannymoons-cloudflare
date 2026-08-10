@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 import type { Post } from '../../../payload-types'
 
@@ -22,7 +22,7 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
       }
       revalidatePath('/')
       revalidatePath('/en')
-      revalidateTag('posts-sitemap', 'max')
+      revalidatePath('/sitemap.xml')
     }
 
     if (previousDoc?._status === 'published' && doc._status !== 'published' && previousDoc.slug) {
@@ -33,7 +33,7 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
         revalidatePath(oldPath)
       }
-      revalidateTag('posts-sitemap', 'max')
+      revalidatePath('/sitemap.xml')
     }
   }
   return doc
@@ -46,7 +46,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<Post> = ({ doc, req: { 
 
       revalidatePath(path)
     }
-    revalidateTag('posts-sitemap', 'max')
+    revalidatePath('/sitemap.xml')
   }
 
   return doc
