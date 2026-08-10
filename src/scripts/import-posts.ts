@@ -321,10 +321,12 @@ const run = async () => {
       .sort()
 
     if (isChangedOnly) {
-      const changed = execSync('git diff --name-only HEAD', { encoding: 'utf-8' })
-        .trim()
-        .split('\n')
-        .filter(Boolean)
+      // Check unstaged changes first, then last commit
+      let raw = execSync('git diff --name-only HEAD', { encoding: 'utf-8' }).trim()
+      if (!raw) {
+        raw = execSync('git diff --name-only HEAD~1', { encoding: 'utf-8' }).trim()
+      }
+      const changed = raw.split('\n').filter(Boolean)
       const changedSet = new Set(changed)
       files = files.filter((f) => changedSet.has(`${draftsDirRelative}/${f}`))
       if (files.length === 0) {
