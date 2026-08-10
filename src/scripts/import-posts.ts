@@ -104,6 +104,31 @@ async function getAdminUser(payload: any) {
   return users.docs[0].id
 }
 
+async function resolveHeroImage(payload: any, filename: string) {
+  const media = await payload.find({
+    collection: 'media',
+    where: { filename: { equals: filename } },
+    limit: 1,
+    overrideAccess: true,
+  })
+  if (media.docs.length > 0) {
+    return media.docs[0].id
+  }
+  // Also try without extension, or with alt text match
+  const basename = filename.replace(/\.[^.]+$/, '')
+  const mediaAlt = await payload.find({
+    collection: 'media',
+    where: { alt: { equals: basename } },
+    limit: 1,
+    overrideAccess: true,
+  })
+  if (mediaAlt.docs.length > 0) {
+    return mediaAlt.docs[0].id
+  }
+  console.warn(`  ⚠ Hero image not found in Media: "${filename}"`)
+  return null
+}
+
 // --- Markdown → Lexical conversion ---
 
 function createEditorConfig() {
@@ -148,6 +173,10 @@ async function importFile(
   const dateStr = (frontmatter.date as string) || new Date().toISOString().split('T')[0]
   const publishedAt = new Date(dateStr).toISOString()
 
+  // Resolve hero image if provided
+  const heroImageName = (frontmatter.heroImage || frontmatter.featuredImage) as string | undefined
+  const heroImageId = heroImageName ? await resolveHeroImage(payload, heroImageName) : null
+
   // Strip the H1 title from body if it matches the article title
   let cleanBody = body
   const h1Match = cleanBody.match(/^#\s+(.+)/)
@@ -191,6 +220,7 @@ async function importFile(
     authors: [authorId],
     categories: categoryIds,
     publishedAt,
+    ...(heroImageId ? { heroImage: heroImageId } : {}),
     meta: {
       title,
       description,
