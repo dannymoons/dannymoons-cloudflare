@@ -2,7 +2,7 @@
 title: "Sustainable Software Is an Engineering Quality"
 description: "Green hosting is not enough. Sustainable software means making better decisions about architecture, dependencies, content, and maintainability — long before you pick a server."
 date: 2026-02-11
-categories: [Sustainable Web-development]
+categories: [Sustainable Web Development]
 tags: [sustainable-software, performance, maintainability, architecture]
 post-type: blog
 status: published

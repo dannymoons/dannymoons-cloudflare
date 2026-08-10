@@ -2,8 +2,7 @@
 title: "What I wish every design file included"
 description: "A clean design file saves time, reduces rework, and leads to a lighter website. Here is what I look for — and what I wish more designers included before the hand-off."
 date: 2026-01-03
-topic: Design & Tools
-categories: [Designing for the web, Design systems]
+categories: [Designing for the Web]
 tags: [design, design-systems, tokens, figma, penpot, collaboration]
 post-type: blog
 status: published
