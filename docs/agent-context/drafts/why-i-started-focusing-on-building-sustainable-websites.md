@@ -2,10 +2,9 @@
 title: "Why I started focusing on building sustainable websites"
 description: "I did not start building websites to think about sustainability. I started because I liked making things for the web. Here is why sustainable websites became part of my everyday work."
 date: 2023-11-26
-topic: Sustainable Software
-categories: [sustainable web-development, sustainability]
+categories: [Sustainable Web Development]
 tags: [sustainable-software, sustainability, web-development, performance]
-status: to-publish
+status: published
 ---
 
 # Why I started focusing on building sustainable websites
@@ -128,6 +127,8 @@ That starts with small, practical changes:
 That is the kind of web I want to help build.
 
 Faster, smarter, and more sustainable.
+
+For a deeper take on what this means in practice — and why green hosting is only one piece of the puzzle — read [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
 ---
 

@@ -2,17 +2,18 @@
 title: "How I think about content modeling now (vs WordPress custom fields)"
 description: "I always defined ACF fields in PHP config files, never in the UI. But switching to Payload changed how I think about content — from config files to structured, type-safe models."
 date: 2026-08-04
-topic: Modern Web
+categories: [Content Management]
 tags: [payload-cms, wordpress, acf, content-modeling, architecture]
+status: draft
 ---
 
 # How I think about content modeling now (vs WordPress custom fields)
 
-I never used the ACF field group UI. From the start, I defined my fields in PHP config files — block fields in a dedicated `block-config.php`, theme settings in a separate file, post type fields in their own files. Everything in code, everything under version control.
+I never used the [ACF](/what-is/acf) field group UI. From the start, I defined my fields in PHP config files — block fields in a dedicated `block-config.php`, theme settings in a separate file, post type fields in their own files. Everything in code, everything under version control.
 
 It worked well. But over time, I noticed the same problems appearing across projects: inconsistent field names, duplicate data structures, and content that was hard to reuse between pages. The code was clean, but the model was not.
 
-When I started working with Payload CMS, I realized the problem was not how I defined the fields. It was the underlying model itself. ACF stores everything as post meta. Payload stores content as structured, relational data.
+When I started working with [Payload CMS](/what-is/payload-cms), I realized the problem was not how I defined the fields. It was the underlying model itself. [ACF](/what-is/acf) stores everything as [post meta](/what-is/post-meta). Payload stores content as structured, relational data.
 
 ## The ACF way: fields in PHP config
 
@@ -74,7 +75,7 @@ That direction led me to Payload.
 
 ## The Payload way: types as the source of truth
 
-In Payload, the content model is defined in TypeScript. The database schema, the admin panel, and the API are all generated from the same types.
+In Payload, the content model is defined in [TypeScript](/what-is/typescript). The database schema, the admin panel, and the API are all generated from the same types.
 
 ```typescript
 const Posts: CollectionConfig = {
@@ -110,13 +111,13 @@ The admin panel reflects this automatically. The API reflects this automatically
 
 ## What I still use ACF for
 
-I still use WordPress with ACF for projects where it fits. Not every site needs a relational content model. For simpler projects, ACF in PHP config files is fast, predictable, and clients understand WordPress.
+I still use [WordPress](/what-is/wordpress) with [ACF](/what-is/acf) for projects where it fits. Not every site needs a relational content model. For simpler projects, ACF in PHP config files is fast, predictable, and clients understand WordPress.
 
 But for any project where content has relationships, needs to be maintained over years, or requires more than flat page content — I start with the model first, not the field group.
 
 ## The sustainability connection
 
-Structured data means less duplication. Less duplication means less code, fewer database queries, and easier maintenance. A site built on a clear content model is lighter, faster, and cheaper to operate.
+Structured data means less duplication. Less duplication means less code, fewer database queries, and easier maintenance. A site built on a clear content model is lighter, faster, and cheaper to operate. This connects directly to [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
 The tools matter, but the way you think about content matters more.
 

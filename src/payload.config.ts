@@ -141,7 +141,14 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: isProduction,
+        // Force remote bindings (production D1) from CI/local tooling:
+        // NODE_ENV stays unset in GitHub Actions, so `isProduction` alone
+        // would route to the local D1 simulation. Set CLOUDFLARE_REMOTE=true
+        // in CI to import into the production database.
+        remoteBindings: isProduction || process.env.CLOUDFLARE_REMOTE === 'true',
+        // Next's parallel static-generation workers each create a platform proxy.
+        // Do not persist Miniflare state to their shared .wrangler directory.
+        persist: false,
       } satisfies GetPlatformProxyOptions),
   )
 }

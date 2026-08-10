@@ -2,8 +2,9 @@
 title: "Sustainable Software Is an Engineering Quality"
 description: "Green hosting is not enough. Sustainable software means making better decisions about architecture, dependencies, content, and maintainability — long before you pick a server."
 date: 2026-02-11
-topic: Sustainable Software
+categories: [Sustainable Web Development]
 tags: [sustainable-software, performance, maintainability, architecture]
+post-type: blog
 status: published
 ---
 
@@ -11,7 +12,7 @@ status: published
 
 I often see websites that claim to be sustainable because they switched to a green hosting provider. Sometimes they even display a [carbon badge in the footer](https://www.thegreenwebfoundation.org). Done. Sustainable website achieved.
 
-I understand the impulse. Green hosting is better than gray hosting. But if that same site still loads 8 MB of JavaScript, serves uncompressed hero images, runs five analytics tools, and has dependencies nobody remembers adding — then the hosting provider is not the problem. The waste was designed and built in long before the request reached the server.
+I understand the impulse. Green hosting is better than gray hosting. But if that same site still loads 8 MB of [JavaScript](/what-is/typescript), serves uncompressed hero images, runs five analytics tools, and has dependencies nobody remembers adding — then the hosting provider is not the problem. The waste was designed and built in long before the request reached the server.
 
 Sustainable software is not a hosting decision. It is not a badge or an offset purchase. It is an engineering quality — the same way performance, accessibility, and maintainability are qualities of good software. Green hosting is one piece of the puzzle, but it is not the whole picture.
 
@@ -39,7 +40,7 @@ When I look at a project, I think about sustainability across several layers:
 
 ## Where green hosting fits
 
-Green hosting matters. A server powered by renewable energy is better than one powered by fossil fuels. A hosting provider that measures and reduces its footprint is making a real choice.
+Green hosting matters. A server powered by renewable energy is better than one powered by fossil fuels. A hosting provider that measures and reduces its footprint is making a real choice. The [Green Web Foundation](/what-is/green-web-foundation) and [Carbonfooter](/what-is/carbonfooter) are useful tools to verify this.
 
 But if your page weighs 8 MB and loads forty third-party scripts, even the greenest server does not make it sustainable. The waste was already created — in the code, in the content, in the design decisions — before the first byte left the server.
 
@@ -87,6 +88,8 @@ Sustainability in software is not a label you add after the build. It is a quali
 The next time someone asks if a site is sustainable, the useful answer is not the name of the hosting provider. It is a description of what the site does, how it performs, what it weighs, how long it will last, and whether the waste was designed out before the first line of code was written.
 
 Green hosting is a fine start. But it is not the finish.
+
+If you want to understand why I began thinking about this in the first place, read [Why I started focusing on building sustainable websites](/posts/why-i-started-focusing-on-building-sustainable-websites).
 
 ---
 
