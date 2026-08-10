@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: payload-local-api
 tags: [payload, development]
 aliases: [Local API, Payload Local API]
+reviewed: true
 ---
 
 The Payload Local API is a way to read and write content directly in your code, without sending a request over the internet.

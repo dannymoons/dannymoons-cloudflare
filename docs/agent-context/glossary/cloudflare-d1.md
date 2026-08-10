@@ -3,7 +3,8 @@ title: "Cloudflare D1"
 date: 2026-08-05
 slug: cloudflare-d1
 tags: [cloudflare, database, hosting]
-aliases: [D1]
+aliases: [D1, Cloudflare database]
+reviewed: true
 ---
 
 Cloudflare D1 is Cloudflare's serverless SQLite database. It runs on Cloudflare's global network, close to where your Workers and Pages run.

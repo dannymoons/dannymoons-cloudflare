@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: api
 tags: [development, infrastructure]
 aliases: [API, REST API, application programming interface]
+reviewed: true
 ---
 
 API is short for Application Programming Interface. It is a way for different pieces of software to talk to each other.

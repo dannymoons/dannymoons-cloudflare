@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: nextjs
 tags: [development, framework]
 aliases: [Next.js, Next]
+reviewed: true
 ---
 
 Next.js is a framework for building websites and web applications. It is built on top of React, a popular JavaScript library.

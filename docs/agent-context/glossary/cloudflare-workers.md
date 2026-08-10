@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: cloudflare-workers
 tags: [cloudflare, hosting, development]
 aliases: [Workers, Cloudflare Workers, edge workers]
+reviewed: true
 ---
 
 Cloudflare Workers is a platform that runs code on Cloudflare's global network. Instead of running your code on one server in one location, it runs on dozens of servers around the world — close to your visitors.

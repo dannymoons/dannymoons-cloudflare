@@ -3,7 +3,8 @@ title: "Vercel"
 date: 2026-08-05
 slug: vercel
 tags: [hosting, development]
-aliases: [Vercel, zeit]
+aliases: [Vercel]
+reviewed: true
 ---
 
 Vercel is a hosting platform for websites. It is especially popular for sites built with Next.js, because Vercel is built by the same company that created Next.js.

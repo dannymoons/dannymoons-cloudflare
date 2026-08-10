@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: plugin
 tags: [development, cms]
 aliases: [plugin, plugins, add-on, extension]
+reviewed: true
 ---
 
 A plugin is a piece of software that adds a feature to an existing system. Instead of building everything from scratch, you install a plugin to do one specific thing.

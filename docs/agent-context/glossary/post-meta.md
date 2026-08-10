@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: post-meta
 tags: [wordpress, development]
 aliases: [post meta, wp_postmeta, meta data]
+reviewed: true
 ---
 
 Post meta is how WordPress stores extra information about a page or post. Think of it as sticky notes attached to a document. Every time you add a custom field — like a photo, a price, or a special setting — WordPress writes it as a separate sticky note in a big table called `wp_postmeta`.

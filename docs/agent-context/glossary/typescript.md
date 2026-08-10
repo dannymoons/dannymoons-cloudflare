@@ -4,6 +4,7 @@ date: 2026-08-05
 slug: typescript
 tags: [development, programming]
 aliases: [TypeScript, TS, typescript]
+reviewed: true
 ---
 
 TypeScript is a programming language that builds on JavaScript. It adds types, which are like labels that describe what kind of data something is — a number, a piece of text, a yes/no value, or a list.
