@@ -54,7 +54,7 @@ export default async function GlossaryEntryPage({
 
   const content = entry.content as unknown as Parameters<
     typeof RichTextBasic
-  >[0]['data']
+  >[0]['data'] | null
 
   return (
     <article>
