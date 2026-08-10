@@ -1,0 +1,13 @@
+---
+title: "Penpot"
+date: 2026-08-05
+slug: penpot
+tags: [design, tools, open-source]
+aliases: [Penpot, penpot.app]
+---
+
+Penpot is a design tool for creating website and app mockups — layouts, buttons, colors, typography. It is similar to Figma or Sketch, but with two important difference: Penpot is open source and truly aimed at developer hand-off.
+
+That means anyone can use it for free, without a subscription. More importantly for me, it has better developer features built in. I can inspect [design tokens](/what-is/design-tokens) like colors and spacing directly in the browser, without asking the designer to export anything.
+
+I used Figma for years, but I switched most of my collaboration to [Penpot](/what-is/penpot). The hand-off between designer and developer is smoother, and the [open-source](/what-is/open-source) model fits better with how I think about tools — no lock-in, no license fees, full control.

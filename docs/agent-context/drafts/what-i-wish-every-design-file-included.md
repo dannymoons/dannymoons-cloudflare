@@ -1,14 +1,15 @@
 ---
-title: "
+title: "What I wish every design file included"
 description: "A clean design file saves time, reduces rework, and leads to a lighter website. Here is what I look for — and what I wish more designers included before the hand-off."
 date: 2026-01-03
-topic: Design & Tools
-categories: [Design systems]
+categories: [Designing for the Web]
 tags: [design, design-systems, tokens, figma, penpot, collaboration]
+post-type: blog
 status: published
 ---
 
 # What I wish every design file included
+
 
 A good design file does more than show how a page should look. It communicates intent, constraints, and decisions. A bad design file leaves me guessing — and guessing leads to rework, bloated CSS, and a site that does not quite match what the designer envisioned.
 
@@ -17,20 +18,18 @@ A good design file does more than show how a page should look. It communicates i
 I have worked with different designers over the years, and that is the common thread. The file itself sets the tone for the entire build.
 
 ## Design tokens, not just colors
-
 When a designer picks a color, I want to know why. Is this the primary action color? The background variant? The hover state? Without that context, I make assumptions — and assumptions are where inconsistencies creep in.
 
-The most useful design files include tokens:
+The most useful design files include [tokens](/what-is/design-tokens):
 - Color palette with names (not just hex values)
 - Spacing scale (4px, 8px, 12px, 16px, 24px...)
 - Type scale with sizes, weights, and line heights
 - Shadow and border radius tokens
 - Basically tokenize everything if you want to make me happy :-)
 
-Tools like Penpot and Figma both support token systems. When they are defined in the file before development starts, the CSS is cleaner and the site is lighter. No redundant values, no guessing.
+Tools like [Penpot](/what-is/penpot) and Figma both support token systems. When they are defined in the file before development starts, the CSS is cleaner and the site is lighter. No redundant values, no guessing.
 
 ## Component states, not just the happy path
-
 Every button has a default state, a hover state, a focus state, a disabled state, and a loading state. Same for inputs, links, cards, and navigation items.
 
 When a design file only shows the default state, I have to invent the rest. That means more guesswork and a higher chance that the interaction does not match the designer's intent.
@@ -38,7 +37,6 @@ When a design file only shows the default state, I have to invent the rest. That
 The best files include every state, even if they are simple. It saves time and makes the result more polished.
 
 ## Responsive behavior, not just desktop
-
 A design for desktop tells me where elements go. Designing for desktop is easy though. Designing for mobile is a different story for many. But it is important to know how elements should behave when a screen shrinks.
 
 Does this card stack or collapse? Does the sidebar hide or scroll? Does the font size scale down or stay the same?
@@ -60,8 +58,7 @@ The best design files include:
 Including these in the design phase prevents accessibility issues before they reach code. Fixing an accessibility issue in CSS is much more expensive than getting it right from the start.
 
 ## A note on tools: Penpot over Figma
-
-I used to work in Figma. It is a great design tool. But I am currently migrating over to Penpot.
+I used to work in Figma. It is a great design tool. But I am currently migrating over to [Penpot](/what-is/penpot).
 
 The reasons are practical:
 - Open-source: No subscription, no license management, no data lock-in.
@@ -71,10 +68,10 @@ The reasons are practical:
 The principles in this article apply to both tools. But if you are choosing between them, Penpot makes the developer side of the workflow significantly smoother.
 
 ## What this has to do with sustainability
-
 Good design files lead to cleaner code. Cleaner code means less CSS, fewer revisions, fewer rebuilds. Every revision cycle costs energy — not just developer time, but compute resources for testing, deploying, and serving the site.
 
-> Sustainable software starts before the first line of code is written. It starts in the design file.
+> Sustainable software starts before the first line of code is written. It starts in the design file. Read more in [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
+
 
 ---
 
