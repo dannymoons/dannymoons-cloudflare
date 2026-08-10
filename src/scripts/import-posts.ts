@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 import readline from 'readline/promises'
@@ -14,6 +15,7 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 let updateAllMode = false
 const isCI = process.env.CI === 'true' || process.argv.includes('--yes')
 const isCheckOnly = process.argv.includes('--check')
+const isChangedOnly = process.argv.includes('--changed')
 
 /**
  * Import blog posts / notes from Markdown files into the Posts collection.
@@ -312,10 +314,25 @@ const run = async () => {
     const result = await importFile(payload, filePath, authorId)
     console.log(`\nResult: ${result}`)
   } else {
-    const files = fs
+    const draftsDirRelative = path.relative(process.cwd(), draftsDir)
+    let files = fs
       .readdirSync(draftsDir)
       .filter((f) => f.endsWith('.md'))
       .sort()
+
+    if (isChangedOnly) {
+      const changed = execSync('git diff --name-only HEAD', { encoding: 'utf-8' })
+        .trim()
+        .split('\n')
+        .filter(Boolean)
+      const changedSet = new Set(changed)
+      files = files.filter((f) => changedSet.has(`${draftsDirRelative}/${f}`))
+      if (files.length === 0) {
+        console.log('No changed files in docs/agent-context/drafts/')
+        process.exit(0)
+      }
+      console.log(`--changed: ${files.length} files selected\n`)
+    }
 
     if (files.length === 0) {
       console.log('No .md files found in docs/agent-context/drafts/')
