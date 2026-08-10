@@ -69,15 +69,15 @@ export default function GlossaryIndex({ entries }: { entries: Entry[] }) {
 
   return (
     <>
-      <div className='mb-8 flex justify-end'>
+      <div className='mb-5 flex justify-end sm:mb-8'>
         <Sheet>
           <SheetTrigger asChild>
             <button
               type='button'
-              className='inline-flex h-14 shrink-0 items-center gap-2 rounded-[var(--radius-lg)] border border-border bg-surface px-4 font-medium text-foreground text-sm transition-colors hover:border-primary hover:text-primary'
+              className='fixed right-4 bottom-4 left-4 z-[var(--z-fixed)] inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border/80 bg-background/70 px-5 font-medium text-foreground text-sm shadow-[0_8px_28px_oklch(0_0_0_/_0.22)] backdrop-blur-xl transition-colors hover:border-foreground/30 sm:static sm:z-auto sm:h-14 sm:w-auto sm:justify-start sm:rounded-[var(--radius-lg)] sm:bg-surface sm:px-4 sm:shadow-none sm:backdrop-blur-none'
             >
               <SlidersHorizontal className='size-4' />
-              <span className='hidden sm:inline'>Filter</span>
+              <span>Filter</span>
               {activeFilterCount > 0 && (
                 <span className='flex size-5 items-center justify-center rounded-full bg-primary font-mono text-[0.62rem] text-primary-foreground'>
                   {activeFilterCount}
@@ -85,7 +85,7 @@ export default function GlossaryIndex({ entries }: { entries: Entry[] }) {
               )}
             </button>
           </SheetTrigger>
-          <SheetContent side='right' className='border-border bg-surface p-0 sm:max-w-md'>
+          <SheetContent side='right' className='max-w-[calc(100%-1rem)] border-border bg-surface p-0 sm:max-w-md'>
             <SheetHeader className='relative overflow-hidden border-border border-b px-6 py-8'>
               <div aria-hidden='true' className='pointer-events-none absolute -top-20 -right-16 size-48 rounded-full bg-primary/10 blur-3xl' />
               <p className='relative font-medium font-mono text-[0.62rem] text-primary uppercase tracking-[0.18em]'>
@@ -166,34 +166,20 @@ export default function GlossaryIndex({ entries }: { entries: Entry[] }) {
       </div>
 
       {filteredEntries.length > 0 ? (
-        <div className='grid gap-3 sm:grid-cols-2 lg:grid-cols-3'>
+        <div className='border-border border-t'>
           {filteredEntries.map((entry, index) => (
             <Link
               key={entry.slug}
               href={`/what-is/${entry.slug}`}
-              className='group flex min-h-64 flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-primary/60 hover:bg-elevated sm:p-7'
+              className='group grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-3 border-border border-b px-0 py-5 transition-colors hover:border-primary/60 sm:grid-cols-[3rem_minmax(0,1fr)_auto] sm:gap-5 sm:py-7'
             >
-              <div className='flex items-center justify-between'>
-                <span className='font-mono text-[0.64rem] text-primary tracking-[0.16em]'>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <ArrowUpRight className='size-4 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary' />
-              </div>
-              <div className='mt-auto pt-12'>
-                <div className='mb-3 flex flex-wrap gap-1.5'>
-                  {entry.tags.slice(0, 2).map(tag => (
-                    <span key={tag.slug} className='font-mono text-[0.58rem] text-muted-foreground uppercase tracking-[0.12em]'>
-                      {tag.title}
-                    </span>
-                  ))}
-                </div>
-                <h3 className='font-heading font-medium text-2xl leading-tight tracking-[-0.04em] transition-colors group-hover:text-primary'>
-                  {entry.title}
-                </h3>
-                <p className='mt-3 line-clamp-3 text-muted-foreground text-sm leading-6'>
-                  {entry.description}
-                </p>
-              </div>
+              <span className='font-mono text-[0.64rem] text-primary tracking-[0.16em]'>
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 className='font-heading font-medium text-xl leading-tight tracking-[-0.04em] transition-colors group-hover:text-primary sm:text-2xl'>
+                {entry.title}
+              </h3>
+              <ArrowUpRight className='size-4 text-muted-foreground transition-colors group-hover:text-primary' />
             </Link>
           ))}
         </div>

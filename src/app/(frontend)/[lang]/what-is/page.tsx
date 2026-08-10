@@ -48,7 +48,7 @@ export default async function WhatIsPage() {
           aria-hidden='true'
           className='pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(to_right,oklch(1_0_0_/_0.045)_1px,transparent_1px),linear-gradient(to_bottom,oklch(1_0_0_/_0.045)_1px,transparent_1px)] [background-size:clamp(2.5rem,6vw,5rem)_clamp(2.5rem,6vw,5rem)] [mask-image:linear-gradient(to_bottom,black,transparent_82%)]'
         />
-        <Container size='wide' className='relative py-20 sm:py-28 lg:py-36'>
+        <Container size='wide' className='relative py-16 sm:py-28 lg:py-36'>
           <div className='grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:items-end lg:gap-20'>
             <div>
               <p className='mb-7 flex items-center gap-3 font-medium font-mono text-[0.68rem] text-primary uppercase tracking-[0.16em] sm:text-xs'>
@@ -73,7 +73,7 @@ export default async function WhatIsPage() {
         </Container>
       </section>
 
-      <section className='border-border border-b py-section'>
+      <section className='border-border border-b py-section pb-28 sm:pb-section'>
         <Container size='wide'>
           <GlossaryIndex entries={entries} />
         </Container>
