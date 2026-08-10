@@ -51,10 +51,11 @@ export default async function GlossaryEntryPage({
   const entry = await queryGlossaryBySlug(decodedSlug)
 
   if (!entry) return <PayloadRedirects url={url} />
+  if (!entry.content) return <PayloadRedirects url={url} />
 
   const content = entry.content as unknown as Parameters<
     typeof RichTextBasic
-  >[0]['data'] | null
+  >[0]['data']
 
   return (
     <article>
