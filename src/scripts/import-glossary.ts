@@ -9,9 +9,10 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
+let updateAllMode = false
+const isCI = process.env.CI === 'true' || process.argv.includes('--yes')
+
 /**
- * Import glossary entries from Markdown files into Payload CMS.
- *
  * Usage:
  *   pnpm import-glossary                           # import all files
  *   pnpm import-glossary docs/agent-context/glossary/opennext.md  # single file
@@ -110,16 +111,21 @@ async function importFile(payload: any, filePath: string): Promise<'created' | '
   const exists = existing.docs.length > 0
 
   if (exists && !updateAllMode) {
-    const answer = await rl.question(
-      `"${title}" (${slug}) already exists. Update? [y/n/a] `
-    )
-    const lower = answer.toLowerCase().trim()
-
-    if (lower === 'a') {
+    if (isCI) {
+      // Non-interactive CI mode: update all without prompting
       updateAllMode = true
-    } else if (lower !== 'y') {
-      console.log(`  ⏭ Skipped`)
-      return 'skipped'
+    } else {
+      const answer = await rl.question(
+        `"${title}" (${slug}) already exists. Update? [y/n/a] `
+      )
+      const lower = answer.toLowerCase().trim()
+
+      if (lower === 'a') {
+        updateAllMode = true
+      } else if (lower !== 'y') {
+        console.log(`  ⏭ Skipped`)
+        return 'skipped'
+      }
     }
   }
 
@@ -165,10 +171,6 @@ async function importFile(payload: any, filePath: string): Promise<'created' | '
   console.log(`  ✅ Created: "${title}"`)
   return 'created'
 }
-
-// --- Interactive update-all mode (global flag set from prompt) ---
-
-let updateAllMode = false
 
 // --- Main ---
 

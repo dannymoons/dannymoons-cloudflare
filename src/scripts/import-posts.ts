@@ -21,6 +21,7 @@ const rl = readline.createInterface({
 })
 
 let updateAllMode = false
+const isCI = process.env.CI === 'true' || process.argv.includes('--yes')
 
 /**
  * Import blog posts / notes from Markdown files into the Posts collection.
@@ -195,15 +196,20 @@ async function importFile(
   const exists = existing.docs.length > 0
 
   if (exists && !updateAllMode) {
-    const answer = await rl.question(
-      `"${title}" (${slug}) already exists. Update? [y/n/a] `
-    )
-    const lower = answer.toLowerCase().trim()
-    if (lower === 'a') {
+    if (isCI) {
+      // Non-interactive CI mode: update all without prompting
       updateAllMode = true
-    } else if (lower !== 'y') {
-      console.log(`  ⏭ Skipped`)
-      return 'skipped'
+    } else {
+      const answer = await rl.question(
+        `"${title}" (${slug}) already exists. Update? [y/n/a] `
+      )
+      const lower = answer.toLowerCase().trim()
+      if (lower === 'a') {
+        updateAllMode = true
+      } else if (lower !== 'y') {
+        console.log(`  ⏭ Skipped`)
+        return 'skipped'
+      }
     }
   }
 
