@@ -17,9 +17,6 @@ import {
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-// import { Banner } from '../../blocks/Banner/config'
-// import { Code } from '../../blocks/Code/config'
-// import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
@@ -62,9 +59,12 @@ const normalizeCodeBlocks = (content: Record<string, unknown>) => {
     }
     if (block.type !== 'block' || block.fields?.blockType !== 'Code') continue
 
-    const language = typeof block.fields.language === 'string' ? block.fields.language : ''
-    block.fields.language = (codeLanguageAliases[language] ?? language) || 'plaintext'
-    block.fields.code = typeof block.fields.code === 'string' ? block.fields.code : ''
+    const language =
+      typeof block.fields.language === 'string' ? block.fields.language : ''
+    block.fields.language =
+      (codeLanguageAliases[language] ?? language) || 'plaintext'
+    block.fields.code =
+      typeof block.fields.code === 'string' ? block.fields.code : ''
   }
 
   return content
@@ -136,11 +136,19 @@ export const Posts: CollectionConfig<'posts'> = {
               },
               hooks: {
                 beforeValidate: [
-                  async ({ siblingData, siblingFields, value, previousValue, operation }) => {
-                    const generate = (siblingData as Record<string, unknown> | undefined)
-                      ?.generateRichText as boolean | undefined
+                  async ({
+                    siblingData,
+                    siblingFields,
+                    value,
+                    previousValue,
+                    operation
+                  }) => {
+                    const generate = (
+                      siblingData as Record<string, unknown> | undefined
+                    )?.generateRichText as boolean | undefined
                     if (generate === false) return
-                    const changed = operation === 'create' || value !== previousValue
+                    const changed =
+                      operation === 'create' || value !== previousValue
                     if (!changed) return
                     const raw = value
                     if (typeof raw !== 'string' || !raw.trim()) return
@@ -151,12 +159,13 @@ export const Posts: CollectionConfig<'posts'> = {
                     const editorConfig = editorConfigFactory.fromField({
                       field: contentField as RichTextField
                     })
-                    ;(siblingData as Record<string, unknown>).content = normalizeCodeBlocks(
-                      convertMarkdownToLexical({
-                        markdown: raw,
-                        editorConfig
-                      }) as unknown as Record<string, unknown>
-                    )
+                    ;(siblingData as Record<string, unknown>).content =
+                      normalizeCodeBlocks(
+                        convertMarkdownToLexical({
+                          markdown: raw,
+                          editorConfig
+                        }) as unknown as Record<string, unknown>
+                      )
                   }
                 ]
               }
