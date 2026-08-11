@@ -34,7 +34,7 @@ function parseFrontmatter(markdown: string): {
   const frontmatter: Frontmatter = {};
 
   for (const line of match[1].split("\n")) {
-    const entry = line.match(/^(\w+):\s*(.+)$/);
+    const entry = line.match(/^([\w-]+):\s*(.+)$/);
     if (!entry) continue;
 
     const [, key, rawValue] = entry;
@@ -65,6 +65,20 @@ function stringList(frontmatter: Frontmatter, key: string): string[] {
   const value = frontmatter[key];
   if (Array.isArray(value)) return value;
   return typeof value === "string" && value ? [value] : [];
+}
+
+function postType(frontmatter: Frontmatter):
+  | "blog"
+  | "field-note"
+  | "announcement" {
+  const value = frontmatter["post-type"] ?? frontmatter.postType;
+  if (value === undefined) return "field-note";
+  if (value === "blog" || value === "field-note" || value === "announcement") {
+    return value;
+  }
+  throw new Error(
+    'Frontmatter "post-type" must be "blog", "field-note", or "announcement".',
+  );
 }
 
 async function resolveRelationships(
@@ -188,6 +202,7 @@ export async function importMarkdown(
       authors: [author],
       categories,
       tags,
+      postType: postType(frontmatter),
       publishedAt: date.toISOString(),
       ...(heroImage ? { heroImage } : {}),
       meta: {
