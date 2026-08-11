@@ -31,6 +31,7 @@ const realpath = (value: string) => (fs.existsSync(value) ? fs.realpathSync(valu
 
 const isCLI = process.argv.some((value) => realpath(value)?.endsWith(path.join('payload', 'bin.js')))
 const isProduction = process.env.NODE_ENV === 'production'
+const useRemoteBindings = isProduction || process.env.CLOUDFLARE_REMOTE === 'true'
 
 const createLog =
   (level: string, fn: typeof console.log) => (objOrMsg: object | string, msg?: string) => {
@@ -145,10 +146,10 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
         // NODE_ENV stays unset in GitHub Actions, so `isProduction` alone
         // would route to the local D1 simulation. Set CLOUDFLARE_REMOTE=true
         // in CI to import into the production database.
-        remoteBindings: isProduction || process.env.CLOUDFLARE_REMOTE === 'true',
-        // Next's parallel static-generation workers each create a platform proxy.
-        // Do not persist Miniflare state to their shared .wrangler directory.
-        persist: false,
+        remoteBindings: useRemoteBindings,
+        // Local CLI and dev processes need to share the migrated D1 state.
+        // Remote builds must not create persistent Miniflare state.
+        persist: !useRemoteBindings,
       } satisfies GetPlatformProxyOptions),
   )
 }
