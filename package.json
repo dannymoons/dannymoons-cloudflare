@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
-    "build:cf": "cross-env CLOUDFLARE_REMOTE=true pnpm run build && opennextjs-cloudflare build --env=${CLOUDFLARE_ENV:-production}",
+    "build:cf": "cross-env CLOUDFLARE_ENV=production CLOUDFLARE_REMOTE=true pnpm run build && opennextjs-cloudflare build --env=${CLOUDFLARE_ENV:-production}",
     "deploy": "pnpm run deploy:database && pnpm run deploy:app && pnpm run deploy:content",
     "deploy:app": "opennextjs-cloudflare build --env=${CLOUDFLARE_ENV:-production} && opennextjs-cloudflare deploy --env=${CLOUDFLARE_ENV:-production}",
     "deploy:content": "pnpm import-posts && pnpm import-glossary",
