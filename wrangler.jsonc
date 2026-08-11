@@ -23,11 +23,9 @@
       "binding": "D1",
       "database_name": "dannymoons-db",
       "database_id": "bb73d787-4579-4d9e-ba20-ba0647b43d40",
-      // Use local D1 for `next dev` / `next build`. Set `"remote": true` when you
-      // intentionally want local tooling to hit the production database.
-      // Before first deploy of this branch, reset remote D1 (old schema is incompatible)
-      // then run `pnpm payload migrate` with remote enabled / via `deploy:database`.
-      "remote": true,
+      // Use local D1 for `next dev` / `next build`. Production migrations use
+      // `NODE_ENV=production`, which enables remote bindings in payload.config.ts.
+      "remote": false,
     },
   ],
   "services": [
@@ -42,14 +40,55 @@
       "binding": "R2",
       "bucket_name": "dannymoons-r2",
     },
-    // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
-    // {
-    //   "binding": "NEXT_INC_CACHE_R2_BUCKET",
-    //   "bucket_name": "<BUCKET_NAME>",
-    // },
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "dannymoons-r2",
+    },
   ],
   // Here's how to configure an additional environment
   // It can be deployed with `CLOUDFLARE_ENV=staging pnpm run deploy`
+  "env": {
+    "production": {
+      "name": "dannymoons",
+      "services": [],
+      "images": {
+        "binding": "IMAGES",
+      },
+      "d1_databases": [
+        {
+          "binding": "D1",
+          "database_id": "bb73d787-4579-4d9e-ba20-ba0647b43d40",
+          "database_name": "dannymoons-db",
+          "remote": true,
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "R2",
+          "bucket_name": "dannymoons-r2",
+        },
+        {
+          "binding": "NEXT_INC_CACHE_R2_BUCKET",
+          "bucket_name": "dannymoons-r2",
+        },
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "NEXT_CACHE_DO_QUEUE",
+            "class_name": "DOQueueHandler",
+          },
+        ],
+      },
+      "migrations": [
+        {
+          "tag": "v1",
+          "new_sqlite_classes": ["DOQueueHandler"],
+        },
+      ],
+    },
+  },
+  /*
   // "env": {
   //   "staging": {
   //     "name": "my-app-staging",
@@ -81,4 +120,5 @@
   //     ]
   //   }
   // }
+  */
 }

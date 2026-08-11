@@ -10,7 +10,9 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/media') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/next') ||
-    pathname === '/favicon.ico'
+    pathname === '/favicon.ico' ||
+    pathname === '/sitemap.xml' ||
+    pathname === '/robots.txt'
   ) {
     return
   }
