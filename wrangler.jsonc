@@ -40,12 +40,24 @@
       "binding": "R2",
       "bucket_name": "dannymoons-r2",
     },
-    {
-      "binding": "NEXT_INC_CACHE_R2_BUCKET",
-      "bucket_name": "dannymoons-r2",
-    },
   ],
-  // Here's how to configure an additional environment
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  },
+
+ // Here's how to configure an additional environment
   // It can be deployed with `CLOUDFLARE_ENV=staging pnpm run deploy`
   "env": {
     "production": {
@@ -66,24 +78,6 @@
         {
           "binding": "R2",
           "bucket_name": "dannymoons-r2",
-        },
-        {
-          "binding": "NEXT_INC_CACHE_R2_BUCKET",
-          "bucket_name": "dannymoons-r2",
-        },
-      ],
-      "durable_objects": {
-        "bindings": [
-          {
-            "name": "NEXT_CACHE_DO_QUEUE",
-            "class_name": "DOQueueHandler",
-          },
-        ],
-      },
-      "migrations": [
-        {
-          "tag": "v1",
-          "new_sqlite_classes": ["DOQueueHandler"],
         },
       ],
     },
