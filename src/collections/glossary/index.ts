@@ -30,6 +30,7 @@ import {
 import { slugField } from 'payload'
 
 const codeLanguageAliases: Record<string, string> = {
+  bash: 'shell',
   js: 'javascript',
   md: 'markdown',
   plain: 'plaintext',
