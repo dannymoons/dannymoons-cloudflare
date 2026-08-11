@@ -13,7 +13,7 @@ type SitemapDocument = {
 }
 
 const publishedDocuments = async (
-  collection: 'pages' | 'posts' | 'glossary' | 'wiki',
+  collection: 'pages' | 'posts' | 'glossary'
 ): Promise<SitemapDocument[]> => {
   const payload = await getPayload({ config })
   const result = await payload.find({
@@ -26,50 +26,48 @@ const publishedDocuments = async (
     locale: 'en',
     where: {
       _status: {
-        equals: 'published',
-      },
+        equals: 'published'
+      }
     },
     select: {
       slug: true,
-      updatedAt: true,
-    },
+      updatedAt: true
+    }
   })
 
   return result.docs as SitemapDocument[]
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [pages, posts, glossary, wiki] = await Promise.all([
+  const [pages, posts, glossary] = await Promise.all([
     publishedDocuments('pages'),
     publishedDocuments('posts'),
-    publishedDocuments('glossary'),
-    publishedDocuments('wiki'),
+    publishedDocuments('glossary')
   ])
 
-  const staticEntries = ['', 'posts', 'what-is', 'docs', 'search'].map((path) => ({
-    url: `${SITE_URL}/${path}`.replace(/\/$/, path ? '' : '/'),
+  const staticEntries = ['', 'posts', 'what-is', 'search'].map(path => ({
+    url: `${SITE_URL}/${path}`.replace(/\/$/, path ? '' : '/')
   }))
 
   const pageEntries = pages
-    .filter((page) => page.slug && page.slug !== 'home')
-    .map((page) => ({
+    .filter(page => page.slug && page.slug !== 'home')
+    .map(page => ({
       url: `${SITE_URL}/${page.slug}`,
-      lastModified: page.updatedAt ?? undefined,
+      lastModified: page.updatedAt ?? undefined
     }))
 
   const entriesFor = (documents: SitemapDocument[], prefix: string) =>
     documents
-      .filter((document) => document.slug)
-      .map((document) => ({
+      .filter(document => document.slug)
+      .map(document => ({
         url: `${SITE_URL}/${prefix}/${document.slug}`,
-        lastModified: document.updatedAt ?? undefined,
+        lastModified: document.updatedAt ?? undefined
       }))
 
   return [
     ...staticEntries,
     ...pageEntries,
     ...entriesFor(posts, 'posts'),
-    ...entriesFor(glossary, 'what-is'),
-    ...entriesFor(wiki, 'docs'),
+    ...entriesFor(glossary, 'what-is')
   ]
 }

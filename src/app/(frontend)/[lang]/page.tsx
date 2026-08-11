@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
 import { Heading } from '@/components/content/heading'
 import { Container } from '@/components/layout/container'
+import { PostList } from '@/components/sections/post-list'
 import {
   Accordion,
   AccordionContent,
@@ -51,7 +52,7 @@ export default async function HomePage() {
   const { docs } = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: 3,
+    limit: 5,
     overrideAccess: false,
     locale: 'en',
     sort: '-publishedAt',
@@ -168,19 +169,18 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className='mt-14 border-border border-t'>
+          <div className='mt-14'>
             {fieldNotes.length > 0 ? (
-              fieldNotes.map((note, i) => (
-                <Note
-                  key={note.id}
-                  index={String(i + 1).padStart(2, '0')}
-                  topic={note.topic}
-                  title={note.title}
-                  href={`/posts/${note.slug}`}
-                >
-                  {note.excerpt}
-                </Note>
-              ))
+              <PostList
+                items={fieldNotes.map(note => ({
+                  description: note.excerpt,
+                  href: `/posts/${note.slug}`,
+                  id: note.id,
+                  label: note.topic,
+                  title: note.title
+                }))}
+                showArrow={false}
+              />
             ) : (
               <p className='py-8 text-muted-foreground text-sm'>
                 No field notes yet — the first experiments are still brewing.
@@ -367,22 +367,6 @@ export default async function HomePage() {
   )
 }
 
-function SectionLabel({
-  children,
-  index
-}: {
-  children: ReactNode
-  index: string
-}) {
-  return (
-    <div className='flex items-center gap-4 font-mono text-[0.65rem] uppercase tracking-[0.18em]'>
-      <span className='text-primary'>{index}</span>
-      <span className='h-px w-8 bg-border' />
-      <span className='text-muted-foreground'>{children}</span>
-    </div>
-  )
-}
-
 function Force({
   children,
   number,
@@ -450,46 +434,6 @@ function ProjectCard({
           </p>
         </div>
       </div>
-    </article>
-  )
-}
-
-function Note({
-  children,
-  href,
-  index,
-  title,
-  topic
-}: {
-  children: ReactNode
-  href?: string
-  index: string
-  title: string
-  topic: string
-}) {
-  const titleContent = href ? (
-    <Link href={href} className='transition-colors hover:text-primary'>
-      {title}
-    </Link>
-  ) : (
-    title
-  )
-  return (
-    <article className='group grid gap-5 border-border border-b py-8 transition-colors md:flex md:items-start md:gap-8 md:py-10'>
-      <span className='font-mono text-base text-muted-foreground md:w-10'>
-        {index}
-      </span>
-      <div className='md:w-full'>
-        <span className='mb-2 font-mono text-[0.62rem] text-primary uppercase tracking-[0.16em]'>
-          {topic}
-        </span>
-        <Heading headingLevel='h3' size='md' color='foreground'>
-          {titleContent}
-        </Heading>
-      </div>
-      <p className='max-w-2xl text-muted-foreground text-sm leading-6 sm:text-base sm:leading-7'>
-        {children}
-      </p>
     </article>
   )
 }

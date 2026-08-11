@@ -1,9 +1,9 @@
 'use client'
 
-import Link from 'next/link'
-import { ArrowUpRight, Search, SlidersHorizontal, Sparkles } from 'lucide-react'
+import { Search, SlidersHorizontal, Sparkles } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
 
+import { PostList } from '@/components/sections/post-list'
 import {
   Sheet,
   SheetClose,
@@ -166,23 +166,13 @@ export default function GlossaryIndex({ entries }: { entries: Entry[] }) {
       </div>
 
       {filteredEntries.length > 0 ? (
-        <div className='border-border border-t'>
-          {filteredEntries.map((entry, index) => (
-            <Link
-              key={entry.slug}
-              href={`/what-is/${entry.slug}`}
-              className='group grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-3 border-border border-b px-0 py-5 transition-colors hover:border-primary/60 sm:grid-cols-[3rem_minmax(0,1fr)_auto] sm:gap-5 sm:py-7'
-            >
-              <span className='font-mono text-[0.64rem] text-primary tracking-[0.16em]'>
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className='font-heading font-medium text-xl leading-tight tracking-[-0.04em] transition-colors group-hover:text-primary sm:text-2xl'>
-                {entry.title}
-              </h3>
-              <ArrowUpRight className='size-4 text-muted-foreground transition-colors group-hover:text-primary' />
-            </Link>
-          ))}
-        </div>
+        <PostList
+          items={filteredEntries.map(entry => ({
+            href: `/what-is/${entry.slug}`,
+            id: entry.slug,
+            title: entry.title
+          }))}
+        />
       ) : (
         <div className='rounded-[var(--radius-xl)] border border-border border-dashed px-6 py-16 text-center'>
           <Sparkles className='mx-auto size-5 text-primary' />
