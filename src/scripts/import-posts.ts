@@ -43,7 +43,7 @@ function parseFrontmatter(content: string) {
   const frontmatter: Record<string, unknown> = {}
 
   for (const line of raw.split('\n')) {
-    const kv = line.match(/^(\w+):\s*(.+)$/)
+    const kv = line.match(/^([\w-]+):\s*(.+)$/)
     if (!kv) continue
     let value: unknown = kv[2].trim()
 
@@ -140,12 +140,14 @@ function describePostChanges(
   const categoryNames = (frontmatter.categories as string[]) || []
   const tags = (frontmatter.tags as string[]) || []
   const status = (frontmatter.status as string) || 'draft'
+  const postType = (frontmatter['post-type'] || frontmatter.postType || 'field-note') as string
   const dateStr = (frontmatter.date as string) || ''
 
   if (title !== existing.title) changes.push('title')
   if (slug !== existing.slug) changes.push('slug')
   if (description !== (existing.meta?.description || '')) changes.push('description')
   if (status !== (existing._status || 'draft')) changes.push('status')
+  if (postType !== (existing.postType || 'field-note')) changes.push('postType')
 
   // Compare markdown body (source of truth; Payload converts to Lexical server-side)
   if (body !== (existing.markdown || '')) changes.push('content')
@@ -191,6 +193,7 @@ async function importFile(
   const tags = (frontmatter.tags as string[]) || []
   const categoryNames = (frontmatter.categories as string[]) || []
   const status = (frontmatter.status as string) || 'draft'
+  const postType = (frontmatter['post-type'] || frontmatter.postType || 'field-note') as string
   const dateStr = (frontmatter.date as string) || new Date().toISOString().split('T')[0]
   const publishedAt = new Date(dateStr).toISOString()
 
@@ -257,6 +260,7 @@ async function importFile(
     generateRichText: true,
     authors: [authorId],
     categories: categoryIds,
+    postType,
     publishedAt,
     ...(heroImageId ? { heroImage: heroImageId } : {}),
     meta: {
