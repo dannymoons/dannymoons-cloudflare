@@ -1,9 +1,9 @@
 ---
-title: "When AI helped me build a solution to the wrong problem"
-slug: when-ai-helped-me-build-a-solution-to-the-wrong-problem
+title: "AI helped me build a solution to the wrong problem"
+slug: ai-helped-me-build-a-solution-to-the-wrong-problem
 description: "I asked AI to fix 500 errors after adding a Payload collection. Because I had not diagnosed the root cause myself, the AI had no reason to start with the simplest explanation — and helped me build a very sophisticated fix for the wrong problem."
 date: 2026-08-12
-categories: [Modern Web]
+categories: [Modern Web, AI]
 tags: [ai-assisted-debugging, payload-cms, cloudflare-d1, debugging, lessons-learned]
 post-type: field-note
 status: published
@@ -37,7 +37,7 @@ The schema did not exist because SQLite does not create tables from Payload conf
 
 ## What I am taking from this
 
-The lesson is not about AI making mistakes. The AI was working correctly with the information I gave it. The lesson is about the order of operations when something breaks.
+This is not about AI making mistakes. The AI was working with the information I gave it. The lesson is about the order of operations when something breaks.
 
 Before you involve AI in a diagnosis, do three things yourself:
 
@@ -49,7 +49,7 @@ I still use AI for debugging. I will not stop. But I changed one thing: I do my 
 
 > Check the simple things first. Schema. Migrations. Database state. Deployment state. Then, if the problem is still there, call in the AI.
 
-That is the only change I needed to make. And it would have saved me days.
+That is the only change I needed to make. And it would have saved me almost a full day.
 
 ---
 
