@@ -11,9 +11,9 @@ status: published
 
 # When AI helped me build a solution to the wrong problem
 
-I added a new collection to a running Payload CMS site. The admin panel returned a 500 error.
+I added a new collection to a running [Payload CMS](/what-is/payload-cms) site. The admin panel returned a 500 error.
 
-My first experience with Payload was on MongoDB, where adding a collection just worked — the schema adapted automatically. I carried that assumption into a project running on Cloudflare D1, which is SQLite. On SQLite, a changed Payload config needs a database migration. I had not run one.
+My first experience with Payload was on [MongoDB](https://www.mongodb.com), where adding a collection just worked — the schema adapted automatically. I carried that assumption into a project running on [Cloudflare D1](/what-is/cloudflare-d1), which is [SQLite](https://sqlite.org). On SQLite, a changed Payload config needs a [database migration](https://payloadcms.com/docs/database/migrations). I had not run one.
 
 That should have been a five-minute fix. Instead, I spent days deep in build infrastructure.
 
@@ -23,7 +23,7 @@ When the error appeared, I asked an AI assistant to investigate. I described wha
 
 The problem was that I had not done any diagnosis myself first. I did not know whether the error was a schema problem, a config problem, a database problem, or something else entirely. So the AI had no reason to start with the simplest explanation.
 
-It went straight into Cloudflare Workers internals, OpenNext build configuration, caching layers, Durable Objects, and deployment pipelines. And because the suggestions were technically sound and well-reasoned, I followed them.
+It went straight into [Cloudflare Workers](/what-is/cloudflare-workers) internals, [OpenNext](/what-is/opennext) build configuration, caching layers, [Durable Objects](https://developers.cloudflare.com/durable-objects), and deployment pipelines. And because the suggestions were technically sound and well-reasoned, I followed them.
 
 > A good AI assistant can be dangerous not when it is wrong, but when it is convincingly building the right solution to a problem you have not correctly identified.
 
@@ -31,9 +31,9 @@ Every fix made the system more complex. Every change was rational in isolation. 
 
 ## The fix was boring
 
-The actual fix, once I stepped back, was simple: run a Payload migration against the D1 database. One command. Five minutes.
+The actual fix, once I stepped back, was simple: run a [Payload migration](https://payloadcms.com/docs/database/migrations) against the D1 database. One command. Five minutes.
 
-The schema did not exist because SQLite does not create tables from Payload configs automatically. That is not a bug in Payload, Cloudflare, or SQLite. It is the expected behaviour when you use a schema-defined database. I just had not checked.
+The schema did not exist because [SQLite](https://sqlite.org) does not create tables from Payload configs automatically. That is not a bug in Payload, [Cloudflare](/what-is/cloudflare-workers), or [SQLite](https://sqlite.org). It is the expected behaviour when you use a schema-defined database. I just had not checked.
 
 ## What I am taking from this
 
@@ -59,9 +59,9 @@ That is the only change I needed to make. And it would have saved me almost a fu
 
 | Field | Value |
 |-------|-------|
-| **Slug** | when-ai-helped-me-build-a-solution-to-the-wrong-problem |
+| **Slug** | ai-helped-me-build-a-solution-to-the-wrong-problem |
 | **Meta description** | I asked AI to fix 500 errors after adding a Payload collection. Because I had not diagnosed the root cause myself, the AI had no reason to start with the simplest explanation — and helped me build a very sophisticated fix for the wrong problem. |
 | **Social title** | When AI helped me build a solution to the wrong problem |
 | **Social description** | A good AI assistant can be dangerous not when it is wrong, but when it is convincingly building the right solution to a problem you have not correctly identified. |
-| **Related articles** | When a working Payload deployment became a build-system problem |
-| **Related projects** | DannyMoons.nl |
+| **Related articles** | [Exploring Cloudflare as a Vercel alternative](/posts/exploring-cloudflare-as-vercel-alternative-for-nextjs), [So I got curious about Payload CMS with Next.js](/posts/so-i-got-curious-about-payload-cms-with-nextjs) |
+| **Related projects** | [DannyMoons.nl](https://dannymoons.nl) |
