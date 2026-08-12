@@ -1,16 +1,19 @@
 # Article ideas — DannyMoons.nl
 
 Status: planning
-Last updated: 2026-08-04
+Last updated: 2026-08-12
 Language: English (dannymoons.nl)
 
 ---
 
 ## Published
 
-- [x] Sustainable software is an engineering quality *(positioning)*
-- [x] So I got curious about Payload CMS with Next.js *(personal retrospective)*
-- [x] A decade of building websites: what changed, what stayed the same *(year-end retrospective)*
+| Slug | Title | Notes |
+|------|-------|-------|
+| sustainable-software-is-an-engineering-quality | Sustainable software is an engineering quality | *(positioning)* |
+| so-i-got-curious-about-payload-cms-with-nextjs | So I got curious about Payload CMS with Next.js | *(personal retrospective)* |
+| a-decade-of-building-websites | A decade of building websites: what changed, what stayed the same | *(year-end retrospective)* |
+| ai-helped-me-build-a-solution-to-the-wrong-problem | When AI helped me build a solution to the wrong problem | *(field note, AI-assisted debugging)* |
 
 ## Web development
 
