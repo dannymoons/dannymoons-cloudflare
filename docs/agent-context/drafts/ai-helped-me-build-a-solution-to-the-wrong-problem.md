@@ -11,11 +11,11 @@ status: published
 
 # When AI helped me build a solution to the wrong problem
 
-I added a new collection to a running [Payload CMS](/what-is/payload-cms) site. The admin panel returned a 500 error.
+I added a new collection to a running [Payload CMS](/what-is/payload-cms) site. The front-end displayed an internal server error on different pages that were connected to that collection.
 
 My first experience with Payload was on [MongoDB](https://www.mongodb.com), where adding a collection just worked — the schema adapted automatically. I carried that assumption into a project running on [Cloudflare D1](/what-is/cloudflare-d1), which is [SQLite](https://sqlite.org). On SQLite, a changed Payload config needs a [database migration](https://payloadcms.com/docs/database/migrations). I had not run one.
 
-That should have been a five-minute fix. Instead, I spent days deep in build infrastructure.
+That should have been a five-minute fix. Instead, I spent almost a day deep in build infrastructure.
 
 ## How AI became part of the problem
 
@@ -45,7 +45,7 @@ Before you involve AI in a diagnosis, do three things yourself:
 2. **Write down what you know and what you do not know.** If you cannot clearly state the expected behaviour and the actual behaviour, you are not ready to ask for help — from AI or anyone else.
 3. **Scope the problem before opening the tool.** An AI assistant that can analyse your entire stack is extremely useful. That same capability becomes a liability when it starts suggesting infrastructure changes for a problem that turns out to be a missing database migration.
 
-I still use AI for debugging. I will not stop. But I changed one thing: I do my own initial diagnosis first. I check the boring things. I confirm what the system is actually doing before I ask anyone — human or AI — to help explain why it is not doing what I expect.
+I will keep using AI for debugging and reviewing code where needed. But I changed one thing: I do my own initial diagnosis first. I check the boring things (and ofcourse the fancy stuff as well). I confirm what the system is actually doing before I ask anyone — human or AI — to help explain why it is not doing what I expect.
 
 > Check the simple things first. Schema. Migrations. Database state. Deployment state. Then, if the problem is still there, call in the AI.
 
