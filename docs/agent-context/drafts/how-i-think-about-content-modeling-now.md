@@ -5,6 +5,7 @@ description: "I always defined ACF fields in PHP config files, never in the UI. 
 date: 2026-08-04
 categories: [Content Management]
 tags: [payload-cms, wordpress, acf, content-modeling, architecture]
+related-posts: [so-i-got-curious-about-payload-cms-with-nextjs, sustainable-software-is-an-engineering-quality]
 status: draft
 ---
 
@@ -121,18 +122,3 @@ But for any project where content has relationships, needs to be maintained over
 Structured data means less duplication. Less duplication means less code, fewer database queries, and easier maintenance. A site built on a clear content model is lighter, faster, and cheaper to operate. This connects directly to [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
 The tools matter, but the way you think about content matters more.
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | how-i-think-about-content-modeling-now |
-| **Meta description** | I always defined ACF fields in PHP config files. But switching to Payload changed how I think — from post meta to structured, type-safe models. |
-| **Social title** | How I think about content modeling now (vs WordPress custom fields) |
-| **Social description** | Both approaches are code-first. The real difference is what happens underneath — post meta vs relational data. |
-| **Related articles** | So I got curious about Payload CMS with Next.js, Sustainable software is an engineering quality |
-| **Related projects** | Moonsio |
