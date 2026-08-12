@@ -1,10 +1,10 @@
 ---
 title: "When a working Payload deployment became a build-system problem"
 slug: when-a-working-payload-deployment-became-a-build-system-problem
-description: "What broke when I added a glossary and sitemap to a Payload site on Cloudflare, and what I learned about migrations, local D1 state, and OpenNext builds."
+description: "What broke when I added a glossary and sitemap to a Payload site on Cloudflare, and what I learned about migrations, local D1 state, OpenNext builds — and why using AI before checking my assumptions made everything worse."
 date: 2026-08-11
 categories: [Modern Web, Content Management]
-tags: [payload-cms, cloudflare, cloudflare-d1, opennext, nextjs, debugging]
+tags: [payload-cms, cloudflare, cloudflare-d1, opennext, nextjs, debugging, ai-assisted-debugging]
 post-type: field-note
 status: published
 ---
@@ -100,9 +100,31 @@ Other glossary and wiki detail pages failed too. That made it unlikely that ACF'
 
 A diagnostic deployment showed only Next's generic Server Components error. The page started working after a later redeploy, but the temporary logging did not contain a useful exception and there was no evidence that the logging itself fixed the page. The more honest conclusion is that a fresh Worker deployment and rebuilt runtime state cleared the failure, while the underlying data was valid.
 
-## What I would do differently
+## But I left out what started it
 
-I would start with the official Payload Cloudflare template and change one thing at a time.
+There is a step before all of this that I have not mentioned yet, and it is the most instructive part of the story.
+
+Before the build problems, before the environment errors, before any of the infrastructure work, I did something that seemed simple: I added a new Payload collection.
+
+The glossary was not technically complex — a few fields, localized slugs, tags. I had built collections before. So I added the config, ran a local build, and opened the admin panel.
+
+Internal Server Error.
+
+My first experience with Payload was on MongoDB. Adding a collection there just worked. The schema adapted. You added a config, and the database handled it. I carried that assumption into the D1 setup without thinking about it.
+
+Cloudflare D1 is SQLite. A changed Payload config on SQLite means you need a database migration. I had not run one. The error was not a bug in my collection config. It was a schema that did not exist yet.
+
+That should have been a five-minute fix. Instead, I called in AI to investigate.
+
+This is the part I find most useful to reflect on. I did not know the root cause because I had not stopped to check my assumptions. I handed the problem — 500 errors after adding a collection — to an AI assistant, and because I had not scoped the problem correctly, the AI had no reason to start with the simplest explanation. It went straight into Cloudflare internals, OpenNext build issues, caching, Durable Objects, and deployment pipelines.
+
+A likely simple database-migration problem became a full infrastructure investigation.
+
+I do not tell this to blame the AI. The AI responded to the framing I gave it. It was thorough, creative, and persistent. That is exactly what made it dangerous in this situation: it was so good at finding complex explanations that it helped me build a very sophisticated solution to possibly the wrong problem.
+
+> I used AI to solve a problem before I properly understood what problem I was solving. AI then helped convincingly build an increasingly complex solution to possibly the wrong problem.
+
+The lesson is not about AI. It is about order of operations. Before you involve AI in a diagnosis, check the simple things yourself. Schema. Migrations. Database state. Deployment state. Environment variables. Those checks take minutes. And they prevent you from spending days in the wrong layer of the stack.
 
 I would keep the first deployment boring: D1, R2, migrations, and a normal OpenNext build. I would add a glossary, sitemap, caching, and revalidation as separate changes, checking the build after each one.
 
