@@ -248,12 +248,6 @@ export async function importMarkdown(
           typeof frontmatter.description === "string"
             ? frontmatter.description
             : "",
-        ...(typeof frontmatter["social-title"] === "string"
-          ? { socialTitle: frontmatter["social-title"] }
-          : {}),
-        ...(typeof frontmatter["social-description"] === "string"
-          ? { socialDescription: frontmatter["social-description"] }
-          : {}),
       },
       _status: frontmatter.status === "published" ? "published" : "draft",
     };
@@ -275,12 +269,6 @@ export async function importMarkdown(
       meta: {
         title,
         description: `${title} — explained in simple terms.`,
-        ...(typeof frontmatter["social-title"] === "string"
-          ? { socialTitle: frontmatter["social-title"] }
-          : {}),
-        ...(typeof frontmatter["social-description"] === "string"
-          ? { socialDescription: frontmatter["social-description"] }
-          : {}),
       },
       _status: frontmatter.status === "published" ? "published" : "draft",
     };

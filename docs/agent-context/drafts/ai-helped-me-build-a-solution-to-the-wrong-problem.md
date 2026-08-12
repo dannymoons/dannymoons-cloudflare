@@ -5,6 +5,7 @@ description: "I asked AI to fix 500 errors after adding a Payload collection. Be
 date: 2026-08-12
 categories: [Modern Web, AI]
 tags: [ai-assisted-debugging, payload-cms, cloudflare-d1, debugging, lessons-learned]
+related-posts: [exploring-cloudflare-as-a-vercel-alternative, so-i-got-curious-about-payload-cms-with-nextjs]
 post-type: field-note
 status: published
 ---
@@ -50,18 +51,3 @@ I will keep using AI for debugging and reviewing code where needed. But I change
 > Check the simple things first. Schema. Migrations. Database state. Deployment state. Then, if the problem is still there, call in the AI.
 
 That is the only change I needed to make. And it would have saved me almost a full day.
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | ai-helped-me-build-a-solution-to-the-wrong-problem |
-| **Meta description** | I asked AI to fix 500 errors after adding a Payload collection. Because I had not diagnosed the root cause myself, the AI had no reason to start with the simplest explanation — and helped me build a very sophisticated fix for the wrong problem. |
-| **Social title** | When AI helped me build a solution to the wrong problem |
-| **Social description** | A good AI assistant can be dangerous not when it is wrong, but when it is convincingly building the right solution to a problem you have not correctly identified. |
-| **Related articles** | [Exploring Cloudflare as a Vercel alternative](/posts/exploring-cloudflare-as-vercel-alternative-for-nextjs), [So I got curious about Payload CMS with Next.js](/posts/so-i-got-curious-about-payload-cms-with-nextjs) |
-| **Related projects** | [DannyMoons.nl](https://dannymoons.nl) |

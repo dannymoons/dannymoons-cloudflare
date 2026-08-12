@@ -48,17 +48,8 @@ export const generateMeta = async (args: {
   const { doc, alternates, locale = DEFAULT_LOCALE } = args;
 
   const ogImage = getImageURL(doc?.meta?.image);
-  const meta = doc?.meta as
-    | (NonNullable<typeof doc>["meta"] & {
-        socialTitle?: string | null;
-        socialDescription?: string | null;
-      })
-    | null
-    | undefined;
-
+  const meta = doc?.meta;
   const title = meta?.title ? `${meta.title} | ${SITE_NAME}` : SITE_NAME;
-  const socialTitle = meta?.socialTitle || meta?.title || SITE_NAME;
-  const socialDescription = meta?.socialDescription || meta?.description || "";
 
   const canonical = alternates?.[locale];
 
@@ -80,7 +71,7 @@ export const generateMeta = async (args: {
       languages: Object.keys(languages).length > 0 ? languages : undefined,
     },
     openGraph: mergeOpenGraph({
-      description: socialDescription,
+      description: meta?.description || "",
       images: ogImage
         ? [
             {
@@ -88,7 +79,7 @@ export const generateMeta = async (args: {
             },
           ]
         : undefined,
-      title: socialTitle,
+      title,
       url: canonical ?? "/",
     }),
     title,

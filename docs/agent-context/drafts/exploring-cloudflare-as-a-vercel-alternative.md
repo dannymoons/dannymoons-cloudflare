@@ -5,6 +5,7 @@ description: "I wanted to know if my Next.js site could run on verifiable green 
 date: 2026-08-03
 categories: [Sustainable Web Development]
 tags: [cloudflare, vercel, hosting, nextjs, payload-cms, green-hosting]
+related-posts: [a-decade-of-building-websites, sustainable-software-is-an-engineering-quality]
 post-type: field-note
 status: published
 ---
@@ -97,17 +98,3 @@ I want to see how production performance compares under real traffic, whether th
 So far, the answer looks like yes. But I will know more once the site is live.
 
 This is a progress report, not a conclusion. I will write a follow-up once I have production data. For the deeper thinking behind why green infrastructure matters, see [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | exploring-cloudflare-as-vercel-alternative-for-nextjs |
-| **Meta description** | I wanted to know if my Next.js site could run on verifiable green energy. Both the Green Web Foundation and Carbonfooter confirmed Cloudflare delivers. |
-| **Social title** | Exploring Cloudflare as a Vercel alternative for Next.js |
-| **Social description** | The green energy check passed. Now I am testing whether the trade-offs are worth it. |
-| **Related articles** | A decade of building websites, Sustainable software is an engineering quality |
-| **Related projects** | Moonsio, Carbonfooter |

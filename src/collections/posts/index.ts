@@ -273,21 +273,6 @@ export const Posts: CollectionConfig<"posts"> = {
             }),
 
             MetaDescriptionField({}),
-            {
-              name: "socialTitle",
-              type: "text",
-              admin: {
-                description: "Optional title used for social sharing previews.",
-              },
-            },
-            {
-              name: "socialDescription",
-              type: "textarea",
-              admin: {
-                description:
-                  "Optional description used for social sharing previews.",
-              },
-            },
             PreviewField({
               // if the `generateUrl` function is configured
               hasGenerateFn: true,
