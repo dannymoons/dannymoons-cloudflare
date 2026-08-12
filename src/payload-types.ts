@@ -233,6 +233,14 @@ export interface Glossary {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    /**
+     * Optional title used for social sharing previews.
+     */
+    socialTitle?: string | null;
+    /**
+     * Optional description used for social sharing previews.
+     */
+    socialDescription?: string | null;
   };
   publishedAt?: string | null;
   /**
@@ -515,6 +523,14 @@ export interface Post {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    /**
+     * Optional title used for social sharing previews.
+     */
+    socialTitle?: string | null;
+    /**
+     * Optional description used for social sharing previews.
+     */
+    socialDescription?: string | null;
   };
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
@@ -2595,6 +2611,8 @@ export interface GlossarySelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        socialTitle?: T;
+        socialDescription?: T;
       };
   publishedAt?: T;
   generateSlug?: T;
@@ -3572,6 +3590,8 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        socialTitle?: T;
+        socialDescription?: T;
       };
   publishedAt?: T;
   authors?: T;
