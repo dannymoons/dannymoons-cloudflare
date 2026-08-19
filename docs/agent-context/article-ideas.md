@@ -17,6 +17,8 @@ Language: English (dannymoons.nl)
 
 ## Web development
 
+- [x] Manually deploying Next.js with Payload CMS to Cloudflare *(draft ready, 2026-08-19)*
+- [x] Setting up responsive images with Cloudflare and next/image *(draft ready, 2026-08-19)*
 - [ ] The real cost of rebuilding your stack (again)
   > Van moons.io CMS → WordPress → custom themes → Next.js/Payload. Eerlijk over tijd, energie, frustratie, en de les dat niet elke herbouw de moeite waard is.
 
