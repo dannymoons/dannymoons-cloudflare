@@ -35,6 +35,7 @@ import { slugField } from "payload";
 const codeLanguageAliases: Record<string, string> = {
   bash: "shell",
   js: "javascript",
+  jsonc: "json",
   md: "markdown",
   plain: "plaintext",
   py: "python",
@@ -135,7 +136,6 @@ export const Glossary: CollectionConfig<"glossary"> = {
                     value,
                     previousValue,
                     operation,
-                    req,
                   }) => {
                     const generate = (
                       siblingData as Record<string, unknown> | undefined
@@ -150,11 +150,9 @@ export const Glossary: CollectionConfig<"glossary"> = {
                       (field) => "name" in field && field.name === "content",
                     ) as RichTextField | undefined;
                     if (!contentField) return;
-                    const editorConfig =
-                      await editorConfigFactory.fromUnsanitizedField({
-                        config: req.payload.config,
-                        field: contentField,
-                      });
+                    const editorConfig = editorConfigFactory.fromField({
+                      field: contentField,
+                    });
                     (siblingData as Record<string, unknown>).content =
                       normalizeCodeBlocks(
                         convertMarkdownToLexical({
