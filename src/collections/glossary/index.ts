@@ -135,6 +135,7 @@ export const Glossary: CollectionConfig<"glossary"> = {
                     value,
                     previousValue,
                     operation,
+                    req,
                   }) => {
                     const generate = (
                       siblingData as Record<string, unknown> | undefined
@@ -149,9 +150,11 @@ export const Glossary: CollectionConfig<"glossary"> = {
                       (field) => "name" in field && field.name === "content",
                     ) as RichTextField | undefined;
                     if (!contentField) return;
-                    const editorConfig = editorConfigFactory.fromField({
-                      field: contentField as RichTextField,
-                    });
+                    const editorConfig =
+                      await editorConfigFactory.fromUnsanitizedField({
+                        config: req.payload.config,
+                        field: contentField,
+                      });
                     (siblingData as Record<string, unknown>).content =
                       normalizeCodeBlocks(
                         convertMarkdownToLexical({
