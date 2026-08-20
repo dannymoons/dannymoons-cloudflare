@@ -5,6 +5,7 @@ description: "After a decade of WordPress sites, I started wondering what Next.j
 date: 2024-03-12
 categories: [Sustainable Web Development, Modern Web, Content Management]
 tags: [nextjs, payload-cms, wordpress, architecture, web-development]
+related-posts: [sustainable-software-is-an-engineering-quality]
 post-type: field-note
 status: published
 ---
@@ -92,18 +93,3 @@ I did not switch away from WordPress. I added new tools. I changed how I think a
 
 If I could give advice to other WordPress developers: stay curious. Investigate what the best stacks are for you and your projects. But do not get lost like I did. I kept rebuilding my systems from scratch, and that created a less sustainable situation and cost way too much time. The goal is not to switch everything. The goal is to know enough to choose well. For more on why I think this way, read [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | so-i-got-curious-about-payload-cms-with-nextjs |
-| **Meta description** | After a decade of WordPress sites, I started wondering what Next.js and Payload CMS could do. Here is what I found — the good, the hard, and why I still use both. |
-| **Social title** | So I got curious about Payload CMS with Next.js |
-| **Social description** | I did not switch away from WordPress. I added new tools. Here is what I learned from exploring Next.js and Payload CMS. |
-| **Related articles** | Sustainable software is an engineering quality |
-| **Related projects** | Moonsio, Duizeligheid Nederland |

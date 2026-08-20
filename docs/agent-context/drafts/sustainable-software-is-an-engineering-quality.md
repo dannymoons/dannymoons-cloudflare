@@ -5,6 +5,7 @@ description: "Green hosting is not enough. Sustainable software means making bet
 date: 2026-02-11
 categories: [Sustainable Web Development]
 tags: [sustainable-software, performance, maintainability, architecture]
+related-posts: [why-i-started-focusing-on-building-sustainable-websites]
 post-type: blog
 status: published
 ---
@@ -91,18 +92,3 @@ The next time someone asks if a site is sustainable, the useful answer is not th
 Green hosting is a fine start. But it is not the finish.
 
 If you want to understand why I began thinking about this in the first place, read [Why I started focusing on building sustainable websites](/posts/why-i-started-focusing-on-building-sustainable-websites).
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | sustainable-software-is-an-engineering-quality |
-| **Meta description** | Green hosting is not enough. Sustainable software means making better decisions about architecture, dependencies, content, and maintainability — long before you pick a server. |
-| **Social title** | Sustainable Software Is an Engineering Quality |
-| **Social description** | Green hosting is one piece. The real work is in architecture, dependencies, content, and maintainability. |
-| **Related articles** | Digital Sustainability Is More Than Carbon, A Performance Budget for Sustainable Websites |
-| **Related projects** | Moonsio, Carbonfooter |

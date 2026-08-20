@@ -5,6 +5,7 @@ description: "I did not start building websites to think about sustainability. I
 date: 2023-11-26
 categories: [Sustainable Web Development]
 tags: [sustainable-software, sustainability, web-development, performance]
+related-posts: [sustainable-software-is-an-engineering-quality]
 status: published
 ---
 
@@ -130,18 +131,3 @@ That is the kind of web I want to help build.
 Faster, smarter, and more sustainable.
 
 For a deeper take on what this means in practice — and why green hosting is only one piece of the puzzle — read [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | why-i-started-focusing-on-building-sustainable-websites |
-| **Meta description** | I did not start building websites to think about sustainability. I started because I liked making things for the web. Here is why sustainable websites became part of my everyday work. |
-| **Social title** | Why I started focusing on building sustainable websites |
-| **Social description** | More software is not automatically better software. Here is why I build websites that are faster, smarter, and more sustainable. |
-| **Related articles** | Sustainable software is an engineering quality |
-| **Related projects** | Moonsio, Carbonfooter |

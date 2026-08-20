@@ -67,10 +67,9 @@ function stringList(frontmatter: Frontmatter, key: string): string[] {
   return typeof value === "string" && value ? [value] : [];
 }
 
-function postType(frontmatter: Frontmatter):
-  | "blog"
-  | "field-note"
-  | "announcement" {
+function postType(
+  frontmatter: Frontmatter,
+): "blog" | "field-note" | "announcement" {
   const value = frontmatter["post-type"] ?? frontmatter.postType;
   if (value === undefined) return "field-note";
   if (value === "blog" || value === "field-note" || value === "announcement") {
@@ -132,6 +131,37 @@ async function resolveHeroImage(
   return byAlt.docs[0]?.id ?? null;
 }
 
+async function resolveRelatedPosts(
+  payload: Payload,
+  slugs: string[],
+  currentId?: string | number,
+): Promise<(string | number)[]> {
+  if (slugs.length === 0) return [];
+
+  return Promise.all(
+    slugs.map(async (relatedSlug) => {
+      const result = await payload.find({
+        collection: "posts",
+        where: {
+          and: [
+            { slug: { equals: relatedSlug } },
+            ...(currentId ? [{ id: { not_equals: currentId } }] : []),
+          ],
+        },
+        limit: 1,
+        locale: "en",
+        ...importContext,
+      });
+
+      if (!result.docs[0]) {
+        throw new Error(`Related post not found for slug "${relatedSlug}".`);
+      }
+
+      return result.docs[0].id;
+    }),
+  );
+}
+
 async function getAuthorId(payload: Payload): Promise<string | number> {
   const users = await payload.find({
     collection: "users",
@@ -170,23 +200,29 @@ export async function importMarkdown(
   let data: Record<string, unknown>;
 
   if (collection === "posts") {
-    const [categories, tags, author, heroImage] = await Promise.all([
-      resolveRelationships(
-        payload,
-        "categories",
-        stringList(frontmatter, "categories"),
-      ),
-      resolveRelationships(payload, "tags", stringList(frontmatter, "tags")),
-      getAuthorId(payload),
-      resolveHeroImage(
-        payload,
-        typeof frontmatter.heroImage === "string"
-          ? frontmatter.heroImage
-          : typeof frontmatter.featuredImage === "string"
-            ? frontmatter.featuredImage
-            : undefined,
-      ),
-    ]);
+    const [categories, tags, author, heroImage, relatedPosts] =
+      await Promise.all([
+        resolveRelationships(
+          payload,
+          "categories",
+          stringList(frontmatter, "categories"),
+        ),
+        resolveRelationships(payload, "tags", stringList(frontmatter, "tags")),
+        getAuthorId(payload),
+        resolveHeroImage(
+          payload,
+          typeof frontmatter.heroImage === "string"
+            ? frontmatter.heroImage
+            : typeof frontmatter.featuredImage === "string"
+              ? frontmatter.featuredImage
+              : undefined,
+        ),
+        resolveRelatedPosts(
+          payload,
+          stringList(frontmatter, "related-posts"),
+          existing.docs[0]?.id,
+        ),
+      ]);
     const cleanBody = body.replace(
       new RegExp(
         `^#\\s+${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n\\n?`,
@@ -200,6 +236,7 @@ export async function importMarkdown(
       markdown: cleanBody,
       generateRichText: true,
       authors: [author],
+      relatedPosts,
       categories,
       tags,
       postType: postType(frontmatter),
@@ -229,7 +266,10 @@ export async function importMarkdown(
       publishedAt: date.toISOString(),
       aliases: stringList(frontmatter, "aliases").map((alias) => ({ alias })),
       tags,
-      meta: { title, description: `${title} — explained in simple terms.` },
+      meta: {
+        title,
+        description: `${title} — explained in simple terms.`,
+      },
       _status: frontmatter.status === "published" ? "published" : "draft",
     };
   }
