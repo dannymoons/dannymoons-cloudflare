@@ -7,14 +7,7 @@ categories: [Modern Web, Performance]
 tags: [nextjs, next-image, cloudflare-images, responsive-images, payload-cms, cloudflare-r2, image-optimization, performance]
 post-type: field-note
 status: draft
-related-articles:
-  - slug: manually-deploying-nextjs-payload-to-cloudflare
-    title: "Manually deploying Next.js with Payload CMS to Cloudflare"
-  - slug: so-i-got-curious-about-payload-cms-with-nextjs
-    title: "So I got curious about Payload CMS with Next.js"
-related-projects:
-  - name: DannyMoons.nl
-    url: https://dannymoons.nl
+related-posts: [manually-deploying-nextjs-payload-to-cloudflare, so-i-got-curious-about-payload-cms-with-nextjs]
 ---
 
 # Setting up responsive images with Cloudflare and next/image

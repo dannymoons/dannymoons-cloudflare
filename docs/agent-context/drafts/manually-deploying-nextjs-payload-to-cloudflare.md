@@ -7,14 +7,7 @@ categories: [Modern Web]
 tags: [nextjs, payload-cms, cloudflare-workers, cloudflare-d1, cloudflare-r2, opennext, deployment]
 post-type: field-note
 status: draft
-related-articles:
-  - slug: so-i-got-curious-about-payload-cms-with-nextjs
-    title: "So I got curious about Payload CMS with Next.js"
-  - slug: setting-up-responsive-images-cloudflare-next-image
-    title: "Setting up responsive images with Cloudflare and next/image"
-related-projects:
-  - name: DannyMoons.nl
-    url: https://dannymoons.nl
+related-posts: [so-i-got-curious-about-payload-cms-with-nextjs, setting-up-responsive-images-cloudflare-next-image]
 ---
 
 # Manually deploying Next.js with Payload CMS to Cloudflare
