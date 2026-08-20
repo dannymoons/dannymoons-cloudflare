@@ -29,9 +29,10 @@ export async function POST(request: Request): Promise<Response> {
     );
   }
 
-  const { collection, markdown } = body as {
+  const { collection, markdown, skipRelatedPosts } = body as {
     collection?: unknown;
     markdown?: unknown;
+    skipRelatedPosts?: unknown;
   };
   if (!isImportCollection(collection)) {
     return Response.json(
@@ -48,7 +49,9 @@ export async function POST(request: Request): Promise<Response> {
 
   try {
     const payload = await getPayload({ config: configPromise });
-    const result = await importMarkdown(payload, collection, markdown);
+    const result = await importMarkdown(payload, collection, markdown, {
+      skipRelatedPosts: skipRelatedPosts === true,
+    });
     return Response.json({ ok: true, ...result });
   } catch (error) {
     console.error("Content import failed", error);

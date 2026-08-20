@@ -24,7 +24,7 @@ const filenames = target
       .filter((filename) => filename.endsWith(".md"))
       .sort();
 
-for (const filename of filenames) {
+async function importFile(filename: string, skipRelatedPosts = false) {
   const markdown = await fs.readFile(path.join(directory, filename), "utf8");
   const response = await fetch(new URL("/api/import-content", serverURL), {
     method: "POST",
@@ -32,7 +32,7 @@ for (const filename of filenames) {
       authorization: `Bearer ${secret}`,
       "content-type": "application/json",
     },
-    body: JSON.stringify({ collection, markdown }),
+    body: JSON.stringify({ collection, markdown, skipRelatedPosts }),
   });
   const result = (await response.json()) as {
     action?: string;
@@ -47,4 +47,11 @@ for (const filename of filenames) {
   }
 
   console.log(`${result.action}: ${result.title || filename}`);
+}
+
+const passes = collection === "posts" ? [true, false] : [false];
+for (const skipRelatedPosts of passes) {
+  for (const filename of filenames) {
+    await importFile(filename, skipRelatedPosts);
+  }
 }

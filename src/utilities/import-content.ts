@@ -3,6 +3,10 @@ import type { Payload } from "payload";
 export const importCollections = ["posts", "glossary"] as const;
 export type ImportCollection = (typeof importCollections)[number];
 
+export type ImportOptions = {
+  skipRelatedPosts?: boolean;
+};
+
 type Frontmatter = Record<string, string | string[]>;
 type ImportAction = "created" | "updated";
 
@@ -177,6 +181,7 @@ export async function importMarkdown(
   payload: Payload,
   collection: ImportCollection,
   markdown: string,
+  options: ImportOptions = {},
 ): Promise<ImportResult> {
   const { body, frontmatter } = parseFrontmatter(markdown);
   const title = requireString(frontmatter, "title");
@@ -200,29 +205,30 @@ export async function importMarkdown(
   let data: Record<string, unknown>;
 
   if (collection === "posts") {
-    const [categories, tags, author, heroImage, relatedPosts] =
-      await Promise.all([
-        resolveRelationships(
-          payload,
-          "categories",
-          stringList(frontmatter, "categories"),
-        ),
-        resolveRelationships(payload, "tags", stringList(frontmatter, "tags")),
-        getAuthorId(payload),
-        resolveHeroImage(
-          payload,
-          typeof frontmatter.heroImage === "string"
-            ? frontmatter.heroImage
-            : typeof frontmatter.featuredImage === "string"
-              ? frontmatter.featuredImage
-              : undefined,
-        ),
-        resolveRelatedPosts(
+    const [categories, tags, author, heroImage] = await Promise.all([
+      resolveRelationships(
+        payload,
+        "categories",
+        stringList(frontmatter, "categories"),
+      ),
+      resolveRelationships(payload, "tags", stringList(frontmatter, "tags")),
+      getAuthorId(payload),
+      resolveHeroImage(
+        payload,
+        typeof frontmatter.heroImage === "string"
+          ? frontmatter.heroImage
+          : typeof frontmatter.featuredImage === "string"
+            ? frontmatter.featuredImage
+            : undefined,
+      ),
+    ]);
+    const relatedPosts = options.skipRelatedPosts
+      ? []
+      : await resolveRelatedPosts(
           payload,
           stringList(frontmatter, "related-posts"),
           existing.docs[0]?.id,
-        ),
-      ]);
+        );
     const cleanBody = body.replace(
       new RegExp(
         `^#\\s+${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n\\n?`,
@@ -236,7 +242,6 @@ export async function importMarkdown(
       markdown: cleanBody,
       generateRichText: true,
       authors: [author],
-      relatedPosts,
       categories,
       tags,
       postType: postType(frontmatter),
@@ -251,6 +256,7 @@ export async function importMarkdown(
       },
       _status: frontmatter.status === "published" ? "published" : "draft",
     };
+    if (!options.skipRelatedPosts) data.relatedPosts = relatedPosts;
   } else {
     const tags = await resolveRelationships(
       payload,

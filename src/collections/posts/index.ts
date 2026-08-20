@@ -45,7 +45,7 @@ const codeLanguageAliases: Record<string, string> = {
   yml: "yaml",
 };
 
-const normalizeCodeBlocks = (content: Record<string, unknown>) => {
+export const normalizeCodeBlocks = (content: Record<string, unknown>) => {
   const root = content.root;
   if (!root || typeof root !== "object") return content;
 
