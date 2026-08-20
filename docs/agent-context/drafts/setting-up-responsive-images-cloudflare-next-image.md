@@ -7,6 +7,14 @@ categories: [Modern Web, Performance]
 tags: [nextjs, next-image, cloudflare-images, responsive-images, payload-cms, cloudflare-r2, image-optimization, performance]
 post-type: field-note
 status: draft
+related-articles:
+  - slug: manually-deploying-nextjs-payload-to-cloudflare
+    title: "Manually deploying Next.js with Payload CMS to Cloudflare"
+  - slug: so-i-got-curious-about-payload-cms-with-nextjs
+    title: "So I got curious about Payload CMS with Next.js"
+related-projects:
+  - name: DannyMoons.nl
+    url: https://dannymoons.nl
 ---
 
 # Setting up responsive images with Cloudflare and next/image
@@ -226,18 +234,3 @@ Other options for future consideration:
 3. **Use a client-compatible image component from the start.** If you have both server and client components rendering images, a shared `ImageMedia` component prevents the RSC boundary problem.
 
 The working pipeline turned out to be simpler than I expected. Payload serves the reference. Cloudflare transforms the image. `next/image` makes the browser choose well. Each system does one thing, and the combination works without custom infrastructure between them.
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | setting-up-responsive-images-cloudflare-next-image |
-| **Meta description** | How I connected Payload CMS, R2, and Cloudflare Image Transformations with next/image — the custom loader, the /cdn-cgi/image/ path, and the gotchas that took me from broken images to responsive srcsets. |
-| **Social title** | Setting up responsive images with Cloudflare and next/image |
-| **Social description** | Payload stores the reference. R2 stores the file. Cloudflare transforms at the edge. next/image picks the right candidate. Here is how I got them working together. |
-| **Related articles** | [Manually deploying Next.js with Payload CMS to Cloudflare](/posts/manually-deploying-nextjs-payload-to-cloudflare), [So I got curious about Payload CMS with Next.js](/posts/so-i-got-curious-about-payload-cms-with-nextjs) |
-| **Related projects** | [DannyMoons.nl](https://dannymoons.nl) |
