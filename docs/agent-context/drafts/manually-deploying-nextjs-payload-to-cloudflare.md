@@ -1,7 +1,7 @@
 ---
 title: "Manually deploying Next.js with Payload CMS to Cloudflare"
 slug: manually-deploying-nextjs-payload-to-cloudflare
-description: "Setting up Payload CMS on Cloudflare Workers, D1, and R2 manually — the infrastructure decisions, what went wrong, and what I learned from not using the one-click deploy button."
+description: "I had a working Payload site on Cloudflare, but I could not have reproduced it from scratch. So I created a fresh project and set up every resource by hand — D1, R2, Workers, OpenNext. Here is what went wrong, what I fixed, and the quick guide that came out of it."
 date: 2026-08-19
 categories: [Modern Web]
 tags: [nextjs, payload-cms, cloudflare-workers, cloudflare-d1, cloudflare-r2, opennext, deployment]
@@ -11,161 +11,261 @@ status: draft
 
 # Manually deploying Next.js with Payload CMS to Cloudflare
 
-I had a fresh Payload CMS site running locally. Media was stored in R2. The next requirement was responsive, optimized image delivery — and my first instinct was to build a custom media route with caching and transformations.
+I had a working Payload CMS site on Cloudflare. This site was my first attempt at the platform, and it worked. But if someone had asked me to create a fresh one from scratch and explain every step, I could not have done it without guessing.
 
-That instinct was wrong. But understanding *why* it was wrong took me through the entire Cloudflare deployment stack manually, instead of pressing a one-click button and hoping for the best.
+So I created a new project — a duplicate of my existing setup — and rebuilt it manually. Not with a one-click deploy template, but by creating each Cloudflare resource by hand, connecting them one at a time, and documenting what broke and why.
 
-This article is about that manual path: setting up D1, R2, Workers, OpenNext, and a custom domain by hand. The problems I hit, the things that differed from the quick-start tutorials, and what I would do differently.
+This article is the result of that process: the problems I ran into, the fixes, and the quick guide for deploying a fresh Payload site on Cloudflare manually.
 
-## Why deploy manually?
+## What I wanted to do
 
-Cloudflare offers a one-click deploy template for Payload. It works. But I wanted to understand what each piece does before I committed to the platform.
+I had an existing Payload + Next.js site deployed to Cloudflare — this very site, dannymoons.nl. It used:
 
-A manual deployment forces you to know:
+- **Cloudflare Workers** to run the Next.js application via OpenNext
+- **D1** for the CMS database
+- **R2** for media storage
+- **Cloudflare Image Transformations** for responsive images
 
-- What D1 does (it stores your CMS data)
-- What R2 does (it stores your media files)
-- What the Worker does (it runs your Next.js application)
-- Where environment variables need to exist (build time vs. runtime)
-- What OpenNext does (it adapts Next.js for Workers)
+The existing site was built iteratively, with resources created as-needed through the dashboard. I wanted a clean, reproducible setup: start from a fresh Payload project, create every Cloudflare resource from the command line, and end with a fully working deployment on a custom domain.
 
-That understanding matters when something breaks — and something *will* break. A one-click deploy hides the plumbing until you need to change it.
+I also wanted to understand what each piece does. Not just "it works" — but what happens when it does not.
 
-## Start with a working project
+## Problem 1: The project does not run without a working database
 
-Before you add any Cloudflare resource, make sure the local project runs. Not "mostly runs." Runs.
+This seems obvious in hindsight, but it is worth stating explicitly.
 
-Verify:
+Payload CMS expects a database connection at startup. If D1 is not configured and bound to the Worker, the project will not start. Not "the admin panel breaks." The whole application refuses to load.
 
-- The Payload admin panel loads
-- The media collection accepts uploads
-- The frontend renders pages
-- Payload generates types correctly
+On my first attempt, I tried to build and deploy before D1 was properly connected. The Worker deployed successfully but returned errors on every request.
 
-If the unmodified application does not work locally, it will not work on Cloudflare either. You will just be debugging two environments at once.
-
-## Create the Cloudflare resources manually
-
-Skip the dashboard tutorial. Here is what you actually need:
-
-**A D1 database** — call it something like `payload-production`. This stores all Payload's structured data: pages, posts, media metadata, settings, users.
-
-**An R2 bucket** — call it `payload-media`. This stores the binary files that Payload's media collection references.
-
-**A Worker** — this runs the OpenNext bundle that contains your Next.js application and Payload CMS.
-
-**A custom domain** — attach it to the Worker. This is not optional (more on that in the images article).
-
-Exact commands change as Wrangler evolves. Verify against the current [Wrangler documentation](https://developers.cloudflare.com/workers/wrangler/) before running. But the principle stays the same: create each resource separately, bind them explicitly, and test each connection before moving on.
-
-## Configure D1
-
-D1 stores Payload's schema and content. Payload migrations create and update that schema. Local and production D1 databases should be distinct — do not run production migrations against your local database.
-
-A note on deployment commands: I originally had a combined command that ran migrations and deployed the application in one step. For a media-only change (no schema change needed), that was overkill. The safer approach became:
+**Fix:** Create and bind D1 before the first deploy.
 
 ```
-CLOUDFLARE_ENV=production pnpm deploy:app
+# Create the D1 database
+pnpm wrangler d1 create dannymoons-db
+
+# Generate Cloudflare types so Payload knows the D1 binding
+pnpm generate:types:cloudflare
 ```
 
-This deployed the application without running unnecessary production migrations. Keep migration and deployment as separate concerns.
+The `wrangler.jsonc` needs the database ID returned by the create command:
 
-## Configure R2
-
-Payload stores media *metadata* in D1 — the filename, alt text, dimensions, and so on. The *binary file* lives in R2.
-
-Payload exposes a media URL like:
-
+```jsonc
+"d1_databases": [
+  {
+    "binding": "D1",
+    "database_name": "dannymoons-db",
+    "database_id": "<id-from-create>",
+    "remote": false,
+  },
+],
 ```
-/api/media/file/image-1
+
+The production environment needs the same binding with `remote: true`:
+
+```jsonc
+"env": {
+  "production": {
+    "d1_databases": [
+      {
+        "binding": "D1",
+        "database_id": "<id-from-create>",
+        "database_name": "dannymoons-db",
+        "remote": true,
+      },
+    ],
+  },
+}
 ```
 
-Upload access stays authenticated by default. Public read access is appropriate only for media intended for the public website. Do not set the bucket to public without thinking about what you are exposing.
-
-## Deploy with OpenNext
-
-[OpenNext](https://opennext.js.org) is the adapter that makes Next.js run inside a Cloudflare Worker. Standard Next.js does not target Workers natively — OpenNext produces a Worker bundle that Wrangler can deploy.
-
-This is where I hit the first real problem.
-
-### Problem 1: Worker APIs are not available in local Next.js
-
-The custom media route I initially built used the Worker Cache API:
+The Payload config reads the D1 binding from the Cloudflare context and passes it to the `sqliteD1Adapter`:
 
 ```typescript
-await caches.open('media-cache')
+db: sqliteD1Adapter({
+  binding: cloudflare.env.D1,
+  push: false,
+}),
 ```
 
-This works inside a deployed Worker. It does not work in local Next.js development, because `caches` is not a standard Web API available in Node.js.
-
-My first fix was to detect whether `caches` exists and fall back to the bare R2 object. That is a code smell — you are writing conditional paths for two fundamentally different runtimes.
-
-The final fix was simpler: remove the custom route entirely. The application now uses Payload's existing media URL:
+Then run the migration to create the schema:
 
 ```
-/api/media/file/{filename}
+pnpm deploy:database
 ```
 
-**Lesson:** Do not introduce Worker-specific caching code when the platform already provides a CDN and your application does not yet need custom caching behaviour. The smallest correct architecture is better than a custom media pipeline you have to maintain.
+Which executes:
 
-### Problem 2: Overcomplicating before the basic path was proven
+```
+cross-env NODE_ENV=production PAYLOAD_SECRET=ignore payload migrate && wrangler d1 execute D1 --command 'PRAGMA optimize' --remote
+```
 
-My first implementation combined:
+Without this step, the database exists but has no tables. And without tables, Payload returns errors on every request.
 
-- R2 reads
-- Cache API storage
-- Stream cloning
-- Fallback responses
-- Local runtime checks
+## Problem 2: Build-time environment variables must be set before the build
 
-That is several concerns in one route, written before the basic media path had been tested in production.
+Payload and Next.js use `NEXT_PUBLIC_*` environment variables — `NEXT_PUBLIC_SERVER_URL`, `NEXT_PUBLIC_MEDIA_CDN_URL`. These are inlined during the `next build` step. Setting them only as runtime Worker variables does nothing.
 
-The fix was to delete the route and separate responsibilities:
+The `.env` file needs:
 
-- Payload provides the original media URL
-- R2 stores the original
-- Cloudflare transforms at delivery time
-- `next/image` generates responsive candidates
+```
+PAYLOAD_SECRET=<your-secret>
+NEXT_PUBLIC_SERVER_URL=https://payload-starter.moonsio.dev
+NEXT_PUBLIC_MEDIA_CDN_URL=https://payload-starter.moonsio.dev
+CRON_SECRET=<your-cron-secret>
+PREVIEW_SECRET=<your-preview-secret>
+```
 
-**Lesson:** The first version should use the simplest correct path. Add custom infrastructure only when you can point to a specific failing requirement.
+And the OpenNext build step needs access to these values. In CI or from the CLI, you use a `.env` file or export them before running:
 
-## What is different from the one-click deploy
+```
+pnpm build:cf
+```
 
-The one-click template deploys to `*.workers.dev` and gives you a working Payload instance. What it does not teach you:
+Which runs:
 
-- **Build-time vs. runtime environment variables.** `NEXT_PUBLIC_*` variables are inlined during the Next.js build. Setting them only as runtime Worker variables does nothing — they must be available at build time, and Wrangler needs explicit configuration to forward them.
-- **Custom domains are infrastructure, not branding.** A `workers.dev` URL cannot reliably serve Cloudflare Image Transformations. You need a proxied zone.
-- **What each binding does.** The template creates bindings silently. When something breaks, you need to know which binding connects to what.
-- **How migrations work on SQLite.** Payload on MongoDB auto-adapts schemas. On D1 (SQLite), you must run migrations explicitly. If you add a collection and get a 500, check migrations first.
+```
+cross-env CLOUDFLARE_ENV=production CLOUDFLARE_REMOTE=true opennextjs-cloudflare build --env=production
+```
 
-A one-click deploy gets you running fast. A manual deploy gets you understanding. Both have their place. But if you plan to operate the site beyond a demo, do the manual path at least once.
+If a `NEXT_PUBLIC_*` variable is missing at build time, the inlined value will be undefined, and the deployed application will try to load from `undefined/api/media/file/...`.
 
-## Deployment checklist
+## Quick guide: Deploying a fresh Payload site to Cloudflare manually
 
-Before you call it done:
+Here is the step-by-step process that came out of this exercise. Each step depends on the previous one. Do not skip ahead.
 
-- [ ] Local Payload site works
+### 1. Start with a working local project
+
+Before creating any Cloudflare resource, make sure the local Payload project runs:
+
+- The admin panel loads at `http://localhost:3000/admin`
+- The media collection accepts uploads
+- The frontend renders pages
+- Payload generates types: `pnpm generate:types`
+
+If the project does not work locally, it will not work on Cloudflare.
+
+### 2. Create the D1 database
+
+```
+pnpm wrangler d1 create <database-name>
+```
+
+Copy the returned database ID into `wrangler.jsonc` under both the default binding and the `env.production` binding. The production environment needs `remote: true`.
+
+### 3. Generate Cloudflare types
+
+```
+pnpm generate:types:cloudflare
+```
+
+This creates (or updates) `cloudflare-env.d.ts` so TypeScript knows the binding shapes.
+
+### 4. Create the R2 bucket
+
+```
+pnpm wrangler r2 bucket create <bucket-name>
+```
+
+Add the binding to `wrangler.jsonc`:
+
+```jsonc
+"r2_buckets": [
+  {
+    "binding": "R2",
+    "bucket_name": "<bucket-name>",
+  },
+],
+```
+
+Configure Payload's storage adapter in `payload.config.ts`:
+
+```typescript
+r2Storage({
+  bucket: cloudflare.env.R2,
+  collections: { media: true },
+}),
+```
+
+### 5. Set environment variables
+
+Create a `.env` file with at minimum:
+
+```
+PAYLOAD_SECRET=<your-secret>
+NEXT_PUBLIC_SERVER_URL=https://<your-domain>
+NEXT_PUBLIC_MEDIA_CDN_URL=https://<your-domain>
+```
+
+Without these, the build will inline `undefined` for public URLs.
+
+### 6. Run migrations
+
+```
+pnpm deploy:database
+```
+
+This runs `payload migrate` against the remote D1 database and optimizes the database afterwards. The project will not serve requests until the schema exists.
+
+### 7. Build and deploy the application
+
+```
+pnpm deploy:app
+```
+
+Which runs:
+
+```
+opennextjs-cloudflare build --env=production
+opennextjs-cloudflare deploy --env=production
+```
+
+OpenNext produces a Worker bundle from the Next.js build. Wrangler deploys it to Cloudflare Workers with the bindings from `wrangler.jsonc`.
+
+### 8. Attach a custom domain
+
+In the Cloudflare dashboard, go to your Worker and add a custom domain. This is needed for Cloudflare Image Transformations to work properly — a `workers.dev` subdomain is not a proxied zone.
+
+### 9. Enable Image Transformations
+
+In the Cloudflare dashboard under the zone, enable Image Transformations. Without this, the `/cdn-cgi/image/` path will not transform images.
+
+### 10. Verify the deployment
+
+Use the deployment checklist:
+
+- [ ] Local Payload site works before deployment
 - [ ] D1 database exists and is bound to the Worker
 - [ ] R2 bucket exists and is bound to the Worker
 - [ ] Payload storage adapter is configured for R2
-- [ ] Wrangler bindings are correct
-- [ ] Migrations have been applied
 - [ ] `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_MEDIA_CDN_URL` are set at build time
-- [ ] Custom domain is attached to the Worker
+- [ ] Migrations have been applied
+- [ ] OpenNext build succeeds
+- [ ] Worker deploys successfully
+- [ ] Custom domain resolves to the Worker
 - [ ] Image Transformations are enabled on the zone
 - [ ] Original media URL returns 200
 - [ ] Production page returns 200
 
+## What is different from the one-click deploy
+
+Cloudflare offers a one-click deploy template for Payload. It works. Use it if you want a quick demo.
+
+What it does not teach you:
+
+- **Build-time vs. runtime environment variables.** The template sets them for you. When you need to change or add one, you need to know where it lives.
+- **Custom domains are infrastructure, not branding.** A `workers.dev` URL cannot serve Cloudflare Image Transformations.
+- **What each binding does.** When the Worker fails because R2 is not bound, the template error message shows a binding name you have never seen.
+- **How migrations work on SQLite.** Payload on MongoDB auto-adapts schemas. On D1 (SQLite), you run migrations explicitly. Add a collection? Run a migration.
+
+A one-click deploy gets you running fast. A manual deploy gets you understanding. If you plan to operate the site beyond a demo, do the manual path at least once.
+
 ## What I would do differently
 
-On a second deployment, I would:
+1. **Create D1 and run migrations before the first deploy.** The project will not work without a schema.
+2. **Set build-time environment variables before the first build.** Fixing them later requires a rebuild and redeploy.
+3. **Generate Cloudflare types right after creating bindings.** It keeps TypeScript accurate and prevents type errors that look like runtime failures.
 
-1. **Skip the custom media route from day one.** Payload's built-in media URL works. Start there.
-2. **Test each Cloudflare resource independently.** Create D1, test the connection. Create R2, upload a file, read it back. Attach the domain, confirm it resolves. Then wire them together.
-3. **Keep migration and deployment in separate commands.** Combined commands hide failures.
-4. **Set build-time environment variables before the first build.** Fixing them later requires a rebuild and redeploy.
-
-A manual deployment is more work at the beginning, but it makes the system easier to understand. Payload can own the CMS. D1 can own the data. R2 can own the originals. And the Worker can run the application without pretending to be everything at once.
+A manual deployment is more work at the beginning, but it makes the system easier to understand. Payload can own the CMS. D1 can own the data. R2 can own the originals. And the Worker runs the application without pretending to be everything at once.
 
 ---
 
@@ -176,8 +276,8 @@ A manual deployment is more work at the beginning, but it makes the system easie
 | Field | Value |
 |-------|-------|
 | **Slug** | manually-deploying-nextjs-payload-to-cloudflare |
-| **Meta description** | Setting up Payload CMS on Cloudflare Workers, D1, and R2 manually — the infrastructure decisions, what went wrong, and what I learned from not using the one-click deploy button. |
+| **Meta description** | I had a working Payload site on Cloudflare, but I could not have reproduced it from scratch. So I created a fresh project and set up every resource by hand — D1, R2, Workers, OpenNext. Here is what went wrong, what I fixed, and the quick guide that came out of it. |
 | **Social title** | Manually deploying Next.js with Payload CMS to Cloudflare |
-| **Social description** | A one-click deploy gets you running fast. A manual deploy gets you understanding. Here is what I learned from setting up Payload CMS on Cloudflare without the template. |
+| **Social description** | A one-click deploy gets you running fast. A manual deploy gets you understanding. Here is what I learned from setting up Payload CMS on Cloudflare from scratch. |
 | **Related articles** | [So I got curious about Payload CMS with Next.js](/posts/so-i-got-curious-about-payload-cms-with-nextjs), [Setting up responsive images with Cloudflare and next/image](/posts/setting-up-responsive-images-cloudflare-next-image) |
 | **Related projects** | [DannyMoons.nl](https://dannymoons.nl) |
