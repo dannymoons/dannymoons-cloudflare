@@ -35,5 +35,10 @@ export const defaultSchemaValues = {
       width: 170
     },
     url: baseUrl
-  }
+  },
+  sameAs: [
+    'https://moonsio.nl',
+    'https://linkedin.com/in/danny-moons',
+    'https://github.com/dannnymoons'
+  ]
 }

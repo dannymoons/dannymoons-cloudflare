@@ -71,6 +71,8 @@ const nextConfig: NextConfig = {
     },
   },
   experimental: {
+    // D1's local SQLite runtime cannot handle concurrent page-data workers.
+    cpus: 1,
     useTypeScriptCli: true,
   },
 }

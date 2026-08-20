@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
 import { PostsArchive } from '@/components/sections/posts-archive'
+import { SchemaPage } from '@/components/seo/schema-page'
 import PageClient from './page.client'
 
 export const dynamic = 'force-static'
@@ -35,16 +36,27 @@ export default async function Page() {
   })
 
   return (
-    <div className='pt-24'>
-      <PageClient />
-      <PostsArchive
-        posts={posts.docs}
-        heading='Articles'
-        description='Read the latest articles, insights, and updates from Danny.'
-        page={posts.page ?? 1}
-        totalPages={posts.totalPages}
+    <>
+      <SchemaPage
+        webpage={{
+          name: 'Articles',
+          description:
+            'Read the latest articles, insights, and updates from Danny.',
+          slug: 'posts',
+          inLanguage: 'en'
+        }}
       />
-    </div>
+      <div className='pt-24'>
+        <PageClient />
+        <PostsArchive
+          posts={posts.docs}
+          heading='Articles'
+          description='Read the latest articles, insights, and updates from Danny.'
+          page={posts.page ?? 1}
+          totalPages={posts.totalPages}
+        />
+      </div>
+    </>
   )
 }
 

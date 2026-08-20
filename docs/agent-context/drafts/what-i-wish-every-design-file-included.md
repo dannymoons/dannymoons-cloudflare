@@ -5,6 +5,7 @@ description: "A clean design file saves time, reduces rework, and leads to a lig
 date: 2026-01-03
 categories: [Designing for the Web]
 tags: [design, design-systems, tokens, figma, penpot, collaboration]
+related-posts: [sustainable-software-is-an-engineering-quality]
 post-type: blog
 status: published
 ---
@@ -73,18 +74,3 @@ Good design files lead to cleaner code. Cleaner code means less CSS, fewer revis
 
 > Sustainable software starts before the first line of code is written. It starts in the design file. Read more in [Sustainable Software Is an Engineering Quality](/posts/sustainable-software-is-an-engineering-quality).
 
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | what-i-wish-every-design-file-included |
-| **Meta description** | A clean design file saves time, reduces rework, and leads to a lighter website. Here is what I look for before the hand-off. |
-| **Social title** | What I wish every design file included |
-| **Social description** | Good design files lead to cleaner code. Cleaner code means less waste. It starts before the first line of code. |
-| **Related articles** | Sustainable software is an engineering quality |
-| **Related projects** | Moonsio, Pixel to Planet |

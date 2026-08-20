@@ -5,6 +5,7 @@ description: "Ten years of building websites. From WordPress to custom CMS to mo
 date: 2026-08-04
 categories: [Sustainable Web Development]
 tags: [retrospective, web-development, wordpress, nextjs, sustainability]
+related-posts: [sustainable-software-is-an-engineering-quality, so-i-got-curious-about-payload-cms-with-nextjs]
 status: draft
 ---
 
@@ -87,18 +88,3 @@ If I could go back and tell my younger self a few things, it would be this:
 I do not know exactly what the next ten years will look like. But I know the direction: less waste, better judgment, and software that is built to last — not just to launch.
 
 I will probably look back at this article in a few years and smile at what I did not know yet. That is fine. That is how building works.
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | a-decade-of-building-websites |
-| **Meta description** | Ten years of building websites. From WordPress to custom CMS to modern stacks. What I learned, what I stopped doing, and what I still believe. |
-| **Social title** | A decade of building websites: what changed, what stayed the same |
-| **Social description** | Ten years, dozens of sites, one big lesson: building well is about knowing what not to build. |
-| **Related articles** | Sustainable software is an engineering quality, So I got curious about Payload CMS with Next.js |
-| **Related projects** | Moonsio, Carbonfooter, Pixel to Planet |

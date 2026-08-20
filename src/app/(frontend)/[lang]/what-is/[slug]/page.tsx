@@ -10,7 +10,7 @@ import { Container } from '@/components/layout/container'
 import { Heading } from '@/components/content/heading'
 import { LivePreviewListener } from '@/components/payload/live-preview-listener'
 import { PayloadRedirects } from '@/components/payload/payload-redirects'
-import type { Tag } from '@/payload-types'
+import { SchemaPage } from '@/components/seo/schema-page'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getLocaleAlternates } from '@/utilities/getLocaleAlternates'
 import { staticAlternates } from '@/utilities/locale'
@@ -59,6 +59,36 @@ export default async function GlossaryEntryPage({
 
   return (
     <article>
+      <SchemaPage
+        renderScript={!draft}
+        webpage={{
+          name: entry.title,
+          description:
+            entry.meta?.description ??
+            'A practical explanation, with the useful bits up front.',
+          slug: `what-is/${decodedSlug}`,
+          inLanguage: 'en',
+          datePublished: entry.publishedAt
+            ? new Date(entry.publishedAt)
+            : undefined,
+          dateModified: new Date(entry.updatedAt)
+        }}
+        article={{
+          headline: entry.title,
+          articleTitle: entry.title,
+          description:
+            entry.meta?.description ??
+            'A practical explanation, with the useful bits up front.',
+          slug: `what-is/${decodedSlug}`,
+          author: 'Person',
+          publisher: { name: 'Danny Moons' },
+          datePublished: entry.publishedAt
+            ? new Date(entry.publishedAt)
+            : undefined,
+          dateModified: new Date(entry.updatedAt),
+          inLanguage: 'en'
+        }}
+      />
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
@@ -69,7 +99,8 @@ export default async function GlossaryEntryPage({
             {entry.title}
           </Heading>
 
-          {(entry.tags?.some(tag => typeof tag === 'object') || entry.aliases?.length) ? (
+          {entry.tags?.some(tag => typeof tag === 'object') ||
+          entry.aliases?.length ? (
             <div className='mb-10 flex flex-col gap-5'>
               {entry.tags?.some(tag => typeof tag === 'object') && (
                 <ul className='flex flex-wrap gap-2' aria-label='Topics'>

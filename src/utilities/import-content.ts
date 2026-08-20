@@ -3,6 +3,10 @@ import type { Payload } from "payload";
 export const importCollections = ["posts", "glossary"] as const;
 export type ImportCollection = (typeof importCollections)[number];
 
+export type ImportOptions = {
+  skipRelatedPosts?: boolean;
+};
+
 type Frontmatter = Record<string, string | string[]>;
 type ImportAction = "created" | "updated";
 
@@ -67,10 +71,9 @@ function stringList(frontmatter: Frontmatter, key: string): string[] {
   return typeof value === "string" && value ? [value] : [];
 }
 
-function postType(frontmatter: Frontmatter):
-  | "blog"
-  | "field-note"
-  | "announcement" {
+function postType(
+  frontmatter: Frontmatter,
+): "blog" | "field-note" | "announcement" {
   const value = frontmatter["post-type"] ?? frontmatter.postType;
   if (value === undefined) return "field-note";
   if (value === "blog" || value === "field-note" || value === "announcement") {
@@ -132,6 +135,37 @@ async function resolveHeroImage(
   return byAlt.docs[0]?.id ?? null;
 }
 
+async function resolveRelatedPosts(
+  payload: Payload,
+  slugs: string[],
+  currentId?: string | number,
+): Promise<(string | number)[]> {
+  if (slugs.length === 0) return [];
+
+  return Promise.all(
+    slugs.map(async (relatedSlug) => {
+      const result = await payload.find({
+        collection: "posts",
+        where: {
+          and: [
+            { slug: { equals: relatedSlug } },
+            ...(currentId ? [{ id: { not_equals: currentId } }] : []),
+          ],
+        },
+        limit: 1,
+        locale: "en",
+        ...importContext,
+      });
+
+      if (!result.docs[0]) {
+        throw new Error(`Related post not found for slug "${relatedSlug}".`);
+      }
+
+      return result.docs[0].id;
+    }),
+  );
+}
+
 async function getAuthorId(payload: Payload): Promise<string | number> {
   const users = await payload.find({
     collection: "users",
@@ -147,6 +181,7 @@ export async function importMarkdown(
   payload: Payload,
   collection: ImportCollection,
   markdown: string,
+  options: ImportOptions = {},
 ): Promise<ImportResult> {
   const { body, frontmatter } = parseFrontmatter(markdown);
   const title = requireString(frontmatter, "title");
@@ -187,6 +222,13 @@ export async function importMarkdown(
             : undefined,
       ),
     ]);
+    const relatedPosts = options.skipRelatedPosts
+      ? []
+      : await resolveRelatedPosts(
+          payload,
+          stringList(frontmatter, "related-posts"),
+          existing.docs[0]?.id,
+        );
     const cleanBody = body.replace(
       new RegExp(
         `^#\\s+${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n\\n?`,
@@ -214,6 +256,7 @@ export async function importMarkdown(
       },
       _status: frontmatter.status === "published" ? "published" : "draft",
     };
+    if (!options.skipRelatedPosts) data.relatedPosts = relatedPosts;
   } else {
     const tags = await resolveRelationships(
       payload,
@@ -229,7 +272,10 @@ export async function importMarkdown(
       publishedAt: date.toISOString(),
       aliases: stringList(frontmatter, "aliases").map((alias) => ({ alias })),
       tags,
-      meta: { title, description: `${title} — explained in simple terms.` },
+      meta: {
+        title,
+        description: `${title} — explained in simple terms.`,
+      },
       _status: frontmatter.status === "published" ? "published" : "draft",
     };
   }
