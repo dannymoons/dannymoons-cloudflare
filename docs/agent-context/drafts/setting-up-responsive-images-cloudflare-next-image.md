@@ -2,17 +2,17 @@
 title: "Setting up responsive images with Cloudflare and next/image"
 slug: setting-up-responsive-images-cloudflare-next-image
 description: "How I connected Payload CMS, R2, and Cloudflare Image Transformations with next/image — the custom loader, the /cdn-cgi/image/ path, and the gotchas that took me from broken images to responsive srcsets."
-date: 2026-08-19
+date: 2026-08-26
 categories: [Modern Web, Performance]
 tags: [nextjs, next-image, cloudflare-images, responsive-images, payload-cms, cloudflare-r2, image-optimization, performance]
-post-type: field-note
+post-type: blog
 status: draft
 related-posts: [manually-deploying-nextjs-payload-to-cloudflare, so-i-got-curious-about-payload-cms-with-nextjs]
 ---
 
 # Setting up responsive images with Cloudflare and next/image
 
-I had Payload CMS deployed on Cloudflare. Media was stored in R2. The original URL worked. But images were being served as full-resolution originals — no WebP, no responsive candidates, no width-aware selection. The page was doing a lot of work to download images that were too large for the viewport they appeared in.
+I had Payload CMS deployed on Cloudflare. Media was stored in R2. The original URL worked. But images were being served as full-resolution originals — no WebP, no responsive candidates, no width-aware selection. The page was doing a lot of work to download images that were too large for the viewport they appeared in. So not sustainable by any means.
 
 The problem was image delivery, not image storage. And fixing it required understanding how four separate systems interact: Payload, R2, Cloudflare Image Transformations, and `next/image`.
 
@@ -106,7 +106,7 @@ No application code needs to be written for this. No route needs to be created. 
 
 ## Problem 3: The hero image caused a production RSC error
 
-**Symptom:** The `/over-mij` page returned a 500 in production. The image file was valid. The original Payload URL worked. The Cloudflare transformation URL returned 200. The production build passed.
+**Symptom:** The page returned a 500 in production. The image file was valid. The original Payload URL worked. The Cloudflare transformation URL returned 200. The production build passed.
 
 **Cause:** `HeroCoverBlock` was a React Server Component that passed the custom loader function directly into the client-side `next/image` component. Functions cannot cross the server-client component boundary in React Server Components.
 

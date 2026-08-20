@@ -2,11 +2,11 @@
 title: "Manually deploying Next.js with Payload CMS to Cloudflare"
 slug: manually-deploying-nextjs-payload-to-cloudflare
 description: "I had a working Payload site on Cloudflare, but I could not have reproduced it from scratch. So I created a fresh project and set up every resource by hand — D1, R2, Workers, OpenNext. Here is what went wrong, what I fixed, and the quick guide that came out of it."
-date: 2026-08-19
+date: 2026-08-20
 categories: [Modern Web]
 tags: [nextjs, payload-cms, cloudflare-workers, cloudflare-d1, cloudflare-r2, opennext, deployment]
 post-type: field-note
-status: draft
+status: published
 related-posts: [so-i-got-curious-about-payload-cms-with-nextjs, setting-up-responsive-images-cloudflare-next-image]
 ---
 
