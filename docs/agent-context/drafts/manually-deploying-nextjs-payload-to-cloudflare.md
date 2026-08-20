@@ -128,6 +128,26 @@ cross-env CLOUDFLARE_ENV=production CLOUDFLARE_REMOTE=true opennextjs-cloudflare
 
 If a `NEXT_PUBLIC_*` variable is missing at build time, the inlined value will be undefined, and the deployed application will try to load from `undefined/api/media/file/...`.
 
+## Problem 3: The block-based image component caused an internal server error
+
+The first Payload site I deployed to Cloudflare did not use blocks for page layouts. The new project did. Pages were composed from blocks — `HeroCoverBlock`, `ImageMedia`, `ContentBlock` — and some of those blocks rendered images through `next/image` with a custom Cloudflare loader.
+
+The build passed. TypeScript passed. The deployment succeeded. But the page returned a 500 error.
+
+**Cause:** `HeroCoverBlock` was a React Server Component that passed the custom image loader function into the client-side `next/image` component. Functions cannot cross the React server-client component boundary. The error only appeared at runtime because the RSC serialization check happens when the page is actually requested, not during the build.
+
+**Fix:** Route the hero image through an existing client-compatible image component. The block itself stayed a server component — only the image rendering needed the client boundary.
+
+**Lesson:** If your project uses Payload blocks with images, verify that the image component handles the server-client boundary correctly. A green build does not guarantee a working page when image components cross the RSC boundary.
+
+## The issues we encountered
+
+Here is every issue that blocked a working deployment, in short:
+
+1. **No database connection** — The project does not start without D1 configured and bound. Create the database, add the binding, run migrations before the first deploy.
+2. **Missing build-time environment variables** — `NEXT_PUBLIC_*` variables are inlined during `next build`. Runtime Worker variables are not enough.
+3. **Block-based image component crossing the RSC boundary** — Payload blocks that render `next/image` with a custom loader need a client-compatible component. The build passes, the page returns 500.
+
 ## Quick guide: Deploying a fresh Payload site to Cloudflare manually
 
 Here is the step-by-step process that came out of this exercise. Each step depends on the previous one. Do not skip ahead.
