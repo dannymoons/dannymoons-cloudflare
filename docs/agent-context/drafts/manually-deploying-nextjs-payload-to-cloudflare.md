@@ -7,6 +7,14 @@ categories: [Modern Web]
 tags: [nextjs, payload-cms, cloudflare-workers, cloudflare-d1, cloudflare-r2, opennext, deployment]
 post-type: field-note
 status: draft
+related-articles:
+  - slug: so-i-got-curious-about-payload-cms-with-nextjs
+    title: "So I got curious about Payload CMS with Next.js"
+  - slug: setting-up-responsive-images-cloudflare-next-image
+    title: "Setting up responsive images with Cloudflare and next/image"
+related-projects:
+  - name: DannyMoons.nl
+    url: https://dannymoons.nl
 ---
 
 # Manually deploying Next.js with Payload CMS to Cloudflare
@@ -285,18 +293,3 @@ A one-click deploy gets you running fast. A manual deploy gets you understanding
 3. **Generate Cloudflare types right after creating bindings.** It keeps TypeScript accurate and prevents type errors that look like runtime failures.
 
 A manual deployment is more work at the beginning, but it makes the system easier to understand. Payload can own the CMS. D1 can own the data. R2 can own the originals. And the Worker runs the application without pretending to be everything at once.
-
----
-
-*Production note: This article was drafted with assistance from Lotte, Danny's AI assistant, and reviewed by Danny before publication.*
-
-## Metadata
-
-| Field | Value |
-|-------|-------|
-| **Slug** | manually-deploying-nextjs-payload-to-cloudflare |
-| **Meta description** | I had a working Payload site on Cloudflare, but I could not have reproduced it from scratch. So I created a fresh project and set up every resource by hand — D1, R2, Workers, OpenNext. Here is what went wrong, what I fixed, and the quick guide that came out of it. |
-| **Social title** | Manually deploying Next.js with Payload CMS to Cloudflare |
-| **Social description** | A one-click deploy gets you running fast. A manual deploy gets you understanding. Here is what I learned from setting up Payload CMS on Cloudflare from scratch. |
-| **Related articles** | [So I got curious about Payload CMS with Next.js](/posts/so-i-got-curious-about-payload-cms-with-nextjs), [Setting up responsive images with Cloudflare and next/image](/posts/setting-up-responsive-images-cloudflare-next-image) |
-| **Related projects** | [DannyMoons.nl](https://dannymoons.nl) |
