@@ -24,7 +24,6 @@ I had an existing Payload + Next.js site deployed to Cloudflare — this very si
 - **Cloudflare Workers** to run the Next.js application via OpenNext
 - **D1** for the CMS database
 - **R2** for media storage
-- **Cloudflare Image Transformations** for responsive images
 
 The existing site was built iteratively, with resources created as-needed through the dashboard. I wanted a clean, reproducible setup: start from a fresh Payload project, create every Cloudflare resource from the command line, and end with a fully working deployment on a custom domain.
 
@@ -42,7 +41,7 @@ On my first attempt, I tried to build and deploy before D1 was properly connecte
 
 ```
 # Create the D1 database
-pnpm wrangler d1 create dannymoons-db
+pnpm wrangler d1 create $database-name
 
 # Generate Cloudflare types so Payload knows the D1 binding
 pnpm generate:types:cloudflare
@@ -54,7 +53,7 @@ The `wrangler.jsonc` needs the database ID returned by the create command:
 "d1_databases": [
   {
     "binding": "D1",
-    "database_name": "dannymoons-db",
+    "database_name": "$database-name",
     "database_id": "<id-from-create>",
     "remote": false,
   },
@@ -70,7 +69,7 @@ The production environment needs the same binding with `remote: true`:
       {
         "binding": "D1",
         "database_id": "<id-from-create>",
-        "database_name": "dannymoons-db",
+        "database_name": "$database-name",
         "remote": true,
       },
     ],
