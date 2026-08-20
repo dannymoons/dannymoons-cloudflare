@@ -68,6 +68,7 @@ describe('post Markdown rich text', () => {
     )
 
     expect(screen.getByRole('table')).toBeTruthy()
+    expect(screen.getByRole('table').querySelector('tbody')).toBeTruthy()
     expect(screen.getByRole('columnheader', { name: 'Check' })).toBeTruthy()
   })
 })

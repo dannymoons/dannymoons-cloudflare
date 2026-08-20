@@ -122,18 +122,24 @@ const jsxConverters = (textSize?: TextSize): JSXConvertersFunction<NodeTypes> =>
 			}
 		},
 		table: ({ node, nodesToJSX }) => (
-			<div className='my-8 max-w-full overflow-x-auto'>
-				<table>{nodesToJSX({ nodes: (node as SerializedTableNode).children })}</table>
+			<div className='my-8 w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain rounded-2xl border border-border bg-surface shadow-sm'>
+				<table className='w-full min-w-[36rem] border-collapse text-left text-sm'>
+					<tbody>{nodesToJSX({ nodes: (node as SerializedTableNode).children })}</tbody>
+				</table>
 			</div>
 		),
 		tablerow: ({ node, nodesToJSX }) => (
-			<tr>{nodesToJSX({ nodes: (node as SerializedTableRowNode).children })}</tr>
+			<tr className='group'>{nodesToJSX({ nodes: (node as SerializedTableRowNode).children })}</tr>
 		),
 		tablecell: ({ node, nodesToJSX }) => {
 			const tableCell = node as SerializedTableCellNode
 			const Tag = tableCell.headerState > 0 ? 'th' : 'td'
+			const cellClassName =
+				tableCell.headerState > 0
+					? 'border-b border-border bg-muted/60 px-4 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-foreground [&_p]:text-sm [&_p]:leading-5'
+					: 'border-b border-border/70 px-4 py-3 align-top leading-6 text-muted-foreground transition-colors group-last:border-b-0 group-hover:bg-muted/20 [&_p]:text-sm [&_p]:leading-6'
 
-			return <Tag>{nodesToJSX({ nodes: tableCell.children })}</Tag>
+			return <Tag className={cellClassName}>{nodesToJSX({ nodes: tableCell.children })}</Tag>
 		},
 		paragraph: ({ node, nodesToJSX }) => (
 			<Paragraph
@@ -191,7 +197,7 @@ export const RichTextBasic = ({
 	return (
 		<RichTextWithoutBlocks
 			converters={jsxConverters(textSize)}
-			className={cn('flex flex-col gap-4', className)}
+			className={cn('flex min-w-0 flex-col gap-4', className)}
 			{...props}
 		/>
 	)
