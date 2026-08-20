@@ -35,6 +35,28 @@ type NodeTypes =
 		language?: string
 	}>
 	| SerializedHeadingNode
+	| SerializedTableNode
+	| SerializedTableRowNode
+	| SerializedTableCellNode
+
+type SerializedTableNode = {
+	children: SerializedTableRowNode[]
+	type: 'table'
+	version: number
+}
+
+type SerializedTableRowNode = {
+	children: SerializedTableCellNode[]
+	type: 'tablerow'
+	version: number
+}
+
+type SerializedTableCellNode = {
+	children: DefaultNodeTypes[]
+	headerState: number
+	type: 'tablecell'
+	version: number
+}
 
 type TextSize = 'sm' | 'md' | 'lg'
 
@@ -98,6 +120,20 @@ const jsxConverters = (textSize?: TextSize): JSXConvertersFunction<NodeTypes> =>
 					</pre>
 				)
 			}
+		},
+		table: ({ node, nodesToJSX }) => (
+			<div className='my-8 max-w-full overflow-x-auto'>
+				<table>{nodesToJSX({ nodes: (node as SerializedTableNode).children })}</table>
+			</div>
+		),
+		tablerow: ({ node, nodesToJSX }) => (
+			<tr>{nodesToJSX({ nodes: (node as SerializedTableRowNode).children })}</tr>
+		),
+		tablecell: ({ node, nodesToJSX }) => {
+			const tableCell = node as SerializedTableCellNode
+			const Tag = tableCell.headerState > 0 ? 'th' : 'td'
+
+			return <Tag>{nodesToJSX({ nodes: tableCell.children })}</Tag>
 		},
 		paragraph: ({ node, nodesToJSX }) => (
 			<Paragraph

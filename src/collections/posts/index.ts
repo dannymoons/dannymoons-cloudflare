@@ -41,11 +41,12 @@ const codeLanguageAliases: Record<string, string> = {
   sh: 'shell',
   text: 'plaintext',
   ts: 'typescript',
+  tsx: 'typescript',
   txt: 'plaintext',
   yml: 'yaml'
 }
 
-const normalizeCodeBlocks = (content: Record<string, unknown>) => {
+export const normalizeCodeBlocks = (content: Record<string, unknown>) => {
   const root = content.root
   if (!root || typeof root !== 'object') return content
 
