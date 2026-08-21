@@ -3,11 +3,10 @@ title: "More Sustainable AI Agents on Hermes with GreenPT"
 slug: more-sustainable-ai-agents-on-hermes-with-greenpt
 description: "I recently set up GreenPT as a custom provider on Hermes, my AI agent framework. This article covers my experience with the setup process, the reasons behind choosing GreenPT, and my initial impressions of using their services."
 date: 2026-08-20
-categories: [Sustainable Web Development, Modern Web]
-tags: [ai-agents, hermes, greenpt, sustainability, cloudflare-workers, ai-workloads]
+categories: [Sustainable Web Development]
+tags: [ai-agents, hermes, greenpt, sustainability]
 post-type: field-note
-status: draft
-related-posts: [exploring-cloudflare-as-vercel-alternative, so-i-got-curious-about-payload-cms-with-nextjs]
+status: published
 ---
 
 Today I set up GreenPT as a custom provider on Hermes, my AI agent framework. This article covers my experience with the setup process, the reasons behind choosing GreenPT, and my initial impressions of using their services.

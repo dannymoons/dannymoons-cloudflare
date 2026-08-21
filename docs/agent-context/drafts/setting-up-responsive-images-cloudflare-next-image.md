@@ -6,7 +6,7 @@ date: 2026-08-26
 categories: [Modern Web, Performance]
 tags: [nextjs, next-image, cloudflare-images, responsive-images, payload-cms, cloudflare-r2, image-optimization, performance]
 post-type: blog
-status: draft
+status: published
 related-posts: [manually-deploying-nextjs-payload-to-cloudflare, so-i-got-curious-about-payload-cms-with-nextjs]
 ---
 
@@ -140,7 +140,7 @@ Type 'string | null | undefined' is not assignable to type 'string'
 
 **Fix:**
 
-```tsx
+```typescript
 alt={media.alt || ''}
 ```
 

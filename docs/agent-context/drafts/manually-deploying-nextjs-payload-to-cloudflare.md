@@ -50,7 +50,7 @@ pnpm generate:types:cloudflare
 
 The `wrangler.jsonc` needs the database ID returned by the create command:
 
-```jsonc
+```
 "d1_databases": [
   {
     "binding": "D1",
@@ -63,7 +63,7 @@ The `wrangler.jsonc` needs the database ID returned by the create command:
 
 The production environment needs the same binding with `remote: true`:
 
-```jsonc
+```
 "env": {
   "production": {
     "d1_databases": [
@@ -188,7 +188,7 @@ pnpm wrangler r2 bucket create <bucket-name>
 
 Add the binding to `wrangler.jsonc`:
 
-```jsonc
+```
 "r2_buckets": [
   {
     "binding": "R2",
